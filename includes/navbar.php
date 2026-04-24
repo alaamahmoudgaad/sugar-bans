@@ -12,19 +12,7 @@
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="menu.php" id="menuDrop" data-toggle="dropdown">
-                            Our Menu
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item border-bottom" href="menu.php">categories</a>
-                            <a class="dropdown-item" href="#">Cakes</a>
-                            <a class="dropdown-item" href="#">Western Desserts</a>
-                            <a class="dropdown-item" href="#">Eastern Desserts</a>
-                            <a class="dropdown-item" href="beverage.php">Beverages</a>
-                        </div>
-                    </li>
-            
+                    <li class="nav-item"><a class="nav-link" href="menu.php">Our Menu</a></li>
                     <li class="nav-item"><a class="nav-link" href="offer.php">Offers</a></li>
                     <li class="nav-item"><a class="nav-link" href="contact.php">Contact Us</a></li>
                     <li class="nav-item"><a class="nav-link" href="login.php">LogIn / Register</a></li>

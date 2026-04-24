@@ -26,12 +26,11 @@ body{
     font-weight: 700;
     font-size: 19px;
     margin-left: 20px;
-    transition: 0.3s;
+    transition: all 0.3s;
 }
 .navbar-light .navbar-nav .nav-link:hover{
-    transform: scale(1.1);
+    transform: scale(1.05);
     color: #31241c;
-
 }
 .dropdown-menu {
     background-color: #f4eadf;
@@ -348,27 +347,6 @@ body{
 }
 
 
-/* _____________________________________________________ */
-
-
-/* _______________login , contact ,cart ______________________ */
-.form-bg {
-    display: block; 
-    padding-top: 70px;
-    padding-bottom: 90px;
-    background-color: #f5f1ea;
-    color: #4c3a2f;
-}
-
-/* ________________________cart ____________________________ */
-.order-summary-box {
-    max-width: 550px;
-    margin: 0 auto 20px auto; 
-    background: #fff;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.078);
-} 
 
 /* _______________login ,  register  ,  contact______________________ */
 

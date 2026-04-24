@@ -7,9 +7,10 @@ $('.nav-link').click(closeMenu);
 
 
 var loopTrack = document.getElementById('loop');
-var images = loopTrack.innerHTML;
-loopTrack.innerHTML = images + images;
-
+if (loopTrack !== null) { 
+    var images = loopTrack.innerHTML;
+    loopTrack.innerHTML = images + images;
+}
 
 function AddressShow(show) {
     const address= document.getElementById('address-div');
@@ -19,4 +20,5 @@ function AddressShow(show) {
         address.style.display = 'none';
     }
 }
+
 
