@@ -11,7 +11,6 @@ include 'includes/temp/navbar.php';
 include 'includes/temp/aside.php';
 ?>
 
-
 <h2>Hello From Dashboard</h2>
 
 <?php

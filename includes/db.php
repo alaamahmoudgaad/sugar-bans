@@ -1,7 +1,7 @@
 <?php 
 // PDO   ===> PHP Data Object 
 
-$dns = "mysql:host=localhost;dbname=sugarbans_db";
+$dns = "mysql:host=localhost;dbname=sugarbans";
 $user = "root";
 $pass = "";
 $option = array(

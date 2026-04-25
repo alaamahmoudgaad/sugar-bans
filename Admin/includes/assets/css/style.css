@@ -8,8 +8,12 @@ body{
    font-family:Georgia, 'Times New Roman', Times, serif;
 }
 nav{
+    width: 100%;
     background-color: #795548;
     background-color: #b19a80 ;
+    position: fixed !important;
+    top: 0;
+    z-index: 100;
 }
 nav img{   
    height: 90px;         
@@ -26,6 +30,8 @@ nav a{
 nav a:hover{
     transform: scale(1.04);
 }
+
+
 .side-wrapper{
     background-color: #f8f5f2; 
     min-height: 100vh;
@@ -34,7 +40,11 @@ nav a:hover{
     background-color: #f9eada;
     background-color: #f1e7dd;
     color: #5d4037 ;
-    position:sticky;
+    position:fixed;
+    z-index: 99;
+    top:65px;
+    left: 0;
+    bottom: 0;
 }
 .side-item {
     display: block;
