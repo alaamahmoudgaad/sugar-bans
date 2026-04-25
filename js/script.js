@@ -6,6 +6,7 @@ function closeMenu() {
 $('.nav-link').click(closeMenu);
 
 var loopTrack = document.getElementById('loop');
+
 if (loopTrack) {
     var images = loopTrack.innerHTML;
     loopTrack.innerHTML = images + images;
@@ -150,6 +151,5 @@ document.addEventListener("submit", function (e) {
         }
     }
 });
-
 
 

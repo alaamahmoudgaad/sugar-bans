@@ -26,12 +26,11 @@ body{
     font-weight: 700;
     font-size: 19px;
     margin-left: 20px;
-    transition: 0.3s;
+    transition: all 0.3s;
 }
 .navbar-light .navbar-nav .nav-link:hover{
-    transform: scale(1.1);
+    transform: scale(1.05);
     color: #31241c;
-
 }
 .dropdown-menu {
     background-color: #f4eadf;
@@ -346,10 +345,6 @@ body{
         height: 70px;
     }
 }
-
-
-/* _____________________________________________________ */
-
 
 /* _______________login , contact ,cart ______________________ */
 .form-bg {
