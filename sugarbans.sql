@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 25, 2026 at 04:02 PM
+-- Generation Time: Apr 25, 2026 at 08:17 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,33 @@ SET time_zone = "+00:00";
 --
 -- Database: `sugarbans`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `boxes`
+--
+
+CREATE TABLE `boxes` (
+  `box_id` int(11) NOT NULL,
+  `box_name` varchar(150) NOT NULL,
+  `description` text DEFAULT NULL,
+  `box_price` decimal(10,2) NOT NULL,
+  `box_image_url` varchar(255) DEFAULT NULL,
+  `products_included` text DEFAULT NULL,
+  `is_available` tinyint(1) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `boxes`
+--
+
+INSERT INTO `boxes` (`box_id`, `box_name`, `description`, `box_price`, `box_image_url`, `products_included`, `is_available`) VALUES
+(1, 'Besties Box', '2 Donuts (Chocolate + Caramel) + 2 Cold Drinks (Iced Mocha / Iced Coffee)', 250.00, 'images/besties box.jpg', 'Chocolate donut, Caramel donut, Iced Mocha, Iced Coffee', 1),
+(2, 'Sweet Heaven', 'Cheesecake slice + Tiramisu slice + 1 Cold Drink', 250.00, 'images/sweet heaven.jpg', 'Cheesecake, Tiramisu, Iced Latte', 1),
+(3, 'Sugar Rush Duo', '2 Donuts + 2 Cupcakes + 2 Cold Drinks', 400.00, 'images/sugar rush duo.jpg', 'Chocolate donut, Caramel donut, Vanilla cupcake, Caramel cupcake, Iced Mocha, Iced Coffee', 1),
+(4, 'Honey Mood', 'Honey Cake slice + Iced Latte', 150.00, 'images/honey mood.jpg', 'Honey cake, Iced Latte', 1),
+(5, 'Chill Combo', 'Cupcake + Tiramisu slice + Cold Drink', 200.00, 'images/chill combo.jpg', 'Vanilla cupcake, Tiramisu, Iced Latte', 1);
 
 -- --------------------------------------------------------
 
@@ -57,67 +84,6 @@ INSERT INTO `categories` (`category_id`, `name`, `parent_id`, `level`, `display_
 -- --------------------------------------------------------
 
 --
--- Table structure for table `offers`
---
-
-CREATE TABLE `offers` (
-  `offer_id` int(11) NOT NULL,
-  `offer_name` varchar(100) NOT NULL,
-  `discount_percentage` decimal(5,2) NOT NULL,
-  `offer_image_url` varchar(255) DEFAULT NULL,
-  `start_date` date DEFAULT NULL,
-  `end_date` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `offers`
---
-
-INSERT INTO `offers` (`offer_id`, `offer_name`, `discount_percentage`, `offer_image_url`, `start_date`, `end_date`) VALUES
-(1, 'Besties Box', 16.00, 'images/besties box.jpg', '2026-03-01', '2026-07-14'),
-(2, 'Sweet Heaven', 12.00, 'images/sweet heaven.jpg', '2026-04-01', '2026-05-15'),
-(3, 'Sugar Rush Duo', 11.00, 'images/sugar rush duo.jpg', '2026-03-01', '0000-00-00'),
-(4, 'Honey Mood', 25.00, 'images/honey mood.jpg', '2026-01-01', '2026-03-10'),
-(5, 'Chill Combo', 15.00, 'images/chill combo.jpg', '2026-02-01', '2026-05-07');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `offer_items`
---
-
-CREATE TABLE `offer_items` (
-  `offer_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `offer_items`
---
-
-INSERT INTO `offer_items` (`offer_id`, `product_id`) VALUES
-(1, 16),
-(1, 18),
-(1, 40),
-(1, 41),
-(2, 17),
-(2, 26),
-(2, 33),
-(3, 16),
-(3, 18),
-(3, 40),
-(3, 41),
-(3, 47),
-(3, 48),
-(4, 17),
-(4, 28),
-(5, 17),
-(5, 26),
-(5, 47);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `orders`
 --
 
@@ -126,7 +92,23 @@ CREATE TABLE `orders` (
   `order_price` decimal(10,2) NOT NULL,
   `order_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `order_type` enum('delivery','pickup') NOT NULL,
+  `note` text DEFAULT NULL,
   `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_boxes`
+--
+
+CREATE TABLE `order_boxes` (
+  `id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `box_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL DEFAULT 1,
+  `box_price` decimal(10,2) NOT NULL,
+  `box_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -139,7 +121,9 @@ CREATE TABLE `order_details` (
   `id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `order_quantity` int(11) NOT NULL
+  `quantity` int(11) NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `order_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -223,7 +207,8 @@ INSERT INTO `products` (`product_id`, `product_name`, `description`, `product_pr
 
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
-  `user_name` varchar(255) NOT NULL,
+  `first_name` varchar(100) NOT NULL,
+  `last_name` varchar(100) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `phone` varchar(20) NOT NULL,
@@ -239,16 +224,21 @@ CREATE TABLE `users` (
 
 CREATE TABLE `user_comment` (
   `comment_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `subject` enum('problem','review','complaint','question') NOT NULL,
   `comment` varchar(255) DEFAULT NULL,
-  `review_date` timestamp NOT NULL DEFAULT current_timestamp()
+  `comment_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `boxes`
+--
+ALTER TABLE `boxes`
+  ADD PRIMARY KEY (`box_id`);
 
 --
 -- Indexes for table `categories`
@@ -257,24 +247,19 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`category_id`);
 
 --
--- Indexes for table `offers`
---
-ALTER TABLE `offers`
-  ADD PRIMARY KEY (`offer_id`);
-
---
--- Indexes for table `offer_items`
---
-ALTER TABLE `offer_items`
-  ADD PRIMARY KEY (`offer_id`,`product_id`),
-  ADD KEY `product_id` (`product_id`);
-
---
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`order_id`),
   ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `order_boxes`
+--
+ALTER TABLE `order_boxes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `order_id` (`order_id`),
+  ADD KEY `box_id` (`box_id`);
 
 --
 -- Indexes for table `order_details`
@@ -296,20 +281,24 @@ ALTER TABLE `products`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`user_id`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD PRIMARY KEY (`user_id`);
 
 --
 -- Indexes for table `user_comment`
 --
 ALTER TABLE `user_comment`
   ADD PRIMARY KEY (`comment_id`),
-  ADD KEY `product_id` (`product_id`),
   ADD KEY `user_id` (`user_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `boxes`
+--
+ALTER TABLE `boxes`
+  MODIFY `box_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -318,16 +307,16 @@ ALTER TABLE `categories`
   MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT for table `offers`
---
-ALTER TABLE `offers`
-  MODIFY `offer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
   MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `order_boxes`
+--
+ALTER TABLE `order_boxes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `order_details`
@@ -358,17 +347,17 @@ ALTER TABLE `user_comment`
 --
 
 --
--- Constraints for table `offer_items`
---
-ALTER TABLE `offer_items`
-  ADD CONSTRAINT `offer_items_ibfk_1` FOREIGN KEY (`offer_id`) REFERENCES `offers` (`offer_id`),
-  ADD CONSTRAINT `offer_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
-
---
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
   ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+
+--
+-- Constraints for table `order_boxes`
+--
+ALTER TABLE `order_boxes`
+  ADD CONSTRAINT `order_boxes_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `order_boxes_ibfk_2` FOREIGN KEY (`box_id`) REFERENCES `boxes` (`box_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `order_details`
@@ -387,7 +376,6 @@ ALTER TABLE `products`
 -- Constraints for table `user_comment`
 --
 ALTER TABLE `user_comment`
-  ADD CONSTRAINT `user_comment_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`),
   ADD CONSTRAINT `user_comment_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 COMMIT;
 
