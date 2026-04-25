@@ -10,7 +10,7 @@
             <h2 class=" mb-2">Contact Us</h2>
             <p class="mb-4">We'd love to hear from you. Please fill out the form below.</p>
             
-            <form action="save_comment.php" method="POST">
+            <form id="contact" action="save_comment.php" method="POST">
 
                 <div class="form-row">
                     <div class="col-md-6">
@@ -28,7 +28,15 @@
 
                 <div class="mb-3">
                     <label for="Subject">Subject</label>
-                    <input type="text" class="form-control  py-2" name="subject" id="Subject" placeholder="What is this about?">
+                   <div class="form-label-group mb-3">
+                        <select class="form-control py-2" name="subject" id="Subject" required>
+                            <option value="" disabled selected>What is this about?</option>
+                            <option value="problem">Problem</option>
+                            <option value="review">Review</option>
+                            <option value="complaint">Complaint</option>
+                            <option value="question">Question</option>
+                        </select>
+                </div>
                 </div>
 
                 <div class="mb-3">

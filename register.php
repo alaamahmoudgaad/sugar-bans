@@ -5,12 +5,12 @@
 
 
 <div class="form-bg">
-   <h2 class="text-center fw-bold mb-5" style="letter-spacing: 1px;">Start Your Journey with Sugar Bans</h2>
+   <h2 class="text-center fw-bold mb-5" style="letter-spacing: 1px;">Start Your Journey with Sugar BANS</h2>
 
 <div class="order-card pb-5">
     <h3>Create Your Account</h3>
     
-    <form action="#" method="POST">
+    <form id ="register" action="#" method="POST">
         
         <div class="form-row">
           
