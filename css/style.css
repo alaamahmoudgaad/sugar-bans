@@ -346,7 +346,24 @@ body{
     }
 }
 
+/* _______________login , contact ,cart ______________________ */
+.form-bg {
+    display: block; 
+    padding-top: 70px;
+    padding-bottom: 90px;
+    background-color: #f5f1ea;
+    color: #4c3a2f;
+}
 
+/* ________________________cart ____________________________ */
+.order-summary-box {
+    max-width: 550px;
+    margin: 0 auto 20px auto; 
+    background: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.078);
+} 
 
 /* _______________login ,  register  ,  contact______________________ */
 
