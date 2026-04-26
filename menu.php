@@ -7,31 +7,31 @@
 <!-- Filter Bar -->
 <div class="filter-bar">
     <button class="filter-btn active" data-cat="all">All Products</button>
-    <button class="filter-btn" data-cat="drinks">🥤Drinks</button>
+    <button class="filter-btn" data-cat="drinks">Drinks</button>
     
     <div class="dropdown d-inline-block">
         <button class="filter-btn dropdown-toggle" type="button" id="dessertsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-            🧁 Desserts
+            Desserts
         </button>
         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dessertsDropdown">
             <<li><a class="dropdown-item sub-btn" data-cat="western" href="#">
-                 Western 🍩<br>
+                 Western<br>
                 <small class="text-muted">Donuts, Cupcakes, Cheesecakes, Cinnamon Rolls</small>
                 </a></li>
             <<li><a class="dropdown-item sub-btn" data-cat="eastern" href="#">
-    Eastern 🥧<br>
+    Eastern<br>
     <small class="text-muted">Kunafa, Basbousa, Qatayef, Baklava</small>
 </a></li>
         </ul>
     </div>
     
-    <button class="filter-btn" data-cat="cakes">🎂 Cakes</button>
-    <button class="filter-btn" data-cat="boxes">📦 Boxes</button>
+    <button class="filter-btn" data-cat="cakes">Cakes</button>
+    <button class="filter-btn" data-cat="boxes">Boxes</button>
 </div>
 
 <!-- Products Container -->
 <div class="products-container" id="content">
-    <div class="loading">✨ Loading menu...</div>
+    <div class="loading">Loading menu...</div>
 </div>
 
 <style>
@@ -213,7 +213,7 @@
 <script>
     async function loadMenu(filterType) {
         const container = document.getElementById('content');
-        container.innerHTML = '<div class="loading">🍰 Loading...</div>';
+        container.innerHTML = '<div class="loading">Loading...</div>';
         
         let url = 'api.php?action=getAll';
         if (filterType === 'drinks') url = 'api.php?action=getByParent&id=1';
@@ -227,7 +227,7 @@
             const data = await res.json();
             
             if (!data.length) {
-                container.innerHTML = '<div class="loading">No items found 🍽️</div>';
+                container.innerHTML = '<div class="loading">No items found</div>';
                 return;
             }
             
@@ -259,7 +259,7 @@
             container.innerHTML = html;
             attachCartEvents();
         } catch(err) {
-            container.innerHTML = '<div class="loading">Error loading menu 😢</div>';
+            container.innerHTML = '<div class="loading">Error loading menu </div>';
             console.error(err);
         }
     }
@@ -276,11 +276,11 @@
             plus.onclick = () => { qty++; count.textContent = qty; };
             add.onclick = () => { 
                 if (qty > 0) { 
-                    alert(`✅ Added ${qty} x ${add.dataset.name} to cart`); 
+                    alert(`Added ${qty} x ${add.dataset.name} to cart`); 
                     qty = 0; 
                     count.textContent = qty; 
                 } else { 
-                    alert('⚠️ Please select quantity first'); 
+                    alert('Please select quantity first'); 
                 } 
             };
         });

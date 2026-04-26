@@ -7,7 +7,7 @@ $action = $_GET['action'] ?? '';
 try {
     if ($action === 'getAll') {
         // جلب كل المنتجات بدون تقسيم حسب level
-        $stmt = $pdo->query("
+        $stmt = $connect->query("
             SELECT 
                 p.product_id, 
                 p.product_name, 
@@ -32,12 +32,12 @@ try {
         $parentId = (int)$_GET['id'];
         
         // جلب جميع الأبناء المباشرين
-        $stmt = $pdo->prepare("SELECT category_id, name FROM categories WHERE parent_id = ? ORDER BY display_order");
+        $stmt = $connect->prepare("SELECT category_id, name FROM categories WHERE parent_id = ? ORDER BY display_order");
         $stmt->execute([$parentId]);
         $children = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
         // جلب المنتجات المرتبطة مباشرة بالفئة الأم
-        $stmtDirect = $pdo->prepare("
+        $stmtDirect = $connect->prepare("
             SELECT product_id, product_name, description, product_price, product_image_url 
             FROM products 
             WHERE category_id = ? AND is_available = 1
@@ -57,7 +57,7 @@ try {
         
         // إضافة أقسام الأبناء مع منتجاتهم
         foreach ($children as $child) {
-            $stmtChild = $pdo->prepare("
+            $stmtChild = $connect->prepare("
                 SELECT product_id, product_name, description, product_price, product_image_url 
                 FROM products 
                 WHERE category_id = ? AND is_available = 1
@@ -76,7 +76,7 @@ try {
         echo json_encode($result, JSON_UNESCAPED_UNICODE);
     }
     elseif ($action === 'getBoxes') {
-        $stmt = $pdo->query("
+        $stmt = $connect->query("
             SELECT 
                 box_id, 
                 box_name AS product_name, 
@@ -89,7 +89,7 @@ try {
         $boxes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
         echo json_encode([[
-            'sectionName' => '📦 Sugarbans Boxes',
+            'sectionName' => 'Sugarbans Boxes',
             'products' => $boxes
         ]], JSON_UNESCAPED_UNICODE);
     }
