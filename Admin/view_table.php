@@ -1,4 +1,5 @@
 <?php 
+session_start();
 include 'includes/db/db.php';
 include 'includes/temp/header.php';
 include 'includes/temp/navbar.php';
@@ -34,7 +35,12 @@ include 'includes/temp/navbar.php';
              return !is_numeric($key);
             });
             $columns = array_slice($columns, 0, 3);
-        }
+            }
+             if(isset($_SESSION['message']) ){
+                    echo "<h4 class='alert alert-success text-center'>".$_SESSION['message']."</h4>";
+                }
+            unset($_SESSION['message']);
+
         ?>
             <div class="card shadow-sm mt-4 overflow-hidden">
     
@@ -56,9 +62,9 @@ include 'includes/temp/navbar.php';
                                     <td><?php echo $row[$col]; ?></td>
                                         <?php endforeach; ?>
                                     <td class="d-flex flex-md-nowrap justify-content-center operation">
-                                     <a href="show.php?id=<?php echo array_values($row)[0]; ?>" class="btn btn-sm btn-success"><i class="fa-solid fa-eye"></i></a>
-                                    <a href="edit.php?id=<?php echo array_values($row)[0]; ?>" class="btn btn-sm btn-primary"><i class="fa-solid fa-pen-to-square"></i></a>
-                                    <a href="delete.php?id=<?php echo array_values($row)[0]; ?>" class="btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></a>
+                                     <a href="action.php?action=show&table=<?php echo $currentTable; ?>&id=<?php echo array_values($row)[0]; ?>" class="btn btn-sm btn-success"><i class="fa-solid fa-eye"></i></a>
+                                    <a href="action.php?action=edit&table=<?php echo $currentTable; ?>&id=<?php echo array_values($row)[0]; ?>" class="btn btn-sm btn-primary"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <a href="action.php?action=delete&table=<?php echo $currentTable; ?>&id=<?php echo array_values($row)[0]; ?>" class="btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></a>
                                     </td>
                                </tr>
                             <?php endforeach; ?>

@@ -13,7 +13,6 @@
                     <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
 
                     <li class="nav-item"><a class="nav-link" href="menu.php">Our Menu</a></li>
-                    <li class="nav-item"><a class="nav-link" href="offer.php">Offers</a></li>
                     <li class="nav-item"><a class="nav-link" href="contact.php">Contact Us</a></li>
                     <li class="nav-item"><a class="nav-link" href="login.php">LogIn / Register</a></li>
                     <li class="nav-item"><a class="nav-link" href="cart.php"><i class="fa-solid fa-cart-shopping"></i></a></li>
