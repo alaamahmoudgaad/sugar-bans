@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 25, 2026 at 08:17 PM
+-- Generation Time: Apr 26, 2026 at 02:54 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -150,7 +150,7 @@ INSERT INTO `products` (`product_id`, `product_name`, `description`, `product_pr
 (1, 'Tea', 'Traditional black tea', 15.00, 'images/tea.jpg', 4, 1),
 (2, 'Green tea', 'Fresh green tea', 20.00, 'images/green tea.jpg', 4, 1),
 (3, 'Espresso', 'Strong espresso shot', 50.00, 'images/Espresso.jpg', 4, 1),
-(4, 'Americano', 'Espresso with hot water', 55.00, 'images/americano.jpg', 4, 1),
+(4, 'Americano', 'Espresso with hot water', 55.00, 'images/americano.png', 4, 1),
 (5, 'Cappuccino', 'Espresso with steamed milk foam', 60.00, 'images/Cappuccino.jpg', 4, 1),
 (6, 'Latte', 'Espresso with steamed milk', 65.00, 'images/Latte.jpg', 4, 1),
 (7, 'Matcha Latte', 'Green tea matcha latte', 60.00, 'images/matcha latte.jpg', 4, 1),
@@ -160,16 +160,16 @@ INSERT INTO `products` (`product_id`, `product_name`, `description`, `product_pr
 (16, 'Iced Coffee', 'Cold brewed coffee', 45.00, 'images/iced coffee.jpg', 5, 1),
 (17, 'Iced Latte', 'Cold latte with milk', 50.00, 'images/Iced Latte.jpg', 5, 1),
 (18, 'Iced Mocha', 'Cold mocha with chocolate', 60.00, 'images/iced mocha.jpg', 5, 1),
-(19, 'Frappé', 'Blended iced coffee', 60.00, 'images/Frappé.jpg', 5, 1),
+(19, 'Frappé', 'Blended iced coffee', 60.00, 'images/Frappé.png', 5, 1),
 (20, 'Iced Matcha', 'Cold green tea matcha', 65.00, 'images/iced matcha !.jpg', 5, 1),
 (23, 'Vanilla Latte', 'Latte with vanilla syrup', 70.00, 'images/vanilla latte.jpg', 6, 1),
-(24, 'Caramel Latte', 'Latte with caramel syrup', 65.00, 'images/Caramel latte.jpg', 6, 1),
+(24, 'Caramel Latte', 'Latte with caramel syrup', 65.00, 'images/Caramel Latte.jpg', 6, 1),
 (25, 'Chocolate Coffee', 'Coffee with chocolate flavor', 60.00, 'images/chocolate coffee.jpg', 6, 1),
 (26, 'Tiramisu', 'ladyfinger biscuits, heavy cream, espresso coffee, cocoa powder, vanilla extract', 100.00, 'images/Tiramisu.jpg', 7, 1),
 (27, 'Macaron', 'Almond flour, powdered sugar, eggs, granulated sugar, food coloring, buttercream filling', 20.00, 'images/Macaron.jpg', 7, 1),
 (28, 'Honey cake', 'Flour, eggs, sugar, honey, butter, milk, vanilla extract, cream filling', 100.00, 'images/Honey cake.jpg', 7, 1),
 (29, 'Eclairs', 'Flour, butter, eggs, milk, sugar, vanilla extract, pastry cream, chocolate ganache', 50.00, 'images/Eclairs.jpg', 7, 1),
-(30, 'Creme caramel', 'Milk, Sugar, Eggs, Vanilla extract, Caramel', 80.00, 'images/Creme pana cotta.jpg', 7, 1),
+(30, 'Creme caramel', 'Milk, Sugar, Eggs, Vanilla extract, Caramel', 80.00, 'images/Creme pana cotta.png', 7, 1),
 (31, 'Classic cookies', 'Flour, Butter, Brown sugar, Vanilla extract, Chocolate chips', 20.00, 'images/Classic cookies.jpg', 7, 1),
 (32, 'Chocolate cookies', 'Flour, Butter, Brown sugar, Cocoa powder, Chocolate chips', 30.00, 'images/Chocolate cookies.jpg', 7, 1),
 (33, 'Blueberry Cheesecake', 'Digestive biscuits, Creme cheese, blueberry syrup', 70.00, 'images/blueberry Cheesecake.jpg', 11, 1),
@@ -193,7 +193,7 @@ INSERT INTO `products` (`product_id`, `product_name`, `description`, `product_pr
 (55, 'Caramel cinnamon rolls', 'Flour, butter, brown sugar, eggs, milk, cinnamon powder, vanilla extract, caramel syrup', 70.00, 'images/caramel cinnamon rolls.jpg', 12, 1),
 (56, 'Oreo cinnamon rolls', 'Flour, butter, brown sugar, eggs, milk, cinnamon powder, vanilla extract, cream cheese icing, Oreo cookies', 80.00, 'images/oreo cinnamon.jpg', 12, 1),
 (57, 'Lotus cinnamon rolls', 'Flour, butter, brown sugar, eggs, milk, cinnamon powder, vanilla extract, Lotus biscuits, Lotus spread', 90.00, 'images/lotus cinnamon.jpg', 12, 1),
-(58, 'Red velvet cinnamon', 'red velvet cake, cream cheese icing', 90.00, 'images/red_velvet_cinnamon_rolls.jpg', 12, 1),
+(58, 'Red velvet cinnamon', 'red velvet cake, cream cheese icing', 90.00, 'images/red_velvet_ cinnamon_rolls.jpg', 12, 1),
 (59, 'Pistachio cinnamon rolls', 'Flour, butter, brown sugar, eggs, milk, cinnamon powder, vanilla extract, cream cheese icing, pistachio spread', 120.00, 'images/pistachio cinnamon.jpg', 12, 1),
 (61, 'Vanilla Cake', 'Flour, sugar, eggs, butter, milk, vanilla, cream', 450.00, 'images/Vanilla Cake.jpg', 3, 1),
 (62, 'Oreo Cake', 'Flour, sugar, eggs, butter, milk, Oreo, cream', 550.00, 'images/Oreo Cake.jpg', 3, 1),
