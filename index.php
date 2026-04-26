@@ -40,29 +40,35 @@
 
 
     <section class="choose">
-        <div class="choose-container">
-
-            <div class="choose-content">
-
+    <div class="container"> <div class="row align-items-center"> <div class="col-lg-6 choose-content">
                 <h2>Why Choose Our dessert shop?</h2>
-
                 <div class="choose-line"></div>
-                    <p><i class="fa-solid fa-check"></i>Handcrafted with love. Baked fresh daily for your joy.</p>
-                    <p><i class="fa-solid fa-check"></i>Natural flavors. Premium butter. No shortcuts, just taste.</p>
-                    <p><i class="fa-solid fa-check"></i>From oven to heart.</p>
-                    <p><i class="fa-solid fa-check"></i>Honest baking from our kitchen to your heart.</p>
-                    <p><i class="fa-solid fa-check"></i>Driven by taste. Inspired by tradition. Perfectly sweet.</p>
-
+                <p><i class="fa-solid fa-check"></i>Handcrafted with love. Baked fresh daily for your joy.</p>
+                <p><i class="fa-solid fa-check"></i>Natural flavors. Premium butter. No shortcuts, just taste.</p>
+                <p><i class="fa-solid fa-check"></i>From oven to heart.</p>
+                <p><i class="fa-solid fa-check"></i>Honest baking from our kitchen to your heart.</p>
+                <p><i class="fa-solid fa-check"></i>Driven by taste. Inspired by tradition. Perfectly sweet.</p>
             </div>
 
-            <div class="choose-video">
-                <video controls loop autoplay >
-                    <source src="assets/3992584-uhd_4096_2160_25fps.mp4">
-                </video>
+            <div class="col-lg-6 choose-video mt-4 mt-lg-0">
+                <div class="ratio ratio-16x9">
+                    <video controls loop autoplay muted>
+                        <source src="assets/3992584-uhd_4096_2160_25fps.mp4">
+                    </video>
+                </div>
             </div>
 
         </div>
+    </div>
+</section>
 
-    </section>
 
+<button type="button" class="btn btn-brown btn-back-to-top" id="btn-back-to-top">
+  <i class="fas fa-arrow-up"></i>
+</button>
+
+
+<?php include 'includes/footer.php';
+echo '<script src="js/script.js"></script>';
+?>
 <?php include 'includes/footer.php'; ?>
