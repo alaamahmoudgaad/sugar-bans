@@ -71,4 +71,3 @@
 <?php include 'includes/footer.php';
 echo '<script src="js/script.js"></script>';
 ?>
-<?php include 'includes/footer.php'; ?>
