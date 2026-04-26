@@ -1,5 +1,5 @@
 <?php 
-    require_once 'admin/includes/db/db.php';
+    require_once 'includes/db.php';
     include 'includes/header.php';
     include 'includes/navbar.php';
 ?>

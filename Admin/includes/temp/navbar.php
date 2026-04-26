@@ -1,5 +1,5 @@
 
-<nav class="navbar navbar-expand-lg navbar-light shadow">
+<nav class="navbar navbar-expand-md navbar-light shadow">
     
     <a class="navbar-brand font-weight-bold" href="dashboard.php">
         <img src="includes/assets/img/ChatGPT Image Mar 31, 2026, 09_50_31 PM.png" height="45px" alt="Sugar Bans">

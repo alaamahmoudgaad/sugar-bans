@@ -1,5 +1,5 @@
 <?php
-require_once 'admin/includes/db/db.php';
+require_once 'includes/db.php';
 header('Content-Type: application/json; charset=utf-8');
 
 $action = $_GET['action'] ?? '';

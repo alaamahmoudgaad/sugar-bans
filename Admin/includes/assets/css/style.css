@@ -9,11 +9,10 @@ body{
 }
 nav{
     width: 100%;
-    background-color: #795548;
     background-color: #b19a80 ;
-    position: fixed !important;
+    position:fixed !important;
     top: 0;
-    z-index: 100;
+    z-index: 10000;
 }
 nav img{   
    height: 90px;         
@@ -33,18 +32,17 @@ nav a:hover{
 
 
 .side-wrapper{
+    position:fixed;
+    top: 65px;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
     background-color: #f8f5f2; 
     min-height: 100vh;
-    max-width: 20%;
     border-right: 1px solid #e0dcd9;
     background-color: #f9eada;
     background-color: #f1e7dd;
     color: #5d4037 ;
-    position:fixed;
-    z-index: 99;
-    top:65px;
-    left: 0;
-    bottom: 0;
 }
 .side-item {
     display: block;
@@ -59,15 +57,23 @@ nav a:hover{
     text-decoration: none ;
     transform: scale(1.03);
 }
+main{
+    margin-top: 100px;
+    margin-left: 16.5%;
+    padding-right:5px ;
+}
 
  @media (max-width: 768px) {
     .side-wrapper {
         display: flex ;
         flex-direction: row ;
         flex-wrap: wrap;             
-        max-width: 100% ;
-        min-height: auto ;
+        max-width: 100% !important;
+        height: auto !important; 
+        min-height: auto !important;
+        max-height: fit-content;
     }
+
     .side-item {
         display: inline-block !important;
         border-bottom: none;
@@ -75,4 +81,53 @@ nav a:hover{
         margin-bottom: 5px;          
         padding: 2px 5px;        
     }
+
+    main{
+        width: 80%;
+        margin-top: 270px;
+         margin-left: 0;
+   }
+   .operation{
+    flex-direction: column;
+   }
+   .operation a{
+        display: block !important;
+    }
+
+ }
+
+.div-title{
+    border-bottom: 2px solid #f1e7dd; 
+    padding-bottom: 5px;
 }
+.table-title{
+    color: #5d4037; 
+    font-weight: bold;
+
+}
+.btn-add{
+    background-color:#b19a80;
+    color: #3c2011 ;
+}
+.badge{
+     background-color:#b19a80;
+    color: #3c2011 ;
+}
+.table{
+    color: #5d4037;
+    border-color: #d2b48c;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f8f4f0 !important; 
+    transition: 0.3s; 
+}
+.table th, .table td{
+    border: 1px solid #e0d0c0 !important ; 
+    text-align: center;
+}
+.operation {
+    gap:5px;
+        margin: auto;
+}
+
