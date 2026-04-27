@@ -49,25 +49,25 @@ include 'includes/temp/navbar.php';
                     <table class="table table-hover mb-0 w-100 border 1px">
                         <thead>
                             <tr>
-                                <?php foreach ($columns as $col): ?>
+                                <?php foreach ($columns as $col){?>
                                     <th><?php echo ucwords(str_replace('_', ' ', $col)); ?></th>
-                                    <?php endforeach; ?>
+                                    <?php } ?>
                                     <th>Actions</th> 
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($result as $row): ?>
+                            <?php foreach ($result as $row){ ?>
                                 <tr>
-                                    <?php foreach ($columns as $col): ?>
+                                    <?php foreach ($columns as $col){ ?>
                                     <td><?php echo $row[$col]; ?></td>
-                                        <?php endforeach; ?>
+                                        <?php } ?>
                                     <td class="d-flex flex-md-nowrap justify-content-center operation">
-                                     <a href="action.php?action=show&table=<?php echo $currentTable; ?>&id=<?php echo array_values($row)[0]; ?>" class="btn btn-sm btn-success"><i class="fa-solid fa-eye"></i></a>
-                                    <a href="action.php?action=edit&table=<?php echo $currentTable; ?>&id=<?php echo array_values($row)[0]; ?>" class="btn btn-sm btn-primary"><i class="fa-solid fa-pen-to-square"></i></a>
-                                    <a href="action.php?action=delete&table=<?php echo $currentTable; ?>&id=<?php echo array_values($row)[0]; ?>" class="btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></a>
-                                    </td>
+                                        <a href="action.php?action=show&table=<?php echo $currentTable; ?>&id=<?php echo array_values($row)[0]; ?>" class="btn btn-sm btn-success"><i class="fa-solid fa-eye"></i></a>
+                                        <a href="action.php?action=edit&table=<?php echo $currentTable; ?>&id=<?php echo array_values($row)[0]; ?>" class="btn btn-sm btn-primary"><i class="fa-solid fa-pen-to-square"></i></a>
+                                        <a href="action.php?action=delete&table=<?php echo $currentTable; ?>&id=<?php echo array_values($row)[0]; ?>" class="btn btn-sm btn-danger" onclick= "return confirm('Are you sure you want to delete this?')"><i class="fa-solid fa-trash"></i></a>
+                                   </td>
                                </tr>
-                            <?php endforeach; ?>
+                            <?php } ?>
                         </tbody>
 
                     </table>

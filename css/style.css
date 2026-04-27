@@ -193,47 +193,8 @@ body{
         transform: translateX(-50%); 
     }
 }
-/* //////////////////////////////////////////////////// */
-.choose {
-    margin-top: 100px;
-    padding: 50px 0;
-}
 
-.choose-container {
-    width: 100%; 
-}
-
-.choose-content h2 {
-    font-size: 32px;
-    color: #4c3a2f;
-}
-
-.choose-line {
-    width: 70px;
-    height: 3px;
-    background-color: #4c3a2f;
-    margin-bottom: 30px;
-}
-
-.choose-content p {
-    font-size: 19px;
-    line-height: 2;
-    color: #4c3a2f;
-    display: flex;
-    align-items: flex-start;
-}
-
-.choose-content i {
-    margin-right: 10px;
-    margin-top: 7px;
-    font-size: 15px;
-}
-
-.choose-video video {
-    width: 100%;
-    border-radius: 8px;
-}
-
+/*//////////////////////////////////*/
 @media (max-width: 1024px) {
     .hero-content h2{
         font-size: 38px;
@@ -266,31 +227,6 @@ body{
         height: 140px;
     }
 }
-
-/*//////////////////////////////////////*/
-
-.btn-back-to-top {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  display: none;
-  z-index: 1000;
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  background-color: #4c3a2f;
-  color: white;
-  border: none;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  transition: all 0.3s ease;
-}
-
-.btn-back-to-top:hover {
-  background-color: #6d5444;
-  color: white;
-  transform: translateY(-5px);
-}
-/*//////////////////////////////////*/
 @media (max-width: 768px) {
     .hero-content{
         width: 90%;
@@ -363,6 +299,75 @@ body{
         height: 70px;
     }
 }
+
+/* ______________________choose part_________________________ */
+.choose {
+    margin-top: 100px;
+    padding: 50px 0;
+}
+
+.choose-container {
+    width: 100%; 
+}
+
+.choose-content h2 {
+    font-size: 32px;
+    color: #4c3a2f;
+}
+
+.choose-line {
+    width: 70px;
+    height: 3px;
+    background-color: #4c3a2f;
+    margin-bottom: 30px;
+}
+
+.choose-content p {
+    font-size: 19px;
+    line-height: 2;
+    color: #4c3a2f;
+    display: flex;
+    align-items: flex-start;
+}
+
+.choose-content i {
+    margin-right: 10px;
+    margin-top: 7px;
+    font-size: 15px;
+}
+
+.choose-video video {
+    width: 100%;
+    border-radius: 8px;
+}
+
+
+
+/* ____________________btn-back-to-top_____________________*/
+
+.btn-back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: none;
+  z-index: 1000;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: #4c3a2f;
+  color: white;
+  border: none;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+}
+
+.btn-back-to-top:hover {
+  background-color: #6d5444;
+  color: white;
+  transform: translateY(-5px);
+}
+
+
 
 /* _______________login , contact ,cart ______________________ */
 .form-bg {

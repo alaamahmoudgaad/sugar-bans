@@ -1,4 +1,5 @@
 <?php 
+  session_start();
   include 'includes/db.php';
   include 'includes/header.php'; 
   include 'includes/navbar.php'; 
@@ -15,32 +16,36 @@
    <h2 class="text-center fw-bold mb-3" style="letter-spacing: 1px;">Welcome Back </h2>
 
 <div class="order-card">
+    <?php if (isset($_SESSION['error_msg'])){
+        echo "<div class='alert alert-danger text-center'>".$_SESSION['error_msg']."</div>";}
+        unset($_SESSION['error_msg']);?>
+ 
     <h3>Log IN</h3>
     
-    <form id="loginForm" action="#" method="POST">
+    <form id="loginForm" action="includes/login_process.php" method="POST">
         
         <div class="form-row">
           
             <div class="col-md-6">
-                <div class="form-label-group">
+                <p class="form-label-group">
                     <input type="text" id="fname" name="fname" class="form-control" placeholder="First Name" required>
-                </div>
+                </p>
             </div>
 
             <div class="col-md-6">
-                <div class="form-label-group">
+                <p class="form-label-group">
                     <input type="text" id="lname" name="lname" class="form-control" placeholder="Last Name" required>
-                </div>
+                </p>
             </div>
         </div>
 
-        <div class="form-label-group">
+        <p class="form-label-group">
             <input type="email" id="email" name="email" class="form-control" placeholder="Email" required>
-        </div>
+        </p>
 
-        <div class="form-label-group">
+        <p class="form-label-group">
             <input type="password" id="pass" name="pass" class="form-control" placeholder="password" required>
-        </div>
+        </p>
 
         <button type="submit" name="submit" class="btn-submit shadow-sm">LogIn</button>
 

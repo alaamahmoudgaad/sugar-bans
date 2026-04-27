@@ -1,9 +1,15 @@
 <?php 
+  session_start();
   include 'includes/header.php'; 
   include 'includes/navbar.php'; 
 ?>
     
     <main class="hero">
+
+        <?php if (isset($_SESSION['error_msg'])){
+        echo "<h4 class='alert alert-success text-center'>".$_SESSION['error_msg']."</h4>";}
+        unset($_SESSION['error_msg']);?>
+
         <div class="hero-overlay">
             <div class="hero-content">
                 <h2>Baked to Perfection, Crafted for You</h2>
@@ -40,7 +46,8 @@
 
 
     <section class="choose">
-    <div class="container"> <div class="row align-items-center"> <div class="col-lg-6 choose-content">
+    <div class="container"> <div class="row align-items-center "> 
+        <div class="col-lg-6 choose-content">
                 <h2>Why Choose Our dessert shop?</h2>
                 <div class="choose-line"></div>
                 <p><i class="fa-solid fa-check"></i>Handcrafted with love. Baked fresh daily for your joy.</p>
@@ -67,8 +74,4 @@
   <i class="fas fa-arrow-up"></i>
 </button>
 
-
-<?php include 'includes/footer.php';
-echo '<script src="js/script.js"></script>';
-?>
 <?php include 'includes/footer.php'; ?>
