@@ -32,8 +32,6 @@ if (isset($_POST['submit'])) {
             $_SESSION['user_lname'] = $user['lname'];    
             $_SESSION['user_email'] = $user['email'];   
 
-            $_SESSION['success_msg'] = "Welcome back, " . $user['fname'] . "! You have successfully logged in.";
-
             header("Location: ../index.php");
             exit();
         } 

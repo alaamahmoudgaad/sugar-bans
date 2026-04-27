@@ -3,13 +3,7 @@
   include 'includes/header.php'; 
   include 'includes/navbar.php'; 
 ?>
-    
     <main class="hero">
-
-        <?php if (isset($_SESSION['error_msg'])){
-        echo "<h4 class='alert alert-success text-center'>".$_SESSION['error_msg']."</h4>";}
-        unset($_SESSION['error_msg']);?>
-
         <div class="hero-overlay">
             <div class="hero-content">
                 <h2>Baked to Perfection, Crafted for You</h2>
