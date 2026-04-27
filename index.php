@@ -39,12 +39,9 @@
     </section>
 
 
-<<<<<<< Updated upstream
     <section class="choose">
     <div class="container"> <div class="row align-items-center "> 
         <div class="col-lg-6 choose-content">
-=======
-
 
 <section class="background">
         <div class="container mt-4">
@@ -243,7 +240,6 @@
 
         <section class="choose">
     <div class="container"> <div class="row align-items-center"> <div class="col-lg-6 choose-content">
->>>>>>> Stashed changes
                 <h2>Why Choose Our dessert shop?</h2>
                 <div class="choose-line"></div>
                 <p><i class="fa-solid fa-check"></i>Handcrafted with love. Baked fresh daily for your joy.</p>
