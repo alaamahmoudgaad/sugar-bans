@@ -1,4 +1,5 @@
 <?php 
+    session_start();
   include 'includes/db.php';
   include 'includes/header.php'; 
   include 'includes/navbar.php'; 
@@ -10,28 +11,37 @@
         <div class="col-md-6 p-5">
             <h2 class=" mb-2">Contact Us</h2>
             <p class="mb-4">We'd love to hear from you. Please fill out the form below.</p>
+            <?php 
+                if (isset($_SESSION['user_id'])){} 
+            ?>
             
             <form id="contact" action="save_comment.php" method="POST">
 
                 <div class="form-row">
                     <div class="col-md-6">
                           <div class="form-label-group">
-                          <input type="text" id="fname" name="fname" class="form-control" placeholder="First Name" required>
+                          <input type="text" id="fname" name="fname" class="form-control" value="<?php echo $_SESSION['user_fname']; ?>" readonly>
                     </div>
                 </div>
 
                 <div class="col-md-6">
                     <div class="form-label-group">
-                          <input type="text" id="lname" name="lname" class="form-control" placeholder="Last Name" required>
+                          <input type="text" id="lname" name="lname" class="form-control" value="<?php echo $_SESSION['user_lname']; ?>" readonly>
                     </div>
                 </div>
               </div>
+
+               <div class="mb-3">
+                   <div class="form-label-group">
+                        <input type="email" id="email" name="email" class="form-control" value="<?php echo $_SESSION['user_email']; ?>" readonly>
+                    </div>
+               </div>
 
                 <div class="mb-3">
                     <label for="Subject">Subject</label>
                    <div class="form-label-group mb-3">
                         <select class="form-control py-2" name="subject" id="Subject" required>
-                            <option value="" disabled selected>What is this about?</option>
+                            <option hidden value="disabled selected">What is this about?</option>
                             <option value="problem">Problem</option>
                             <option value="review">Review</option>
                             <option value="complaint">Complaint</option>
