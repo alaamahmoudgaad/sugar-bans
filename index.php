@@ -74,4 +74,5 @@
   <i class="fas fa-arrow-up"></i>
 </button>
 
-<?php include 'includes/footer.php'; ?>
+<?php include 'includes/footer.php';?>
+
