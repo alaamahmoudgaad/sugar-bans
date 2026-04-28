@@ -2,7 +2,7 @@
     
         <div class="container">
 
-            <a class="navbar-logo" href=""><img src="assets/ChatGPT Image Mar 31, 2026, 09_50_31 PM.png" height="40px" alt="Sugar Bans"></a>
+            <a class="navbar-logo" href="index.php"><img src="assets/ChatGPT Image Mar 31, 2026, 09_50_31 PM.png" height="40px" alt="Sugar Bans"></a>
 
             <button class="navbar-toggler" data-toggle="collapse" data-target="#mainNavbar">
                 <span class="navbar-toggler-icon"></span>
