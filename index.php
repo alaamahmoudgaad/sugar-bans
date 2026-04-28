@@ -250,7 +250,6 @@
                     </div>
                 </div>
 
-                <button>Discover More</button>
             </div>
 
         </div>

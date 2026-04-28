@@ -817,19 +817,6 @@ footer img{
   color: #7a6a60;
 }
 
-.about-text button {
-  padding: 10px 25px;
-  border: none;
-  background: linear-gradient(135deg, #e0c9a1, #a67c52);
-  color: white;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.about-text button:hover {
-  transform: scale(1.05);
-}
 
 @media (max-width: 768px) {
 
