@@ -440,6 +440,7 @@ function attachCartEvents() {
                         
                         if (result.success) {
                             alert(`Added ${qty} x ${add.dataset.name} to cart`);
+                        
                             const activeBtn = document.querySelector('.sidebar-btn.active');
                             if (activeBtn && activeBtn.dataset.cat) {
                                 loadMenu(activeBtn.dataset.cat);
