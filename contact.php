@@ -20,20 +20,20 @@
                 <div class="form-row">
                     <div class="col-md-6">
                           <div class="form-label-group">
-                          <input type="text" id="fname" name="fname" class="form-control" value="<?php echo $_SESSION['user_fname']; ?>" readonly>
+                          <input type="text" id="fname" name="fname" class="form-control" value="<?php echo $_SESSION['user_fname'] ?? "";?>" placeholder="First Name">
                     </div>
                 </div>
 
                 <div class="col-md-6">
                     <div class="form-label-group">
-                          <input type="text" id="lname" name="lname" class="form-control" value="<?php echo $_SESSION['user_lname']; ?>" readonly>
+                          <input type="text" id="lname" name="lname" class="form-control" value="<?php echo $_SESSION['user_lname'] ?? "";?>" placeholder="Last Name">
                     </div>
                 </div>
               </div>
 
                <div class="mb-3">
                    <div class="form-label-group">
-                        <input type="email" id="email" name="email" class="form-control" value="<?php echo $_SESSION['user_email']; ?>" readonly>
+                        <input type="email" id="email" name="email" class="form-control" value="<?php echo $_SESSION['user_email'] ?? ""; ?>"  placeholder="Email">
                     </div>
                </div>
 
@@ -42,21 +42,24 @@
                    <div class="form-label-group mb-3">
                         <select class="form-control py-2" name="subject" id="Subject" required>
                             <option hidden value="disabled selected">What is this about?</option>
-                            <option value="problem">Problem</option>
-                            <option value="review">Review</option>
-                            <option value="complaint">Complaint</option>
-                            <option value="question">Question</option>
+                            <option value="problem"<?php echo (isset($_SESSION['contact_message']) && $_SESSION['contact_message'] == 'problem') ? 'selected' : ''; ?>>Problem</option>
+                            <option value="review"<?php echo (isset($_SESSION['contact_message']) && $_SESSION['contact_message'] == 'review') ? 'selected' : ''; ?>>Review</option>
+                            <option value="complaint"<?php echo (isset($_SESSION['contact_message']) && $_SESSION['contact_message'] == 'complaint') ? 'selected' : ''; ?>>Complaint</option>
+                            <option value="question"<?php echo (isset($_SESSION['contact_message']) && $_SESSION['contact_message'] == 'question') ? 'selected' : ''; ?>>Question</option>
                         </select>
                 </div>
                 </div>
 
                 <div class="mb-3">
                     <label for="message">Message</label>
-                    <textarea class="form-control py-2" name="user_message" rows="4" id= "message" placeholder="Write your message here..." required></textarea>
+                    <textarea class="form-control py-2" name="user_message" rows="4" id= "message" placeholder="Write your message here..." required>
+                        <?php echo $_SESSION['contact_message'] ?? ''; ?></textarea>
                 </div>
 
+                <?php if (isset($_SESSION['user_id'])){} ?>
+
                 <button type="submit" class="btn-submit w-100  py-2 mt-4 ">
-                    Send Message
+                    Send Message</button>
             </form>
         </div>
 

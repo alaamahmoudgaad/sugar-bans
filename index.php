@@ -1,5 +1,6 @@
 <?php 
   session_start();
+  session_destroy();
   include 'includes/header.php'; 
   include 'includes/navbar.php'; 
 ?>

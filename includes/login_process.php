@@ -2,6 +2,7 @@
 session_start();
 include ( 'db.php');
 
+//   ________________________form login___________________________
 if (isset($_POST['submit'])) {
 
     $fname    = trim($_POST['fname']);
@@ -28,11 +29,16 @@ if (isset($_POST['submit'])) {
         if (password_verify($password, $user['password'])) {
 
             $_SESSION['user_id'] = $user['id'];
-            $_SESSION['user_fname'] = $user['fname'];
-            $_SESSION['user_lname'] = $user['lname'];    
+            $_SESSION['user_fname'] = $user['first_name'];
+            $_SESSION['user_lname'] = $user['last_name'];    
             $_SESSION['user_email'] = $user['email'];   
 
-            header("Location: ../index.php");
+            if (isset($_SESSION['contact_message'])) {
+                header("Location: contact.php");
+            } 
+            else {
+                header("Location: ../index.php");
+            }
             exit();
         } 
          else {
@@ -52,4 +58,8 @@ else {
     header("Location: ../login.php");
     exit();
 }
+
+// _____________________________form contact us____________________________________
 ?>
+
+
