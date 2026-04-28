@@ -22,7 +22,7 @@
  
     <h3>Log IN</h3>
     
-    <form id="loginForm" action="includes/login_process.php" method="POST">
+    <form id="loginForm" action="includes/process.php" method="POST">
         
         <div class="form-row">
           
@@ -47,7 +47,7 @@
             <input type="password" id="pass" name="pass" class="form-control" placeholder="password" required>
         </p>
 
-        <button type="submit" name="submit" class="btn-submit shadow-sm">LogIn</button>
+        <button type="submit" name="login" class="btn-submit shadow-sm">LogIn</button>
 
         <div class="text-center mt-4 pt-3 border-top">
             <p>Don't have an account? <a href="register.php">Register Here</a></p>

@@ -11,29 +11,33 @@
         <div class="col-md-6 p-5">
             <h2 class=" mb-2">Contact Us</h2>
             <p class="mb-4">We'd love to hear from you. Please fill out the form below.</p>
-            <?php 
-                if (isset($_SESSION['user_id'])){} 
-            ?>
+            <?php if (isset($_SESSION['error_validation'])){
+                echo "<h5 class='alert alert-danger text-center'>".$_SESSION['error_validation']."</h5>";}
+                unset($_SESSION['error_validation']);?>
+
+                <?php if (isset($_SESSION['success_msg'])){
+                echo "<h5 class='alert alert-success text-center'>".$_SESSION['success_msg']."</h5>";}
+                unset($_SESSION['success_msg']);?>
             
-            <form id="contact" action="save_comment.php" method="POST">
+            <form id="contact" action="includes/process.php" method="POST">
 
                 <div class="form-row">
                     <div class="col-md-6">
                           <div class="form-label-group">
-                          <input type="text" id="fname" name="fname" class="form-control" value="<?php echo $_SESSION['user_fname'] ?? "";?>" placeholder="First Name">
+                          <input type="text" id="fname" name="fname" class="form-control" value="<?php echo $_SESSION['user_fname'] ?? "";?>" placeholder="First Name" required>
                     </div>
                 </div>
 
                 <div class="col-md-6">
                     <div class="form-label-group">
-                          <input type="text" id="lname" name="lname" class="form-control" value="<?php echo $_SESSION['user_lname'] ?? "";?>" placeholder="Last Name">
+                          <input type="text" id="lname" name="lname" class="form-control" value="<?php echo $_SESSION['user_lname'] ?? "";?>" placeholder="Last Name" required>
                     </div>
                 </div>
               </div>
 
                <div class="mb-3">
                    <div class="form-label-group">
-                        <input type="email" id="email" name="email" class="form-control" value="<?php echo $_SESSION['user_email'] ?? ""; ?>"  placeholder="Email">
+                        <input type="email" id="email" name="email" class="form-control" value="<?php echo $_SESSION['user_email'] ?? ""; ?>"  placeholder="Email" required>
                     </div>
                </div>
 
@@ -42,23 +46,25 @@
                    <div class="form-label-group mb-3">
                         <select class="form-control py-2" name="subject" id="Subject" required>
                             <option hidden value="disabled selected">What is this about?</option>
-                            <option value="problem"<?php echo (isset($_SESSION['contact_message']) && $_SESSION['contact_message'] == 'problem') ? 'selected' : ''; ?>>Problem</option>
-                            <option value="review"<?php echo (isset($_SESSION['contact_message']) && $_SESSION['contact_message'] == 'review') ? 'selected' : ''; ?>>Review</option>
-                            <option value="complaint"<?php echo (isset($_SESSION['contact_message']) && $_SESSION['contact_message'] == 'complaint') ? 'selected' : ''; ?>>Complaint</option>
-                            <option value="question"<?php echo (isset($_SESSION['contact_message']) && $_SESSION['contact_message'] == 'question') ? 'selected' : ''; ?>>Question</option>
+                            <option value="problem"<?php echo (isset($_SESSION['contact_message']) && $_SESSION['contact_subject'] == 'problem') ? 'selected' : ''; ?>>Problem</option>
+                            <option value="review"<?php echo (isset($_SESSION['contact_message']) && $_SESSION['contact_subject'] == 'review') ? 'selected' : ''; ?>>Review</option>
+                            <option value="complaint"<?php echo (isset($_SESSION['contact_message']) && $_SESSION['contact_subject'] == 'complaint') ? 'selected' : ''; ?>>Complaint</option>
+                            <option value="question"<?php echo (isset($_SESSION['contact_message']) && $_SESSION['contact_subject'] == 'question') ? 'selected' : ''; ?>>Question</option>
                         </select>
                 </div>
                 </div>
 
                 <div class="mb-3">
                     <label for="message">Message</label>
-                    <textarea class="form-control py-2" name="user_message" rows="4" id= "message" placeholder="Write your message here..." required>
-                        <?php echo $_SESSION['contact_message'] ?? ''; ?></textarea>
+                    <textarea class="form-control py-2" name="message" rows="4" id= "message" placeholder="Write your message here..." required>
+                       <?php echo $_SESSION['contact_message'] ?? ''; ?>
+               
+                    </textarea>
                 </div>
 
-                <?php if (isset($_SESSION['user_id'])){} ?>
+                
 
-                <button type="submit" class="btn-submit w-100  py-2 mt-4 ">
+                <button type="submit" name="contact" class="btn-submit w-100  py-2 mt-4 ">
                     Send Message</button>
             </form>
         </div>
