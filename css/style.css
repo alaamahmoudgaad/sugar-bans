@@ -539,6 +539,7 @@ footer img{
     object-fit: cover;
     display: block;
     transition: 0.4s ease;
+    z-index: 1;
 }
 
 .overlay {
@@ -558,6 +559,7 @@ footer img{
 
     opacity: 0;
     transition: 0.5s ease;
+    z-index: 2;
 }
 
 .card:hover .overlay {
@@ -580,7 +582,7 @@ footer img{
     align-items: center;
 }
 
-.cart-controls button {
+.cart-controls a {
     background: linear-gradient(135deg,#e0c9a1, #a67c52);
     border: none;
     padding: 8px 20px;
@@ -590,10 +592,12 @@ footer img{
     cursor: pointer;
     transition: 0.3s ease;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    text-decoration: none;   
+    display: inline-block;   
 }
 
 
-.cart-controls button:hover {
+.cart-controls a:hover {
     transform: translateY(-5px) scale(1.05);
     box-shadow: 0 10px 25px rgba(0,0,0,0.5);
     background: linear-gradient(135deg, #ddbd87, #9c6e3d);

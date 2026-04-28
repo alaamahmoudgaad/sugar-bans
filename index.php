@@ -38,12 +38,6 @@
 
     </section>
 
-<!-- 
-    <section class="choose">
-        <div class="container"> <div class="row align-items-center "> 
-        <div class="col-lg-6 choose-content">
-    </section> -->
-
     <section class="background">
     <div class="container mt-4">
         <div class="section-title text-center mb-4">
