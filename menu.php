@@ -509,7 +509,51 @@ if (subBtns.length > 0) {
     });
 }
 
-loadMenu('all');
+document.addEventListener("DOMContentLoaded", function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryFromUrl = urlParams.get('cat');
+
+    if (categoryFromUrl) {
+    
+        loadMenu(categoryFromUrl);
+
+        const targetBtn = document.querySelector(`[data-cat="${categoryFromUrl}"]`);
+        if (targetBtn) {
+            document.querySelectorAll('.sidebar-btn, .sub-btn').forEach(b => b.classList.remove('active'));
+            targetBtn.classList.add('active');
+
+            const parentSubmenu = targetBtn.closest('.submenu');
+            if (parentSubmenu) {
+                parentSubmenu.classList.add('show');
+            }
+        }
+    } else {
+        loadMenu('all');
+    }
+});
+
+function initMenu() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const cat = urlParams.get('cat');
+
+    if (cat) {
+        const targetBtn = document.querySelector(`[data-cat="${cat}"]`);
+        
+        if (targetBtn) {
+            document.querySelectorAll('.sidebar-btn, .sub-btn').forEach(b => b.classList.remove('active'));
+            
+            targetBtn.classList.add('active');
+            const parentSub = targetBtn.closest('.submenu');
+            if (parentSub) { parentSub.classList.add('show'); }
+            loadMenu(cat);
+            return;
+        }
+    }
+
+    loadMenu('all');
+}
+
+window.addEventListener('load', initMenu);
 </script>
 
 <?php include 'includes/footer.php'; ?>

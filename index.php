@@ -45,68 +45,63 @@
     </section> -->
 
     <section class="background">
-        <div class="container mt-4">
-            
-            <div class="section-title text-center mb-4">
-                <h2>Shop by Category</h2>
-                <p>Explore our delicious categories</p>
-            </div>
-
-            <div class="row g-4 justify-content-center">
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="images/drinks.jpg">
-                        <div class="overlay">
-                            <h3>Drinks</h3>
-                            
-                            <div class="cart-controls">
-                                <button>View menu</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="images/desserts.jpg">
-                        <div class="overlay">
-                            <h3>Desserts</h3>
-                            
-                            <div class="cart-controls">
-                                <button>View menu</button>
-                            </div>                    
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="images/cakes.png">
-                        <div class="overlay">
-                            <h3>cakes</h3>  
-                            <div class="cart-controls">
-                                <button>View menu</button>
-                            </div>                             
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="images/boxes.jpg">
-                        <div class="overlay">
-                            <h3>Boxes</h3> 
-                            <div class="cart-controls">
-                                <button>View menu</button>
-                            </div>                                      
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+    <div class="container mt-4">
+        <div class="section-title text-center mb-4">
+            <h2>Shop by Category</h2>
+            <p>Explore our delicious categories</p>
         </div>
 
-    </section>
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="images/drinks.jpg">
+                    <div class="overlay">
+                        <h3>Drinks</h3>
+                        <div class="cart-controls">
+                            <a href="menu.php?cat=drinks" class="btn">View menu</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="images/desserts.jpg">
+                    <div class="overlay">
+                        <h3>Desserts</h3>
+                        <div class="cart-controls">
+                            <a href="menu.php?cat=western" class="btn">View menu</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="images/cakes.png">
+                    <div class="overlay">
+                        <h3>Cakes</h3>
+                        <div class="cart-controls">
+                            <a href="menu.php?cat=cakes" class="btn">View menu</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="images/boxes.jpg">
+                    <div class="overlay">
+                        <h3>Boxes</h3>
+                        <div class="cart-controls">
+                            <a href="menu.php?cat=boxes" class="btn">View menu</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
     <section>
             <div class="icons-section">
