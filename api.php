@@ -2,6 +2,11 @@
 require_once 'includes/db.php';
 header('Content-Type: application/json; charset=utf-8');
 
+function jsonResponse($data) {
+    echo json_encode($data, JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
 $action = $_GET['action'] ?? '';
 
 try {
@@ -20,14 +25,10 @@ try {
             ORDER BY c.category_id, p.product_name
         ");
         $allProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
-        if (count($allProducts) > 0) {
-            echo json_encode([[
-                'sectionName' => 'All Products',
-                'products' => $allProducts
-            ]], JSON_UNESCAPED_UNICODE);
+        if (!empty($allProducts)) {
+            jsonResponse([['sectionName' => 'All Products', 'products' => $allProducts]]);
         } else {
-            echo json_encode([]);
+            jsonResponse([]);
         }
     }
     elseif ($action === 'getBoxes') {
@@ -40,90 +41,64 @@ try {
                 description,
                 products_included,
                 stock
-            FROM boxes 
+            FROM boxes
         ");
         $boxes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
-        if (count($boxes) > 0) {
-            echo json_encode([[
-                'sectionName' => 'SugarBANS Boxes',
-                'products' => $boxes
-            ]], JSON_UNESCAPED_UNICODE);
+        if (!empty($boxes)) {
+            jsonResponse([['sectionName' => 'SugarBANS Boxes', 'products' => $boxes]]);
         } else {
-            echo json_encode([]);
+            jsonResponse([]);
         }
     }
     elseif ($action === 'getByParent' && isset($_GET['id'])) {
         $parentId = (int)$_GET['id'];
-        
         $stmt = $connect->prepare("SELECT category_id, name FROM categories WHERE parent_id = ? ORDER BY display_order");
         $stmt->execute([$parentId]);
         $children = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
-        $stmtDirect = $connect->prepare("
-            SELECT product_id, product_name, description, product_price, product_image_url, stock
-            FROM products 
-            WHERE category_id = ?
-        ");
+        $stmtDirect = $connect->prepare("SELECT product_id, product_name, description, product_price, product_image_url, stock FROM products WHERE category_id = ?");
         $stmtDirect->execute([$parentId]);
         $directProducts = $stmtDirect->fetchAll(PDO::FETCH_ASSOC);
-        
         $result = [];
-        
         if (!empty($directProducts)) {
-            $result[] = [
-                'sectionName' => '',
-                'products' => $directProducts
-            ];
+            $result[] = ['sectionName' => '', 'products' => $directProducts];
         }
-        
         foreach ($children as $child) {
-            $stmtChild = $connect->prepare("
-                SELECT product_id, product_name, description, product_price, product_image_url, stock
-                FROM products 
-                WHERE category_id = ?
-            ");
+            $stmtChild = $connect->prepare("SELECT product_id, product_name, description, product_price, product_image_url, stock FROM products WHERE category_id = ?");
             $stmtChild->execute([$child['category_id']]);
             $childProducts = $stmtChild->fetchAll(PDO::FETCH_ASSOC);
-            
             if (!empty($childProducts)) {
-                $result[] = [
-                    'sectionName' => $child['name'],
-                    'products' => $childProducts
-                ];
+                $result[] = ['sectionName' => $child['name'], 'products' => $childProducts];
             }
         }
-        
-        echo json_encode($result, JSON_UNESCAPED_UNICODE);
+        jsonResponse($result);
     }
     elseif ($action === 'updateStock' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         $input = json_decode(file_get_contents('php://input'), true);
-        $productId = $input['product_id'] ?? 0;
-        $quantity = $input['quantity'] ?? 0;
-        $type = $input['type'] ?? 'product';
-        
-        if ($productId && $quantity > 0) {
-            if ($type === 'product') {
-                $stmt = $connect->prepare("UPDATE products SET stock = stock - ? WHERE product_id = ? AND stock >= ?");
-                $stmt->execute([$quantity, $productId, $quantity]);
-            } else {
-                $stmt = $connect->prepare("UPDATE boxes SET stock = stock - ? WHERE box_id = ? AND stock >= ?");
-                $stmt->execute([$quantity, $productId, $quantity]);
-            }
-            
-            if ($stmt->rowCount() > 0) {
-                echo json_encode(['success' => true]);
-            } else {
-                echo json_encode(['success' => false, 'message' => 'Not enough stock']);
-            }
+        if (!$input) {
+            jsonResponse(['success' => false, 'message' => 'Invalid JSON']);
+        }
+        $productId = (int)($input['product_id'] ?? 0);
+        $quantity  = (int)($input['quantity'] ?? 0);
+        $type      = $input['type'] ?? 'product';
+        if ($productId <= 0 || $quantity <= 0) {
+            jsonResponse(['success' => false, 'message' => 'Invalid data']);
+        }
+        if ($type === 'product') {
+            $stmt = $connect->prepare("UPDATE products SET stock = stock - ? WHERE product_id = ? AND stock >= ?");
         } else {
-            echo json_encode(['success' => false, 'message' => 'Invalid data']);
+            $stmt = $connect->prepare("UPDATE boxes SET stock = stock - ? WHERE box_id = ? AND stock >= ?");
+        }
+        $stmt->execute([$quantity, $productId, $quantity]);
+        if ($stmt->rowCount() > 0) {
+            jsonResponse(['success' => true]);
+        } else {
+            jsonResponse(['success' => false, 'message' => 'Not enough stock']);
         }
     }
     else {
-        echo json_encode(['error' => 'Invalid action. Use: getAll, getByParent?id=X, getBoxes, updateStock']);
+        jsonResponse(['error' => 'Invalid action. Use: getAll, getByParent?id=X, getBoxes, updateStock']);
     }
-} catch (PDOException $e) {
-    echo json_encode(['error' => 'Database error: ' . $e->getMessage()]);
+} catch (Throwable $e) {
+    jsonResponse(['error' => 'Server error', 'details' => $e->getMessage()]);
 }
 ?>
