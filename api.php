@@ -95,32 +95,6 @@ try {
             jsonResponse(['success' => false, 'message' => 'Not enough stock']);
         }
     }
-    if ($action === 'addToCart') {
-        session_start();
-        $input = json_decode(file_get_contents('php://input'), true);
-        
-        $id = $input['product_id'];
-        $qty = (int)$input['quantity'];
-        $type = $input['type'] ?? 'product'; 
-        $key = $type . "_" . $id;
-
-        if (!isset($_SESSION['cart'])) {
-            $_SESSION['cart'] = [];
-        }
-
-        if (isset($_SESSION['cart'][$key])) {
-            $_SESSION['cart'][$key]['quantity'] += $qty;
-        } else {
-            $_SESSION['cart'][$key] = [
-                'id' => $id, 
-                'quantity' => $qty, 
-                'type' => $type
-            ];
-        }
-
-        echo json_encode(['success' => true, 'message' => 'Added to cart!']);
-        exit();
-    }
     else {
         jsonResponse(['error' => 'Invalid action. Use: getAll, getByParent?id=X, getBoxes, updateStock']);
     }

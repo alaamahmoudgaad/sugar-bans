@@ -109,7 +109,7 @@ function attachCartEvents() {
             add.onclick = async () => {
                 if (qty > 0) {
                     try {
-                        const response = await fetch('api.php?action=addToCart', {
+                        const response = await fetch('api.php?action=updateStock', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
@@ -120,14 +120,19 @@ function attachCartEvents() {
                         });
                         const result = await response.json();
                         if (result.success) {
-                            alert(`Added ${qty} x ${add.dataset.name} to cart!`);
-                            qty = 0;
-                            count.textContent = qty;
+                            alert(`Added ${qty} x ${add.dataset.name} to cart`);
+                            const activeBtn = document.querySelector('.sidebar-btn.active');
+                            if (activeBtn && activeBtn.dataset.cat) loadMenu(activeBtn.dataset.cat);
+                            else loadMenu('all');
+                        } else {
+                            alert(result.message || 'Failed to add to cart');
                         }
                     } catch(error) {
                         alert('Error adding to cart');
                         console.error(error);
                     }
+                    qty = 0;
+                    count.textContent = qty;
                 } else {
                     alert('Please select quantity first');
                 }
