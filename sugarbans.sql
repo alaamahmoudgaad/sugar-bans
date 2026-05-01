@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 28, 2026 at 01:50 PM
+-- Generation Time: May 01, 2026 at 06:28 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -42,8 +42,8 @@ CREATE TABLE `boxes` (
 --
 
 INSERT INTO `boxes` (`box_id`, `box_name`, `box_price`, `description`, `box_image_url`, `products_included`, `stock`) VALUES
-(1, 'Besties Box', 250.00, '2 Donuts (Chocolate + Caramel) + 2 Cold Drinks (Iced Mocha / Iced Coffee)', 'images/besties offer.png', 'Chocolate donut, Caramel donut, Iced Mocha, Iced Coffee', 30),
-(2, 'Sweet Heaven', 250.00, 'Cheesecake slice + Tiramisu slice + 1 Cold Drink', 'images/sweet heaven.png', 'Cheesecake, Tiramisu, Iced Latte', 30),
+(1, 'Besties Box', 250.00, '2 Donuts (Chocolate + Caramel) + 2 Cold Drinks (Iced Mocha / Iced Coffee)', 'images/besties offer.png', 'Chocolate donut, Caramel donut, Iced Mocha, Iced Coffee', 27),
+(2, 'Sweet Heaven', 250.00, 'Cheesecake slice + Tiramisu slice + 1 Cold Drink', 'images/sweet heaven.png', 'Cheesecake, Tiramisu, Iced Latte', 28),
 (3, 'Sugar Rush Duo', 400.00, '2 Donuts + 2 Cupcakes + 2 Cold Drinks', 'images/sugar rush duo.png', 'Chocolate donut, Caramel donut, Vanilla cupcake, Caramel cupcake, Iced Mocha, Iced Coffee', 30),
 (4, 'Honey Mood', 150.00, 'Honey Cake slice + Iced Latte', 'images/honey mood.jpeg', 'Honey cake, Iced Latte', 30),
 (5, 'Chill Combo', 200.00, 'Cupcake + Tiramisu slice + Cold Drink', 'images/chill combo.jpeg', 'Vanilla cupcake, Tiramisu, Iced Latte', 30);
@@ -93,8 +93,19 @@ CREATE TABLE `orders` (
   `user_id` int(11) NOT NULL,
   `order_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `order_type` enum('delivery','pickup') NOT NULL,
-  `note` text DEFAULT NULL
+  `note` text DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`order_id`, `order_price`, `user_id`, `order_date`, `order_type`, `note`, `address`) VALUES
+(1, 20.00, 13, '2026-05-01 13:52:16', 'delivery', '', 'سيبلاتنمكط'),
+(3, 250.00, 13, '2026-05-01 14:14:15', 'pickup', '', NULL),
+(4, 500.00, 13, '2026-05-01 14:51:17', 'pickup', '', NULL),
+(5, 750.00, 13, '2026-05-01 15:13:21', 'pickup', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -111,6 +122,14 @@ CREATE TABLE `order_boxes` (
   `box_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `order_boxes`
+--
+
+INSERT INTO `order_boxes` (`id`, `order_id`, `box_id`, `quantity`, `box_price`, `box_date`) VALUES
+(1, 3, 1, 1, 0.00, '2026-05-01 14:14:15'),
+(2, 5, 2, 1, 0.00, '2026-05-01 15:13:21');
+
 -- --------------------------------------------------------
 
 --
@@ -125,6 +144,15 @@ CREATE TABLE `order_details` (
   `price` decimal(10,2) NOT NULL,
   `order_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `order_details`
+--
+
+INSERT INTO `order_details` (`id`, `order_id`, `product_id`, `quantity`, `price`, `order_date`) VALUES
+(1, 1, 31, 1, 0.00, '2026-05-01 13:52:16'),
+(2, 4, 63, 1, 0.00, '2026-05-01 14:51:17'),
+(3, 5, 63, 1, 0.00, '2026-05-01 15:13:21');
 
 -- --------------------------------------------------------
 
@@ -150,28 +178,28 @@ INSERT INTO `products` (`product_id`, `product_name`, `product_price`, `descript
 (2, 'Green tea', 20.00, 'Fresh green tea', 'images/green tea.jpg', 4, 50),
 (3, 'Espresso', 50.00, 'Strong espresso shot', 'images/Espresso.jpg', 4, 50),
 (4, 'Americano', 55.00, 'Espresso with hot water', 'images/americano.png', 4, 50),
-(5, 'Cappuccino', 60.00, 'Espresso with steamed milk foam', 'images/Cappuccino.jpg', 4, 50),
-(6, 'Latte', 65.00, 'Espresso with steamed milk', 'images/Latte.jpg', 4, 50),
+(5, 'Cappuccino', 60.00, 'Espresso with steamed milk foam', 'images/Cappuccino.jpg', 4, 49),
+(6, 'Latte', 65.00, 'Espresso with steamed milk', 'images/Latte.jpg', 4, 48),
 (7, 'Matcha Latte', 60.00, 'Green tea matcha latte', 'images/matcha latte.jpg', 4, 50),
 (8, 'Mocha', 55.00, 'Chocolate flavored latte', 'images/Mocha.jpg', 4, 50),
 (9, 'Turkish Coffee', 25.00, 'Traditional Turkish coffee', 'images/Turkish Coffee.jpg', 4, 50),
-(10, 'French Coffee', 35.00, 'French style coffee with cream', 'images/french coffee.jpg', 4, 50),
-(16, 'Iced Coffee', 45.00, 'Cold brewed coffee', 'images/iced coffee.jpg', 5, 50),
+(10, 'French Coffee', 35.00, 'French style coffee with cream', 'images/french coffee.jpg', 4, 49),
+(16, 'Iced Coffee', 45.00, 'Cold brewed coffee', 'images/iced coffee.jpg', 5, 49),
 (17, 'Iced Latte', 50.00, 'Cold latte with milk', 'images/Iced Latte.jpg', 5, 50),
 (18, 'Iced Mocha', 60.00, 'Cold mocha with chocolate', 'images/iced mocha.jpg', 5, 50),
 (19, 'Frappé', 60.00, 'Blended iced coffee', 'images/Frappé.png', 5, 50),
 (20, 'Iced Matcha', 65.00, 'Cold green tea matcha', 'images/iced matcha !.jpg', 5, 50),
 (23, 'Vanilla Latte', 70.00, 'Latte with vanilla syrup', 'images/vanilla latte.jpg', 6, 50),
-(24, 'Caramel Latte', 65.00, 'Latte with caramel syrup', 'images/caramel latte.jpeg', 6, 50),
+(24, 'Caramel Latte', 65.00, 'Latte with caramel syrup', 'images/caramel latte.jpeg', 6, 46),
 (25, 'Chocolate Coffee', 60.00, 'Coffee with chocolate flavor', 'images/chocolate coffee.jpg', 6, 50),
 (26, 'Tiramisu', 100.00, 'ladyfinger biscuits, heavy cream, espresso coffee, cocoa powder, vanilla extract', 'images/Tiramisu.jpg', 7, 50),
 (27, 'Macaron', 20.00, 'Almond flour, powdered sugar, eggs, granulated sugar, food coloring, buttercream filling', 'images/Macaron.jpg', 7, 50),
 (28, 'Honey cake', 100.00, 'Flour, eggs, sugar, honey, butter, milk, vanilla extract, cream filling', 'images/Honey cake.jpg', 7, 50),
 (29, 'Eclairs', 50.00, 'Flour, butter, eggs, milk, sugar, vanilla extract, pastry cream, chocolate ganache', 'images/Eclairs.jpg', 7, 50),
 (30, 'Creme caramel', 80.00, 'Milk, Sugar, Eggs, Vanilla extract, Caramel', 'images/Creme pana cotta.png', 7, 50),
-(31, 'Classic cookies', 20.00, 'Flour, Butter, Brown sugar, Vanilla extract, Chocolate chips', 'images/Classic cookies.jpg', 7, 50),
-(32, 'Chocolate cookies', 30.00, 'Flour, Butter, Brown sugar, Cocoa powder, Chocolate chips', 'images/Chocolate cookies.jpg', 7, 50),
-(33, 'Blueberry Cheesecake', 70.00, 'Digestive biscuits, Creme cheese, blueberry syrup', 'images/blueberry Cheesecake.jpg', 11, 50),
+(31, 'Classic cookies', 20.00, 'Flour, Butter, Brown sugar, Vanilla extract, Chocolate chips', 'images/Classic cookies.jpg', 7, 49),
+(32, 'Chocolate cookies', 30.00, 'Flour, Butter, Brown sugar, Cocoa powder, Chocolate chips', 'images/Chocolate cookies.jpg', 7, 49),
+(33, 'Blueberry Cheesecake', 70.00, 'Digestive biscuits, Creme cheese, blueberry syrup', 'images/blueberry Cheesecake.jpg', 11, 49),
 (34, 'Strawberry Cheesecake', 70.00, 'Digestive biscuits, Creme cheese, strawberry syrup', 'images/strawberry Cheesecake.jpg', 11, 50),
 (35, 'Oreo cheesecake', 80.00, 'Digestive oreo biscuits, Creme cheese', 'images/oreo cheesecake.jpg', 11, 50),
 (36, 'Lemon Cheesecake', 85.00, 'Digestive biscuits, Creme cheese, Lemon extract', 'images/Lemon Cheesecake.jpg', 11, 50),
@@ -187,22 +215,22 @@ INSERT INTO `products` (`product_id`, `product_name`, `product_price`, `descript
 (48, 'Caramel cupcake', 60.00, 'cake, caramel spread, creme', 'images/caramel cupcake.jpg', 9, 50),
 (49, 'Oreo cupcake', 65.00, 'chocolate cake, oreo cookies, oreo creme', 'images/oreo cupcake.jpg', 9, 50),
 (50, 'Red velvet cupcake', 70.00, 'red velvet cake, creme', 'images/red velvet cupcake.jpg', 9, 50),
-(51, 'Pistachio cupcake', 80.00, 'cake, pistachio spread, creme', 'images/pistachio cupcake.jpg', 9, 50),
+(51, 'Pistachio cupcake', 80.00, 'cake, pistachio spread, creme', 'images/pistachio cupcake.jpg', 9, 49),
 (54, 'Classic cinnamon rolls', 70.00, 'Flour, butter, brown sugar, eggs, milk, cinnamon powder, vanilla extract, cream cheese icing', 'images/classic cinnamon.jpg', 12, 50),
 (55, 'Caramel cinnamon rolls', 70.00, 'Flour, butter, brown sugar, eggs, milk, cinnamon powder, vanilla extract, caramel syrup', 'images/caramel cinnamon rolls.jpg', 12, 50),
 (56, 'Oreo cinnamon rolls', 80.00, 'Flour, butter, brown sugar, eggs, milk, cinnamon powder, vanilla extract, cream cheese icing, Oreo cookies', 'images/oreo cinnamon.jpg', 12, 50),
 (57, 'Lotus cinnamon rolls', 90.00, 'Flour, butter, brown sugar, eggs, milk, cinnamon powder, vanilla extract, Lotus biscuits, Lotus spread', 'images/lotus cinnamon.jpg', 12, 50),
 (58, 'Red velvet cinnamon', 90.00, 'red velvet cake, cream cheese icing', 'images/red_velvet_ cinnamon_rolls.jpg', 12, 50),
 (59, 'Pistachio cinnamon rolls', 120.00, 'Flour, butter, brown sugar, eggs, milk, cinnamon powder, vanilla extract, cream cheese icing, pistachio spread', 'images/pistachio cinnamon.jpg', 12, 50),
-(61, 'Vanilla Cake', 450.00, 'Flour, sugar, eggs, butter, milk, vanilla, cream', 'images/Vanilla Cake.jpg', 3, 50),
-(62, 'Oreo Cake', 550.00, 'Flour, sugar, eggs, butter, milk, Oreo, cream', 'images/Oreo Cake.jpg', 3, 50),
-(63, 'Chocolate Cake', 500.00, 'Flour, sugar, eggs, butter, milk, chocolate, cream', 'images/Chocolate Cake.jpg', 3, 50),
-(64, 'Basbousa', 25.00, 'Semolina, coconut flakes, sugar, yogurt, almonds, rose water, simple syrup', 'images/basbousa.jfif', 8, 50),
+(61, 'Vanilla Cake', 450.00, 'Flour, sugar, eggs, butter, milk, vanilla, cream', 'images/Vanilla Cake.jpg', 3, 49),
+(62, 'Oreo Cake', 550.00, 'Flour, sugar, eggs, butter, milk, Oreo, cream', 'images/Oreo Cake.jpg', 3, 49),
+(63, 'Chocolate Cake', 500.00, 'Flour, sugar, eggs, butter, milk, chocolate, cream', 'images/Chocolate Cake.jpg', 3, 45),
+(64, 'Basbousa', 25.00, 'Semolina, coconut flakes, sugar, yogurt, almonds, rose water, simple syrup', 'images/basbousa.jfif', 8, 49),
 (65, 'Zalabia (Luqaimat)', 18.00, 'Flour, yeast, sugar, cardamom, saffron, date syrup, vegetable oil', 'images/Zalabia.jpg', 8, 50),
 (66, 'Qatayef', 22.00, 'Flour, yeast, baking powder, sugar, walnuts, cinnamon, heavy cream, rose water', 'images/qatayef.jpg', 8, 50),
 (67, 'Baklava', 30.00, 'Phyllo dough, walnuts, pistachios, sugar, cinnamon, honey, lemon juice, rose water', 'images/Baklava.jpg', 8, 50),
 (68, 'Classic Kunafa', 35.00, 'Kunafa dough, sweet cheese, sugar, orange blossom water, pistachios, simple syrup', 'images/classic kunafa.png', 13, 50),
-(69, 'Kunafa with Pastry Cream', 40.00, 'Kunafa dough, pastry cream, milk, sugar, vanilla extract, pistachios, simple syrup', 'images/kunafa cream.png', 13, 50),
+(69, 'Kunafa with Pastry Cream', 40.00, 'Kunafa dough, pastry cream, milk, sugar, vanilla extract, pistachios, simple syrup', 'images/kunafa cream.png', 13, 49),
 (70, 'Kunafa with Chocolate', 42.00, 'Kunafa dough, sweet cheese, chocolate spread, cocoa powder, chocolate syrup, pistachios', 'images/chocolate kunafa.png', 13, 50),
 (71, 'Kunafa Nabulsi', 38.00, 'Kunafa dough, Nabulsi cheese, orange blossom water, sugar, pistachios, simple syrup', 'images/kunafa nabulsi.jfif', 13, 50);
 
@@ -395,19 +423,19 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `order_boxes`
 --
 ALTER TABLE `order_boxes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -441,6 +469,7 @@ ALTER TABLE `orders`
 -- Constraints for table `order_boxes`
 --
 ALTER TABLE `order_boxes`
+  ADD CONSTRAINT `fk_order_boxes_orders` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `order_boxes_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `order_boxes_ibfk_2` FOREIGN KEY (`box_id`) REFERENCES `boxes` (`box_id`) ON DELETE CASCADE;
 
@@ -448,6 +477,7 @@ ALTER TABLE `order_boxes`
 -- Constraints for table `order_details`
 --
 ALTER TABLE `order_details`
+  ADD CONSTRAINT `fk_order_details_orders` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `order_details_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
   ADD CONSTRAINT `order_details_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
 
