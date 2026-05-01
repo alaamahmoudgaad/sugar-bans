@@ -13,17 +13,19 @@ if (isset($_POST['submit_order'])) {
     $order_type = $_POST['order_state']; 
     $note = htmlspecialchars($_POST['notes']);
 
+    $address = ($order_type === 'delivery') ? htmlspecialchars($_POST['address']) : null;
+
     try {
         $connect->beginTransaction();
 
-        $sql = "INSERT INTO orders (user_id, order_price, order_type, note) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO orders (user_id, order_price, order_type, note, address) VALUES (?, ?, ?, ?, ?)";
         $stmt = $connect->prepare($sql);
-        $stmt->execute([$user_id, $total_price, $order_type, $note]);
+        $stmt->execute([$user_id, $total_price, $order_type, $note, $address]);
         $order_id = $connect->lastInsertId();
 
         foreach ($_SESSION['cart'] as $item) {
             $id = $item['id'];
-            $qty = $item['quantity'];
+            $qty = $item['quantity'] ?? 1;
 
             if ($item['type'] === 'product') {
                 $stmtDet = $connect->prepare("INSERT INTO order_details (order_id, product_id, quantity) VALUES (?, ?, ?)");
@@ -40,8 +42,13 @@ if (isset($_POST['submit_order'])) {
         $connect->commit();
         
         unset($_SESSION['cart']);
-        $_SESSION['success_msg'] = "Order placed successfully! Order ID: #" . $order_id;
-        header("Location: index.php"); 
+        
+    
+        echo "<script>
+            alert('Order placed successfully! Order ID: #$order_id');
+            window.location.href = 'index.php';
+        </script>";
+        exit();
 
     } catch (Exception $e) {
         $connect->rollBack();

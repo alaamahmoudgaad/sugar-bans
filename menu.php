@@ -1,7 +1,10 @@
 <?php 
+session_start();
 require_once 'includes/db.php';
 include 'includes/header.php';
 include 'includes/navbar.php';
+
+$isLoggedIn = isset($_SESSION['user_id']) ? 'true' : 'false';
 ?>
 
 <link rel="stylesheet" href="css/style.css">
@@ -105,34 +108,42 @@ function attachCartEvents() {
                 else { alert(`Only ${maxStock} items available in stock`); }
             };
         }
-        if (add) {
-            add.onclick = async () => {
-                if (qty > 0) {
-                    try {
-                        const response = await fetch('api.php?action=addToCart', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                product_id: add.dataset.id,
-                                quantity: qty,
-                                type: add.dataset.type || 'product'
-                            })
-                        });
-                        const result = await response.json();
-                        if (result.success) {
-                            alert(`Added ${qty} x ${add.dataset.name} to cart!`);
-                            qty = 0;
-                            count.textContent = qty;
-                        }
-                    } catch(error) {
-                        alert('Error adding to cart');
-                        console.error(error);
-                    }
-                } else {
-                    alert('Please select quantity first');
-                }
-            };
+if (add) {
+    add.onclick = async () => {
+        const isLoggedIn = <?php echo $isLoggedIn; ?>;
+
+        if (!isLoggedIn) {
+            alert('Please login first to add items to your cart!');
+            window.location.href = 'login.php';
+            return;
         }
+
+        if (qty > 0) {
+            try {
+                const response = await fetch('api.php?action=addToCart', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        product_id: add.dataset.id,
+                        quantity: qty,
+                        type: add.dataset.type || 'product'
+                    })
+                });
+                const result = await response.json();
+                if (result.success) {
+                    alert(`Added ${qty} x ${add.dataset.name} to cart!`);
+                    qty = 0;
+                    count.textContent = qty;
+                }
+            } catch(error) {
+                alert('Error adding to cart');
+                console.error(error);
+            }
+        } else {
+            alert('Please select quantity first');
+        }
+    };
+}
     });
 }
 
@@ -201,7 +212,7 @@ document.addEventListener("DOMContentLoaded", function() {
 .main-container {
     display: flex;
     gap: 30px;
-    margin-top: 100px;
+    margin-top: 120px;
     padding: 0 30px;
 }
 .sidebar {

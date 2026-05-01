@@ -4,7 +4,17 @@
   include 'includes/header.php'; 
   include 'includes/navbar.php'; 
 ?>
+<?php
+session_start();
+if (isset($_GET['action']) && $_GET['action'] === 'logout') {
+    $_SESSION = array();
 
+    session_destroy();
+
+    header("Location: login.php");
+    exit();
+}
+?>
 <div class="video-background">
         <video autoplay muted loop id="bgVideo">
             <source src="assets/From KlickPin CF Pin on Postres fáciles y rápidos sin horno.mp4" type="video/mp4">

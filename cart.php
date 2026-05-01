@@ -58,7 +58,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-label-group">
-                        <input type="text" id="fname" name="fname" class="form-control" placeholder="First Name" 
+                        <input type="tegitxt" id="fname" name="fname" class="form-control" placeholder="First Name" 
                                value="<?php echo $_SESSION['user_fname'] ?? ''; ?>" required>
                     </div>
                 </div>
