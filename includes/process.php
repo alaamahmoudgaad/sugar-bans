@@ -18,11 +18,7 @@ if (isset($_POST['login'])) {
 
     $sql = "SELECT * FROM users WHERE email = :email AND first_name = :fname AND last_name = :lname";
     $statement = $connect->prepare($sql);
-    $statement->execute([
-        ':email' => $email,
-        ':fname' => $fname,
-        ':lname' => $lname
-     ]);
+    $statement->execute([':email' => $email,':fname' => $fname,':lname' => $lname]);
 
      $user = $statement->fetch();
 
@@ -32,15 +28,24 @@ if (isset($_POST['login'])) {
             $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['user_fname'] = $user['first_name'];
             $_SESSION['user_lname'] = $user['last_name'];    
-            $_SESSION['user_email'] = $user['email'];   
+            $_SESSION['user_email'] = $user['email']; 
+            $_SESSION['role'] = $user['role']; 
 
             if (isset($_SESSION['contact_message'])) {
                 header("Location: ../contact.php");
+                exit();
             } 
             else {
-                header("Location: ../index.php");
+                if ($_SESSION['role'] === 'admin'){
+                    header("Location: ../Admin/dashboard.php");
+                    exit();
+                }
+                else{
+                    header("Location: ../index.php");
+                    exit();
+                }
             }
-            exit();
+            
         } 
          else {
             $_SESSION['error_msg'] = "The password you entered is incorrect.";
@@ -93,13 +98,14 @@ if (isset($_POST['contact'])) {
 
             unset($_SESSION['contact_subject']);
             unset($_SESSION['contact_message']);
-
++
             $_SESSION['success_msg'] = "Thank you! Your message has been sent.";
             header("Location: ../contact.php");
             exit();
              
     }
     else {
+        
         $_SESSION['contact_subject'] = $subject;
         $_SESSION['contact_message'] = $message;
         $_SESSION['error_msg'] = "Please login first to send your message. We saved your text!";

@@ -1,5 +1,11 @@
 <?php 
 session_start();
+if ($_SESSION['role'] !== 'admin') {
+    header("Location: ../login.php");
+     $_SESSION['error_msg'] = "Access Denied! please log in first";
+    exit();
+}
+
 include 'includes/db/db.php';
 include 'includes/temp/header.php';
 include 'includes/temp/navbar.php';
@@ -20,27 +26,28 @@ include 'includes/temp/navbar.php';
             $statement = $connect->prepare("SELECT * FROM $currentTable");
             $statement->execute();
             $currentTableCount =$statement->rowCount();
-            $result = $statement->fetchAll();
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+            $columns = []; 
+            if (!empty($result)) {
+                $columns = array_slice(array_keys($result[0]), 0, 3);
+            }
             ?>
 
             <div class="d-flex justify-content-between align-items-center mb-2 div-title">
-            <h2 class="table-title" ><?php echo $displayTitle;?> <span class="badge"><?php echo $currentTableCount;?></span></h2>
-            
-            <a href="add.php?table=<?php echo $currentTable; ?>" class="btn shadow-sm btn-add"><i class="fa-solid fa-plus"></i>Add New</a>
-        </div>
+                <h2 class="table-title" ><?php echo $displayTitle;?> <span class="badge"><?php echo $currentTableCount;?></span></h2>
+                 <?php 
+                    if(isset($_SESSION['msg']) ){
+                        echo "<h5 class='alert alert-success text-center'>{$_SESSION['msg']}</h5>";
+                    }
+                    unset($_SESSION['msg']);
+                    ?>
+                <a href="action.php?action=add&table=<?php echo $currentTable; ?>"class="btn shadow-sm btn-add"><i class="fa-solid fa-plus"></i>Add New</a>
+            </div>
         <?php 
-            $columns = [];
-            if (!empty($result)) {
-            $columns = array_filter(array_keys($result[0]), function($key) {
-             return !is_numeric($key);
-            });
-            $columns = array_slice($columns, 0, 3);
-            }
              if(isset($_SESSION['message']) ){
-                    echo "<h4 class='alert alert-success text-center'>".$_SESSION['message']."</h4>";
+                    echo "<h4 class='alert alert-success text-center'>{$_SESSION['message']}</h4>";
                 }
             unset($_SESSION['message']);
-
         ?>
             <div class="card shadow-sm mt-4 overflow-hidden">
     

@@ -1,4 +1,5 @@
 
+<?php session_start(); ?>
 <nav class="navbar navbar-expand-md navbar-light shadow">
     
     <a class="navbar-brand font-weight-bold" href="dashboard.php">
@@ -21,7 +22,7 @@
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown text-white">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
-                    <span>Welcome, Alaa </span><i class="fas fa-user-circle"></i>
+                    <span>Welcome, <?php echo $_SESSION['user_fname']; ?></span><i class="fas fa-user-circle"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item text-danger" href="../login.php">Logout</a>

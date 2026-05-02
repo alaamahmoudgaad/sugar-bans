@@ -7,11 +7,12 @@
         <?php
 
         try {
-            $stmt = $connect->query("SHOW TABLES");
-            while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-                $tableName = $row[0];
-                echo '<a href="view_table.php?table=' . $tableName . '" class="side-item d-flex align-items-center">
-                        <i class="fas fa-table mr-2"></i> ' . $tableName . ' </a>';
+            $stmt = $connect->prepare("SHOW TABLES");
+            $stmt->execute();
+            $allTables = $stmt->fetchAll(PDO::FETCH_COLUMN);
+            foreach ($allTables as $row) {
+                echo"<a href='view_table.php?table=$row' class='side-item d-flex align-items-center'>
+                        <i class='fas fa-table mr-2'></i>$row</a>";
             }
         } 
         catch (PDOException $e) {

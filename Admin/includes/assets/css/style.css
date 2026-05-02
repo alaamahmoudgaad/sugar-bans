@@ -37,10 +37,8 @@ nav a:hover{
     left: 0;
     bottom: 0;
     z-index: 100;
-    background-color: #f8f5f2; 
     min-height: 100vh;
     border-right: 1px solid #e0dcd9;
-    background-color: #f9eada;
     background-color: #f1e7dd;
     color: #5d4037 ;
 }
