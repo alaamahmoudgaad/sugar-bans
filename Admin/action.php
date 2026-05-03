@@ -27,7 +27,9 @@ include 'includes/temp/navbar.php';
                         $stmtCol->execute();
                         $primaryKey = $stmtCol->fetchColumn(); 
                 }
-                switch($action) {
+
+            switch($action) {
+
                 case 'delete':
                     $stmt = $connect->prepare("DELETE FROM $table WHERE $primaryKey = ?");
                     $stmt->execute([$id]) ;
@@ -78,8 +80,14 @@ include 'includes/temp/navbar.php';
                         <div class="card-header bg-white py-3">
                             <h4>Edit Record: <?php echo $id; ?></h4>
                         </div>
+                        <?php 
+                        if(isset($_SESSION['validation_msg']) ){
+                            echo "<h5 class='alert alert-danger text-center'>{$_SESSION['validation_msg']}</h5>";
+                        }
+                        unset($_SESSION['validation_msg']);
+                        ?>
 
-                       <form action="update.php" method="POST" class="px-5">
+                       <form action="action.php?action=process_edit" method="POST" class="px-5">
                         <input type="hidden" name="table_name" value="<?php echo $table; ?>">
                         <input type="hidden" name="id_value" value="<?php echo $id; ?>">
                         <input type="hidden" name="primary_key" value="<?php echo $primaryKey; ?>">
@@ -97,7 +105,7 @@ include 'includes/temp/navbar.php';
 
 
                         <div class="mt-4 px-3 pb-4">
-                            <button type="submit" class="btn btn-success px-3">Save Changes</button>
+                            <button type="submit" name="update" class="btn btn-success px-3">Save Changes</button>
                             <a href="view_table.php?table=<?php echo $table; ?>" class="btn btn-outline-secondary px-4">Cancel</a>
                         </div>
 
@@ -105,9 +113,77 @@ include 'includes/temp/navbar.php';
                     </div>
 
                  <?php    
-                    break;
+                break;
 
-                    case 'add':
+                case 'process_edit':
+                    if (isset($_POST['update'])) {
+                        $tableName = $_POST['table_name'];
+                        $idValue = $_POST['id_value'];
+                        $primaryKey = $_POST['primary_key'];
+                        
+                        
+
+                        unset($_POST['table_name'], $_POST['id_value'], $_POST['primary_key'], $_POST['update']);
+
+                        $updateParts = [];
+                        $values = [];
+
+                        foreach ($_POST as $key => $value) {
+                            $trimmedValue = trim($value);
+                            if ($trimmedValue === "" && $trimmedValue !== "0") {
+                                $_SESSION['validation_msg'] = "Please fill in all fields!";
+                                header("Location: action.php?action=edit&table=$tableName&id=$idValue");
+                                exit();
+                            }
+                            if ($key =='email') {
+
+                                $pattern = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/";
+                                // Perl Regular Expressions
+                                if (!preg_match($pattern, $trimmedValue)) {
+                                    $_SESSION['validation_msg'] = "Invalid Email format! Please use something like name@example.com";
+                                    header("Location: action.php?action=edit&table=$tableName&id=$idValue");
+                                    exit();
+                                }
+
+                                $checkEmail = $connect->prepare("SELECT email FROM $tableName WHERE email = ? AND $primaryKey != ?");
+                                 $checkEmail->execute([$trimmedValue, $idValue]);
+        
+                                if ($checkEmail->rowCount() > 0) {
+                                $_SESSION['validation_msg'] = "This Email is already registered!";
+                                header("Location: action.php?action=edit&table=$tableName&id=$idValue");
+                                exit();
+                                }
+                            }
+
+                            if ($key =='phone') {
+                    
+                            $phonePattern = "/^01[0125][0-9]{8}$/";
+
+                            if (!preg_match($phonePattern, $trimmedValue)) {
+                                $_SESSION['validation_msg'] = "Invalid Egyptian phone number!";
+                                header("Location: action.php?action=edit&table=$tableName&id=$idValue");
+                                exit();
+                            }
+                        }
+
+                            $updateParts[] = "`$key` = ?";
+                            $values[] = $value;
+                        }
+                        $values[] = $idValue;
+
+                        
+
+                        $stmt = $connect->prepare("UPDATE `$tableName` SET " . implode(', ', $updateParts) . " WHERE `$primaryKey` = ?");
+                        $stmt->execute($values);
+
+                        $_SESSION['msg'] = "Record Updated Successfully!";
+                        header("Location: view_table.php?table=$tableName");
+                        exit();
+                    }
+
+
+
+                 case 'add':
                         $stmtCol = $connect->prepare("SHOW COLUMNS FROM $table");
                         $stmtCol->execute();
                         $allColumns = $stmtCol->fetchAll(PDO::FETCH_ASSOC);
@@ -123,15 +199,19 @@ include 'includes/temp/navbar.php';
                             unset($_SESSION['validation_msg']);
                         ?>
 
-                       <form action="insert.php" method="POST" class="px-5">
+                       <form action="action.php?action=process_add&table=<?php echo $table; ?>" method="POST" class="px-5">
                         <input type="hidden" name="table_name" value="<?php echo $table; ?>">
                         <?php 
                             foreach ($allColumns as $column){
                             if ($column['Extra'] == 'auto_increment' || $column['Type'] =='timestamp') continue;
+                            $oldValue = "";
+                            if(isset($_SESSION['form_data'][$column['Field']])){
+                                $oldValue =$_SESSION['form_data'][$column['Field']];
+                            }
                             ?>
                 
                         <p class="my-4">
-                           <input type="text" class="form-control" name="<?php echo $column['Field']; ?>" placeholder="<?php echo $column['Field'] ?>" >
+                           <input type="text" class="form-control" name="<?php echo $column['Field']; ?>" placeholder="<?php echo $column['Field'] ?>" value="<?php echo $oldValue; ?>" required>
                         </p>
                         <?php }?>
 
@@ -141,13 +221,70 @@ include 'includes/temp/navbar.php';
                         </div>
 
                        </form> 
-                    </div>       
+                    </div> 
+                    <?php 
+                    unset($_SESSION['form_data']);
+                    break;
 
-                  
+                    case 'process_add':
+                        if (isset($_POST['save_record'])) {
+                            $tableName = $_POST['table_name'];
+                            $_SESSION['form_data'] = $_POST;
+                            unset($_POST['table_name']); 
+                            unset($_POST['save_record']);
 
+                            $columns = array_keys($_POST); 
+                            $values  = array_values($_POST);
 
+                            if (in_array("", $values)) {
+                                $_SESSION['validation_msg'] = "Please fill in all fields!";
+                                header("Location: action.php?action=add&table=$tableName");
+                                exit();
+                            }
+                            if (isset($_POST['email'])) {
+                                $email = $_POST['email'];
 
-                <?php  
+                                $pattern = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/";
+                                // Perl Regular Expressions
+                                if (!preg_match($pattern, $email)) {
+                                    $_SESSION['validation_msg'] = "Invalid Email format! Please use something like name@example.com";
+                                    header("Location: action.php?action=add&table=$tableName");
+                                    exit();
+                                }
+
+                            $checkEmail = $connect->prepare("SELECT email FROM $tableName WHERE email = ?");
+                            $checkEmail->execute([$email]);
+        
+                            if ($checkEmail->rowCount() > 0) {
+                                $_SESSION['validation_msg'] = "This Email is already registered!";
+                                header("Location: action.php?action=add&table=$tableName");
+                                exit();
+                            }
+                        }
+
+                        if (isset($_POST['phone'])) {
+                            $phone = $_POST['phone'];
+
+                            $phonePattern = "/^01[0125][0-9]{8}$/";
+
+                            if (!preg_match($phonePattern, $phone)) {
+                                $_SESSION['validation_msg'] = "Invalid Egyptian phone number!";
+                                header("Location: action.php?action=add&table=$tableName");
+                                exit();
+                            }
+                        }
+    
+                        $placeholders = implode(', ', array_fill(0, count($columns), '?'));
+
+                        $stmt = $connect->prepare("INSERT INTO $tableName (" . implode(', ', $columns) . ") VALUES ($placeholders)");
+                        $stmt->execute($values); 
+                        unset($_SESSION['form_data']); 
+    
+                        $_SESSION['msg'] = "Record Added Successfully!";
+                        header("Location: view_table.php?table=$tableName");
+                        exit();
+                    }      
+                    break;
                 }
                 ?>
 

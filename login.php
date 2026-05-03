@@ -3,9 +3,7 @@
   include 'includes/db.php';
   include 'includes/header.php'; 
   include 'includes/navbar.php'; 
-?>
-<?php
-session_start();
+
 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     $_SESSION = array();
 
@@ -14,7 +12,63 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     header("Location: login.php");
     exit();
 }
+
+if($_SERVER['REQUEST_METHOD' ] == "POST"){
+
+    $fname    = trim($_POST['fname']);
+    $lname    = trim($_POST['lname']);
+    $email    = trim($_POST['email']);
+    $password = $_POST['pass'];
+
+    if (empty($fname) || empty($lname) || empty($email) || empty($password)) {
+        header("Location: login.php");      
+        exit();
+    }
+    $statement = $connect->prepare("SELECT * FROM users WHERE email = ? AND first_name = ? AND last_name = ?");
+    $statement->execute(array( $email , $fname , $lname));
+    $userCount = $statement->rowCount();
+
+    if($userCount>0){ 
+        $result = $statement->fetch();
+        if (password_verify($password, $result['password'])) {
+
+            $_SESSION['user_id'] = $result['user_id'];
+            $_SESSION['user_fname'] = $result['first_name'];
+            $_SESSION['user_lname'] = $result['last_name'];    
+            $_SESSION['user_email'] = $result['email']; 
+            $_SESSION['role'] = $result['role']; 
+
+            if (isset($_SESSION['contact_message'])) {
+                header("Location: contact.php");
+                exit();
+            } 
+            else {
+                if ($_SESSION['role'] === 'admin'){
+                    header("Location: Admin/dashboard.php");
+                    exit();
+                }
+                else{
+                    header("Location: index.php");
+                    exit();
+                }
+            }
+            
+        } 
+         else {
+            $_SESSION['error_msg'] = "The password you entered is incorrect.";
+            header("Location: login.php");
+            exit();
+        }
+    }
+    else {
+        $_SESSION['error_msg'] = "No account found with this name and email , Register first";
+        header("Location: register.php");
+        exit();
+        }
+}
 ?>
+
+
 <div class="video-background">
         <video autoplay muted loop id="bgVideo">
             <source src="assets/From KlickPin CF Pin on Postres fáciles y rápidos sin horno.mp4" type="video/mp4">
@@ -26,13 +80,22 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
    <h2 class="text-center fw-bold mb-3" style="letter-spacing: 1px;">Welcome Back </h2>
 
 <div class="order-card">
-    <?php if (isset($_SESSION['error_msg'])){
-        echo "<div class='alert alert-danger text-center'>".$_SESSION['error_msg']."</div>";}
-        unset($_SESSION['error_msg']);?>
- 
-    <h3>Log IN</h3>
+    <?php  
+    if (isset($_SESSION['success_msg'])){
+    echo "<div class='alert alert-success text-center'>".$_SESSION['success_msg']."</div>";}
+    unset($_SESSION['success_msg']);
+
+    if (isset($_SESSION['error_msg'])){
+    echo "<div class='alert alert-danger text-center'>".$_SESSION['error_msg']."</div>";}
+    unset($_SESSION['error_msg']);
     
-    <form id="loginForm" action="includes/process.php" method="POST">
+    ?>
+
+
+    <h3>Log IN</h3>
+
+    
+    <form id="loginForm" action="" method="POST">
         
         <div class="form-row">
           

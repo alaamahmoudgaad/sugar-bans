@@ -63,6 +63,40 @@ body{
     }
 }
 
+/*_______________________error page________________*/
+.error-body {
+    text-align: center;
+    background-color: #f5e6da;
+    padding-top: 50px;
+    
+}
+
+.error-title {
+    color: #4a2010;
+    margin-top: 150px;
+    font-size: 50px;
+ }
+
+.error-line {
+    color: #713701;
+    margin-top: 20px;
+    font-size: 18px;
+ }
+
+.error-btn {
+    display: inline-block;
+    margin-top: 30px;
+    background-color: #8b4513;
+    color: white;
+    padding: 12px 25px;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+}
+
+.error-btn:hover {
+    background-color: #6b3410;
+}
 /* ________________________hero section______________*/
 
 .hero{
