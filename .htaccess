@@ -1,0 +1,3 @@
+Options -Indexes
+ErrorDocument 404 "/sugar-bans/404.php"
+ErrorDocument 403 "/sugar-bans/404.php"
