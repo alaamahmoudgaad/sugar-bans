@@ -7,9 +7,10 @@
         </div>
 
         <div class="social-links ">
-            <a href="#" class="social-icon"><i class="fa-brands fa-facebook"></i></a>
-            <a href="#" class="social-icon"><i class="fab fa-whatsapp"></i></a>
-            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.facebook.com/NOLACupcakes" target="_blank" class="social-icon"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://wa.me/01022233346" target="_blank" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.instagram.com/dukesegypt" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="tel:01022233346" target="_blank" class="social-icon"><i class="fa-solid fa-phone-volume"></i></a>
         </div>
 
         <div class="copyright-text">

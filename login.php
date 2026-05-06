@@ -4,15 +4,6 @@
   include 'includes/header.php'; 
   include 'includes/navbar.php'; 
 
-if (isset($_GET['action']) && $_GET['action'] === 'logout') {
-    $_SESSION = array();
-
-    session_destroy();
-
-    header("Location: login.php");
-    exit();
-}
-
 if($_SERVER['REQUEST_METHOD' ] == "POST"){
 
     $fname    = trim($_POST['fname']);
@@ -21,6 +12,7 @@ if($_SERVER['REQUEST_METHOD' ] == "POST"){
     $password = $_POST['pass'];
 
     if (empty($fname) || empty($lname) || empty($email) || empty($password)) {
+         $connect = null;
         header("Location: login.php");      
         exit();
     }
@@ -37,6 +29,9 @@ if($_SERVER['REQUEST_METHOD' ] == "POST"){
             $_SESSION['user_lname'] = $result['last_name'];    
             $_SESSION['user_email'] = $result['email']; 
             $_SESSION['role'] = $result['role']; 
+
+            $statement = null;
+            $connect = null;
 
             if (isset($_SESSION['contact_message'])) {
                 header("Location: contact.php");
@@ -55,12 +50,16 @@ if($_SERVER['REQUEST_METHOD' ] == "POST"){
             
         } 
          else {
+            $statement = null;
+            $connect = null;
             $_SESSION['error_msg'] = "The password you entered is incorrect.";
             header("Location: login.php");
             exit();
         }
     }
     else {
+        $statement = null;
+        $connect = null;
         $_SESSION['error_msg'] = "No account found with this name and email , Register first";
         header("Location: register.php");
         exit();
@@ -130,4 +129,6 @@ if($_SERVER['REQUEST_METHOD' ] == "POST"){
 </div>
 
 
-<?php include 'includes/footer.php'; ?>
+<?php 
+ $connect = null;
+include 'includes/footer.php'; ?>

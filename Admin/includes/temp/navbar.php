@@ -25,7 +25,7 @@
                     <span>Welcome, <?php echo $_SESSION['user_fname']; ?></span><i class="fas fa-user-circle"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item text-danger" href="../login.php">Logout</a>
+                    <a class="dropdown-item text-danger" href="../logout.php">Logout</a>
                 </div>
             </li>
         </ul>

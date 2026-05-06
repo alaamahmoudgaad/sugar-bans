@@ -2,7 +2,7 @@
   session_start();
   include 'includes/db.php';
   include 'includes/header.php'; 
-//   include 'includes/navbar.php'; 
+  include 'includes/navbar.php'; 
 
   if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $fname    = trim($_POST['fname']);
@@ -19,12 +19,14 @@
 
 
     if (empty($fname) || empty($lname) || empty($email) || empty($password) || empty($phone)) {
+        $connect = null;
         $_SESSION['error_msg'] = "All fields are required!";
         header("Location: register.php");
         exit();
     }
     $pattern = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/";
     if(!preg_match($pattern, $email)){
+        $connect = null;
         $_SESSION['error_msg'] = "Invalid Email format! Please use something like name@example.com";
         header("Location: register.php");
         exit();
@@ -33,13 +35,17 @@
         $checkEmail->execute([$email]);
         
         if ($checkEmail->rowCount() > 0) {
+            $checkEmail = null;
+             $connect = null;
             $_SESSION['error_msg'] = "This email is already registered!";
             header("Location: register.php");
            exit();
         }
+        $checkEmail = null;
 
         $phonePattern = "/^01[0125][0-9]{8}$/";
         if(!preg_match($phonePattern, $phone)){
+            $connect = null;
             $_SESSION['error_msg'] = "Invalid Egyptian phone number!";
             header("Location: register.php");
            exit();
@@ -49,7 +55,11 @@
         $statement = $connect->prepare("INSERT INTO users (first_name, last_name, email, `password`, phone) VALUES (?, ?, ?, ? ,? )");
         $statement->execute([$fname, $lname, $email, $hashed_password ,$phone]);
 
+        $statement = null; 
+        $connect = null;
+
             unset($_SESSION['user_fname'], $_SESSION['user_lname'], $_SESSION['user_email'], $_SESSION['password'], $_SESSION['phone']);
+            
 
                 $_SESSION['success_msg'] = "Registration successful! You can login now.";
                 header("Location: login.php");
@@ -75,27 +85,27 @@
           
             <div class="col-md-6">
                 <div class="form-label-group">
-                    <input type="text" id="fname" name="fname" class="form-control" placeholder="First Name" value ="<?php echo isset($_SESSION['user_fname'])?$_SESSION['user_fname']:'';?>" >
+                    <input type="text" id="fname" name="fname" class="form-control" placeholder="First Name" value ="<?php echo isset($_SESSION['user_fname'])?$_SESSION['user_fname']:'';?>" required>
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-label-group">
-                    <input type="text" id="lname" name="lname" class="form-control" placeholder="Last Name" value ="<?php echo isset($_SESSION['user_lname'])?$_SESSION['user_lname']:'';?>" >
+                    <input type="text" id="lname" name="lname" class="form-control" placeholder="Last Name" value ="<?php echo isset($_SESSION['user_lname'])?$_SESSION['user_lname']:'';?>"required >
                 </div>
             </div>
         </div>
 
         <div class="form-label-group">
-            <input type="email" id="email" name="email" class="form-control" placeholder="Email" value ="<?php echo isset($_SESSION['user_email'])?$_SESSION['user_email']: "";?>" >
+            <input type="email" id="email" name="email" class="form-control" placeholder="Email" value ="<?php echo isset($_SESSION['user_email'])?$_SESSION['user_email']: "";?>" required>
         </div>
 
         <div class="form-label-group">
-            <input type="password" id="pass" name="pass" class="form-control" placeholder="password" value ="<?php echo isset($_SESSION['password'])?$_SESSION['password']: "";?>" >
+            <input type="password" id="pass" name="pass" class="form-control" placeholder="password" value ="<?php echo isset($_SESSION['password'])?$_SESSION['password']: "";?>" required>
         </div>
 
         <div class="form-label-group">
-            <input type="tel" id="phone" name="phone" class="form-control" placeholder="Phone Number" value ="<?php echo isset($_SESSION['phone'])?$_SESSION['phone']: "";?>" >
+            <input type="tel" id="phone" name="phone" class="form-control" placeholder="Phone Number" value ="<?php echo isset($_SESSION['phone'])?$_SESSION['phone']: "";?>" required>
         </div>
 
         <button type="submit" name="submit" class="btn-submit mt-4 shadow-sm">Create Account</button>
@@ -107,7 +117,7 @@
 </div>
 </div>
 
-
-
-
-<?php include 'includes/footer.php'; ?>
+<?php
+ $connect = null;
+ include 'includes/footer.php'; 
+?>

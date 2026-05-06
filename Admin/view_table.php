@@ -1,18 +1,15 @@
 <?php 
-session_start();
+include 'includes/db/db.php';
+include 'includes/temp/header.php';
+include 'includes/temp/navbar.php';
+
 if ($_SESSION['role'] !== 'admin') {
     header("Location: ../login.php");
      $_SESSION['error_msg'] = "Access Denied! please log in first";
     exit();
 }
-
-include 'includes/db/db.php';
-include 'includes/temp/header.php';
-include 'includes/temp/navbar.php';
 ?>
-
-<div class="container-fluid">
-    <div class="row">
+    <div class="row mx-3">
         <?php include 'includes/temp/aside.php'; ?>
         
         <main class="col-md-10">
@@ -27,13 +24,14 @@ include 'includes/temp/navbar.php';
             $statement->execute();
             $currentTableCount =$statement->rowCount();
             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+            $statement = null;
             $columns = []; 
             if (!empty($result)) {
                 $columns = array_slice(array_keys($result[0]), 0, 3);
             }
             ?>
 
-            <div class="d-flex justify-content-between align-items-center mb-2 div-title">
+            <div class="d-flex justify-content-between align-items-center div-title">
                 <h2 class="table-title" ><?php echo $displayTitle;?> <span class="badge"><?php echo $currentTableCount;?></span></h2>
                  <?php 
                     if(isset($_SESSION['msg']) ){
@@ -83,9 +81,8 @@ include 'includes/temp/navbar.php';
 
         </main>
     </div>
-</div>
-
 
 <?php
+$connect = null;
 include 'includes/temp/footer.php';
 ?>

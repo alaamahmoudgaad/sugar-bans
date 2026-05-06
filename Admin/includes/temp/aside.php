@@ -5,7 +5,7 @@
     
     <div class="mt-2">
         <?php
-
+        
         try {
             $stmt = $connect->prepare("SHOW TABLES");
             $stmt->execute();
@@ -14,7 +14,9 @@
                 echo"<a href='view_table.php?table=$row' class='side-item d-flex align-items-center'>
                         <i class='fas fa-table mr-2'></i>$row</a>";
             }
+            $stmt = null;
         } 
+
         catch (PDOException $e) {
             echo "<div class='p-3 text-danger'>Error: " . $e->getMessage() . "</div>";
         }

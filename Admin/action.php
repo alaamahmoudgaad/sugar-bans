@@ -1,13 +1,13 @@
 <?php 
-session_start();
-if ($_SESSION['role'] !== 'admin') {
-    header("Location: ../login.php");
-     $_SESSION['error_msg'] = "Access Denied! please log in first";
-    exit();
-}
-include 'includes/db/db.php';
+require 'includes/db/db.php';
 include 'includes/temp/header.php';
 include 'includes/temp/navbar.php';
+
+if ($_SESSION['role'] !== 'admin') {
+    $_SESSION['error_msg'] = "Access Denied! please log in first";
+    header("Location: ../login.php");
+    exit();
+}
 ?>
 
 <div class="container-fluid">
@@ -26,6 +26,7 @@ include 'includes/temp/navbar.php';
                         $stmtCol = $connect->prepare("SHOW COLUMNS FROM $table");
                         $stmtCol->execute();
                         $primaryKey = $stmtCol->fetchColumn(); 
+                        $stmtCol = null;
                 }
 
             switch($action) {
@@ -33,6 +34,8 @@ include 'includes/temp/navbar.php';
                 case 'delete':
                     $stmt = $connect->prepare("DELETE FROM $table WHERE $primaryKey = ?");
                     $stmt->execute([$id]) ;
+                    $stmt = null; 
+                    $connect = null;
                     $_SESSION["message"] ="Deleted successfully";
                     header("Location: view_table.php?table=$table");
                     exit();
@@ -42,6 +45,7 @@ include 'includes/temp/navbar.php';
                     $stmt = $connect->prepare("SELECT * FROM $table WHERE $primaryKey = ?");
                     $stmt->execute([$id]);
                     $item = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $stmt = null;
                     ?>
                   
                             <div class="card shadow-sm mt-4 mx-5">
@@ -75,6 +79,7 @@ include 'includes/temp/navbar.php';
                     $stmt = $connect->prepare("SELECT * FROM $table WHERE $primaryKey = ?");
                     $stmt->execute([$id]);
                     $item = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $stmt = null;
                     ?>
                     <div class="card shadow-sm mt-2 mb-5 mx-5">
                         <div class="card-header bg-white py-3">
@@ -132,6 +137,7 @@ include 'includes/temp/navbar.php';
                             $trimmedValue = trim($value);
                             if ($trimmedValue === "" && $trimmedValue !== "0") {
                                 $_SESSION['validation_msg'] = "Please fill in all fields!";
+                                $connect = null;
                                 header("Location: action.php?action=edit&table=$tableName&id=$idValue");
                                 exit();
                             }
@@ -141,6 +147,7 @@ include 'includes/temp/navbar.php';
                                 // Perl Regular Expressions
                                 if (!preg_match($pattern, $trimmedValue)) {
                                     $_SESSION['validation_msg'] = "Invalid Email format! Please use something like name@example.com";
+                                    $connect = null;
                                     header("Location: action.php?action=edit&table=$tableName&id=$idValue");
                                     exit();
                                 }
@@ -150,9 +157,12 @@ include 'includes/temp/navbar.php';
         
                                 if ($checkEmail->rowCount() > 0) {
                                 $_SESSION['validation_msg'] = "This Email is already registered!";
+                                $checkEmail = null;
+                                $connect = null;
                                 header("Location: action.php?action=edit&table=$tableName&id=$idValue");
                                 exit();
                                 }
+                                $checkEmail = null;
                             }
 
                             if ($key =='phone') {
@@ -161,6 +171,7 @@ include 'includes/temp/navbar.php';
 
                             if (!preg_match($phonePattern, $trimmedValue)) {
                                 $_SESSION['validation_msg'] = "Invalid Egyptian phone number!";
+                                $connect = null;
                                 header("Location: action.php?action=edit&table=$tableName&id=$idValue");
                                 exit();
                             }
@@ -175,6 +186,8 @@ include 'includes/temp/navbar.php';
 
                         $stmt = $connect->prepare("UPDATE `$tableName` SET " . implode(', ', $updateParts) . " WHERE `$primaryKey` = ?");
                         $stmt->execute($values);
+                        $stmt = null;
+                        $connect = null;
 
                         $_SESSION['msg'] = "Record Updated Successfully!";
                         header("Location: view_table.php?table=$tableName");
@@ -187,6 +200,7 @@ include 'includes/temp/navbar.php';
                         $stmtCol = $connect->prepare("SHOW COLUMNS FROM $table");
                         $stmtCol->execute();
                         $allColumns = $stmtCol->fetchAll(PDO::FETCH_ASSOC);
+                        $stmtCol = null;
                  ?> 
                  <div class="card shadow-sm mt-2 mb-5 mx-5">
                         <div class="card-header bg-white py-3">
@@ -238,6 +252,7 @@ include 'includes/temp/navbar.php';
 
                             if (in_array("", $values)) {
                                 $_SESSION['validation_msg'] = "Please fill in all fields!";
+                                $connect = null;
                                 header("Location: action.php?action=add&table=$tableName");
                                 exit();
                             }
@@ -248,6 +263,7 @@ include 'includes/temp/navbar.php';
                                 // Perl Regular Expressions
                                 if (!preg_match($pattern, $email)) {
                                     $_SESSION['validation_msg'] = "Invalid Email format! Please use something like name@example.com";
+                                    $connect = null;
                                     header("Location: action.php?action=add&table=$tableName");
                                     exit();
                                 }
@@ -257,9 +273,12 @@ include 'includes/temp/navbar.php';
         
                             if ($checkEmail->rowCount() > 0) {
                                 $_SESSION['validation_msg'] = "This Email is already registered!";
+                                $checkEmail = null;
+                                $connect = null;
                                 header("Location: action.php?action=add&table=$tableName");
                                 exit();
                             }
+                            $checkEmail = null;
                         }
 
                         if (isset($_POST['phone'])) {
@@ -269,6 +288,7 @@ include 'includes/temp/navbar.php';
 
                             if (!preg_match($phonePattern, $phone)) {
                                 $_SESSION['validation_msg'] = "Invalid Egyptian phone number!";
+                                $connect = null;
                                 header("Location: action.php?action=add&table=$tableName");
                                 exit();
                             }
@@ -281,6 +301,8 @@ include 'includes/temp/navbar.php';
                         unset($_SESSION['form_data']); 
     
                         $_SESSION['msg'] = "Record Added Successfully!";
+                        $stmt = null;
+                        $connect = null;
                         header("Location: view_table.php?table=$tableName");
                         exit();
                     }      
@@ -294,5 +316,6 @@ include 'includes/temp/navbar.php';
 
 
 <?php
+$connect = null;
 include 'includes/temp/footer.php';
 ?>

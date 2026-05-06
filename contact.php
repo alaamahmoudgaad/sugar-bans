@@ -3,6 +3,60 @@
   include 'includes/db.php';
   include 'includes/header.php'; 
   include 'includes/navbar.php'; 
+
+  if (isset($_POST['contact'])) {
+    $fname    = trim($_POST['fname']);
+    $lname    = trim($_POST['lname']);
+    $email    = trim($_POST['email']);
+    $subject = htmlspecialchars(trim($_POST['subject']));
+    $message = htmlspecialchars(trim($_POST['message']));
+
+
+    if (empty($fname) || empty($lname) || empty($email) || empty($subject) || empty($message)){
+        $connect = null;
+        $_SESSION['error_msg'] = "All fields are required!";
+        header("Location: contact.php");
+        exit();
+    }
+
+    $pattern = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/";
+    if(!preg_match($pattern, $email)){
+        $connect = null;
+        $_SESSION['error_msg'] = "Invalid Email format! Please use something like name@example.com";
+        header("Location: contact.php");
+        exit();
+    }
+
+    $strEmail = "alaa.mahmoud.gaad@gmail.com";
+    mail($strEmail, $subject, $message);
+    
+    if (isset($_SESSION['user_id'])){
+        $stmt = $connect->prepare( "INSERT INTO user_comment (user_id, subject, comment) VALUES (?, ?, ? )");
+        $stmt->execute([$_SESSION['user_id'], $subject, $message]);
+
+        $stmt = null; 
+        $connect = null;
+
+            $_SESSION['success_msg'] = "Thank you! Your message has been sent.";
+            header("Location: contact.php");
+            exit();  
+    }
+    else{
+        $user_id = 6; 
+        $full_name = $fname . " " . $lname;
+        $stmt = $connect->prepare( "INSERT INTO user_comment (user_id, subject, comment , guest_name, guest_email) VALUES (?, ?, ? ,? ,?)");
+        $stmt->execute([$user_id, $subject, $message, $full_name , $email]);
+
+        $stmt = null; 
+        $connect = null;
+
+        $_SESSION['success_msg'] = "Thank you! Your message has been sent.";
+            header("Location: contact.php");
+            exit(); 
+            
+    }
+}
+
 ?>
 <div class="form-bg">
 <div class="container my-5 ">
@@ -11,15 +65,15 @@
         <div class="col-md-6 p-5">
             <h2 class=" mb-2">Contact Us</h2>
             <p class="mb-4">We'd love to hear from you. Please fill out the form below.</p>
-            <?php if (isset($_SESSION['error_validation'])){
-                echo "<h5 class='alert alert-danger text-center'>".$_SESSION['error_validation']."</h5>";}
-                unset($_SESSION['error_validation']);?>
+            <?php if (isset($_SESSION['error_msg'])){
+                echo "<h5 class='alert alert-danger text-center'>".$_SESSION['error_msg']."</h5>";}
+                unset($_SESSION['error_msg']);?>
 
                 <?php if (isset($_SESSION['success_msg'])){
                 echo "<h5 class='alert alert-success text-center'>".$_SESSION['success_msg']."</h5>";}
                 unset($_SESSION['success_msg']);?>
             
-            <form id="contact" action="includes/process.php" method="POST">
+            <form id="contact" action="contact.php" method="POST">
 
                 <div class="form-row">
                     <div class="col-md-6">
@@ -46,20 +100,17 @@
                    <div class="form-label-group mb-3">
                         <select class="form-control py-2" name="subject" id="Subject" required>
                             <option hidden value="disabled selected">What is this about?</option>
-                            <option value="problem"<?php echo (isset($_SESSION['contact_message']) && $_SESSION['contact_subject'] == 'problem') ? 'selected' : ''; ?>>Problem</option>
-                            <option value="review"<?php echo (isset($_SESSION['contact_message']) && $_SESSION['contact_subject'] == 'review') ? 'selected' : ''; ?>>Review</option>
-                            <option value="complaint"<?php echo (isset($_SESSION['contact_message']) && $_SESSION['contact_subject'] == 'complaint') ? 'selected' : ''; ?>>Complaint</option>
-                            <option value="question"<?php echo (isset($_SESSION['contact_message']) && $_SESSION['contact_subject'] == 'question') ? 'selected' : ''; ?>>Question</option>
+                            <option>Problem</option>
+                            <option>Review</option>
+                            <option>Complaint</option>
+                            <option>Question</option>
                         </select>
                 </div>
                 </div>
 
                 <div class="mb-3">
                     <label for="message">Message</label>
-                    <textarea class="form-control py-2" name="message" rows="4" id= "message" placeholder="Write your message here..." required>
-                       <?php echo $_SESSION['contact_message'] ?? ''; ?>
-               
-                    </textarea>
+                    <textarea class="form-control py-2" name="message" rows="4" id= "message" placeholder="Write your message here..." required></textarea>
                 </div>
 
                 
@@ -76,4 +127,6 @@
   </div>
 </div>
 
-<?php include 'includes/footer.php'; ?>
+<?php 
+$connect = null;
+include 'includes/footer.php'; ?>

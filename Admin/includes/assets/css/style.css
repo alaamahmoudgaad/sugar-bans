@@ -35,7 +35,6 @@ nav a:hover{
     position:fixed;
     top: 65px;
     left: 0;
-    bottom: 0;
     z-index: 100;
     min-height: 100vh;
     border-right: 1px solid #e0dcd9;
@@ -56,9 +55,11 @@ nav a:hover{
     transform: scale(1.03);
 }
 main{
-    margin-top: 100px;
+    margin-top: 130px;
+    margin-bottom: 50px;
     margin-left: 16.5%;
     padding-right:5px ;
+    min-height: calc(100vh - 90px - 180px);
 }
 
  @media (max-width: 768px) {
@@ -91,6 +92,10 @@ main{
    .operation a{
         display: block !important;
     }
+    .dashCard{
+        margin-bottom: 20px;
+    }
+
 
  }
 
@@ -147,4 +152,46 @@ main{
 .form-control:focus{
     border : 2px solid #a1887f94; 
     box-shadow: 0 0 0 0.2rem rgba(161, 136, 127, 0.25);
+}
+
+footer{
+    width: 100%;
+    height: 90px;
+    padding: 15px 0;
+    position: relative; 
+    background-color: #b19a80; 
+    color: #5d4037;
+    text-align: center;
+   background: linear-gradient(to right, transparent, #b19a80);
+}
+footer a{
+    color: #5d4037;
+    text-decoration: underline;
+    display: block;
+    transition: 0.5s;
+    justify-content: space-around;
+}
+footer a:hover{
+    transform:translateY(-5px);
+}
+
+.dashCard{
+    height: 180px; 
+    background-color: #d3c6b8;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+}
+.info{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+    color: #5d4037;
+}
+.info i{
+    font-size: 20px;
+}
+.info p{
+    font-weight: bold;
 }

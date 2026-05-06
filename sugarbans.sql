@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 01, 2026 at 06:28 PM
+-- Generation Time: May 06, 2026 at 07:16 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,7 +43,7 @@ CREATE TABLE `boxes` (
 
 INSERT INTO `boxes` (`box_id`, `box_name`, `box_price`, `description`, `box_image_url`, `products_included`, `stock`) VALUES
 (1, 'Besties Box', 250.00, '2 Donuts (Chocolate + Caramel) + 2 Cold Drinks (Iced Mocha / Iced Coffee)', 'images/besties offer.png', 'Chocolate donut, Caramel donut, Iced Mocha, Iced Coffee', 27),
-(2, 'Sweet Heaven', 250.00, 'Cheesecake slice + Tiramisu slice + 1 Cold Drink', 'images/sweet heaven.png', 'Cheesecake, Tiramisu, Iced Latte', 28),
+(2, 'Sweet Heaven', 250.00, 'Cheesecake slice + Tiramisu slice + 1 Cold Drink', 'images/sweet heaven.png', 'Cheesecake, Tiramisu, Iced Latte', 27),
 (3, 'Sugar Rush Duo', 400.00, '2 Donuts + 2 Cupcakes + 2 Cold Drinks', 'images/sugar rush duo.png', 'Chocolate donut, Caramel donut, Vanilla cupcake, Caramel cupcake, Iced Mocha, Iced Coffee', 30),
 (4, 'Honey Mood', 150.00, 'Honey Cake slice + Iced Latte', 'images/honey mood.jpeg', 'Honey cake, Iced Latte', 30),
 (5, 'Chill Combo', 200.00, 'Cupcake + Tiramisu slice + Cold Drink', 'images/chill combo.jpeg', 'Vanilla cupcake, Tiramisu, Iced Latte', 30);
@@ -105,7 +105,8 @@ INSERT INTO `orders` (`order_id`, `order_price`, `user_id`, `order_date`, `order
 (1, 20.00, 13, '2026-05-01 13:52:16', 'delivery', '', 'سيبلاتنمكط'),
 (3, 250.00, 13, '2026-05-01 14:14:15', 'pickup', '', NULL),
 (4, 500.00, 13, '2026-05-01 14:51:17', 'pickup', '', NULL),
-(5, 750.00, 13, '2026-05-01 15:13:21', 'pickup', '', NULL);
+(5, 750.00, 13, '2026-05-01 15:13:21', 'pickup', '', NULL),
+(6, 250.00, 7, '2026-05-01 22:00:49', 'pickup', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -128,7 +129,8 @@ CREATE TABLE `order_boxes` (
 
 INSERT INTO `order_boxes` (`id`, `order_id`, `box_id`, `quantity`, `box_price`, `box_date`) VALUES
 (1, 3, 1, 1, 0.00, '2026-05-01 14:14:15'),
-(2, 5, 2, 1, 0.00, '2026-05-01 15:13:21');
+(2, 5, 2, 1, 0.00, '2026-05-01 15:13:21'),
+(3, 6, 2, 1, 0.00, '2026-05-01 22:00:49');
 
 -- --------------------------------------------------------
 
@@ -248,7 +250,7 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `phone` varchar(20) NOT NULL,
   `address` varchar(255) DEFAULT NULL,
-  `role` enum('admin','customer') DEFAULT 'customer'
+  `role` enum('admin','customer','guest') DEFAULT 'customer'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -257,11 +259,11 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `password`, `phone`, `address`, `role`) VALUES
 (1, 'Alaa', 'Mahmoud', 'alaa@gmail.com', '$2y$10$gMsZvhz5iP.DaZ2I0JaGnORux18hQNc/tnrsvzTFS3bQggYNnlRdi', '01022233346', 'suez', 'admin'),
-(2, 'Nourhan', 'Hany', 'nourhan@gmail.com', '$2y$10$i3nE.NZN2p.a7va84P6ZTOlaFWJjBqo63ZB1OGo5EMXGe.9FXF282', '8697024709768', 'suez', 'admin'),
-(4, 'Bassant', 'Hamdy', 'bassant@gmail.com', '$2y$10$WPIYRHnE.O907UA6gGPq.OglOHtUDsl9gCSxQuH6qKqM3FJBwe0Pq', '8697024709768', 'suez', 'admin'),
-(5, 'Sama', 'Ahmed', 'sama@gmail.com', '$2y$10$Cqhe8bd0DrJcNLJ7VUYb.u/o6.DoxPexFqgiIL/nZ.pZF5cvOE.I6', '8697024709768', 'suez', 'admin'),
-(6, 'Ali', 'Hany', 'Ali@gmail.com', '$2y$10$WLzPVKtzrtUVILHh33Izt.s4J1JPI4p5Kj8zDVKoMLAO3GsX6l/JG', '8697024709768', 'suez', 'customer'),
-(7, 'youssef', 'Mohamed', 'youssef@gmail.com', '$2y$10$1zKBfdMvzepK5i2RUb5SKODT3WZFPWChqaeddGAnTVgE4NGwGiT0S', '8697024709768', 'suez', 'customer'),
+(2, 'Nourhan', 'Hany', 'nourhan@gmail.com', '$2y$10$i3nE.NZN2p.a7va84P6ZTOlaFWJjBqo63ZB1OGo5EMXGe.9FXF282', '01100998876', 'suez', 'admin'),
+(4, 'Bassant', 'Hamdy', 'bassant@gmail.com', '$2y$10$WPIYRHnE.O907UA6gGPq.OglOHtUDsl9gCSxQuH6qKqM3FJBwe0Pq', '01200998867', 'suez', 'admin'),
+(5, 'Sama', 'Ahmed', 'sama@gmail.com', '$2y$10$Cqhe8bd0DrJcNLJ7VUYb.u/o6.DoxPexFqgiIL/nZ.pZF5cvOE.I6', '01200998821', 'suez', 'admin'),
+(6, 'Guest', 'Guest', 'guest@sugarbans.com', '$2y$10$WLzPVKtzrtUVILHh33Izt.s4J1JPI4p5Kj8zDVKoMLAO3GsX6l/JG', '00000000000', NULL, 'guest'),
+(7, 'youssef', 'Mohamed', 'youssef@gmail.com', '$2y$10$1zKBfdMvzepK5i2RUb5SKODT3WZFPWChqaeddGAnTVgE4NGwGiT0S', '01060954928', 'suez', 'customer'),
 (8, 'Ahmed', 'Mansour', 'ahmed8@gmail.com', '$2y$10$zWoijsCP4xoXPBfDHoG6WuxsyAufzj1H5Aj5MPwzJpqExsPb12Soi', '01012345678', 'Suez', 'customer'),
 (9, 'Mona', 'Zaki', 'mona9@gmail.com', '$2y$10$k6slQT/lGQqHY9U2ZqB0hORK4bcW0n9JJxdV9/H4BhzkmObohmlWe', '01122334455', 'Cairo', 'customer'),
 (10, 'Hassan', 'Farid', 'hassan10@gmail.com', '$2y$10$GdRIIoJ9Bq84Yn3Oyo2qLu9C.SgSHYf3fEH.BFm4xt/H5KWiYQEDS', '01233445566', 'Alexandria', 'customer'),
@@ -313,7 +315,7 @@ INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `password`, 
 (56, 'Akram', 'Hosny', 'akram.h@gmail.com', '$2y$10$02w6iq85tVuRsEJAb5lijueczIP8ZV9J5tVKokA9jwSoblPm3x0Ae', '01266688800', 'Mansoura', 'customer'),
 (57, 'Eyad', 'Nassar', 'eyad.n@gmail.com', '$2y$10$Tq022pbfOT8/rdrV1qWom.aS/fA4CIaZeuZu5RBGxqhArjidpBNpu', '01577799911', 'Cairo', 'customer'),
 (59, 'Rogena', 'Amin', 'rogena.a@gmail.com', '$2y$10$BCH5HueWpTm1Go5rUpOAZugAoJ8Xv7uc/x.Xe8jUNuYx32hhXv9wy', '01199911133', 'Suez', 'customer'),
-(60, 'Bassem', 'Youssef', 'bassem.y@gmail.com', '$2y$10$J8IW4mg2wCUqJH3bEeysu.7U7ySWYZ8zenJgFsqy3ZVyEEYFCzEUa', '01200022244', 'Port Said', 'customer'),
+(60, 'Bassem', 'Mahmoud', 'bassem@gmail.com', '$2y$10$J8IW4mg2wCUqJH3bEeysu.7U7ySWYZ8zenJgFsqy3ZVyEEYFCzEUa', '01200022244', 'Port Said', 'customer'),
 (81, 'Nermin', 'El-Feki', 'nermin.feki@gmail.com', '$2y$10$P2LASMM5VUyD6I/I4aWdkOyInvaN1VxaC.5K0bConq2GHNXila52K', '01011155599', 'Suez', 'customer'),
 (82, 'Hazem', 'Emam', 'hazem.e@gmail.com', '$2y$10$Ii6VT8Izrm.yH7PevBgcXO63W5a3QAJ8zmhcQgYN63Dmk96EZXxa6', '01122266600', 'Cairo', 'customer'),
 (83, 'Lina', 'Shamamy', 'lina.s@gmail.com', '$2y$10$VV3i3UYvSjaIbVd1OvJ3ieKgBDqLoKCUZh0gm6HcdOxd36f2ZMg4W', '01233377711', 'Alexandria', 'customer'),
@@ -327,7 +329,11 @@ INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `password`, 
 (93, 'Mirna', 'Nour', 'mirna.n@gmail.com', '$2y$10$GMcwi292YRu8eJpOhMN/MOklOyT2k3I4FoaTafxXWkuxP554JvMHy', '01233388822', 'Cairo', 'customer'),
 (94, 'Basma', 'Hassan', 'basma.h@gmail.com', '$2y$10$TrFwegX3ccGw8vDuAr7mOu06Dq53CjieGOgi7FFrSZqCzzPqdVzou', '01044499933', 'Giza', 'customer'),
 (95, 'Eyad', 'Badr', 'eyad.b@gmail.com', '$2y$10$9YHFUntfic.aBHGMwvY8tOQFXR0pSE31Sb3cDH3tE3NLQ5JKHnsAa', '01155500044', 'Suez', 'customer'),
-(96, 'Yara', 'Naoum', 'yara.n@gmail.com', '$2y$10$aRXk60pr5psxseQRWc1Qcuwm3G428Yl0LltdsEHoVALxGW2oQBfGu', '01266611155', 'Mansoura', 'customer');
+(96, 'Yara', 'Naoum', 'yara.n@gmail.com', '$2y$10$aRXk60pr5psxseQRWc1Qcuwm3G428Yl0LltdsEHoVALxGW2oQBfGu', '01266611155', 'Mansoura', 'customer'),
+(101, 'ahmed', 'Amr', 'ahmed@gmail.com', '$2y$10$jyEjC7BWC5JBU59cduwB5ORrVsSudmYAmdljcRt9YVhJUU9p.VQaW', '01092455169', NULL, 'customer'),
+(102, 'Anas', 'Amr', 'anas@gmail.com', '$2y$10$qey2ikpw3la.CJuA98e3Fe4KcX8nY/fj9b79FaFhdv2.lZq7LxZ.u', '01098755168', NULL, 'customer'),
+(103, 'Ahmed', 'Sayed', 'ahmed15@gmail.com', '$2y$10$.dA4ZN9gkKPX1Qlu6EVHJuyRkeQgHBbibWcbHBxVoEWZGExChOzP6', '01092765168', NULL, 'customer'),
+(104, 'Asser', 'Mahmoud', 'asser@gmail.com', '$2y$10$4WoP1HJs/1/.4N8IDrAFIuTjOLS8kKivk5iiFiPUKmKr2bYK7Abx6', '01092686898', NULL, 'customer');
 
 -- --------------------------------------------------------
 
@@ -339,9 +345,30 @@ CREATE TABLE `user_comment` (
   `comment_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `subject` enum('problem','review','complaint','question') NOT NULL,
-  `comment` varchar(255) DEFAULT NULL,
+  `comment` varchar(255) NOT NULL,
+  `guest_email` varchar(255) DEFAULT NULL,
+  `guest_name` varchar(255) DEFAULT NULL,
   `comment_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user_comment`
+--
+
+INSERT INTO `user_comment` (`comment_id`, `user_id`, `subject`, `comment`, `guest_email`, `guest_name`, `comment_date`) VALUES
+(1, 7, 'review', 'The chocolate cupcakes taste amazing and are so fluffy, well done!', NULL, NULL, '2026-05-01 23:22:30'),
+(2, 11, 'review', 'Honestly, the best Cinnabon I’ve ever had; the sauce is so rich.', NULL, NULL, '2026-05-01 23:27:14'),
+(3, 13, 'question', 'Do you have any sugar-free cakes available for diabetic customers? ', NULL, NULL, '2026-05-01 23:31:17'),
+(4, 20, 'problem', 'I placed an online order two hours ago and it still hasn\'t arrived. ', NULL, NULL, '2026-05-01 23:46:00'),
+(5, 32, 'review', 'The donuts are properly filled with a generous amount of cream, a great experience. ', NULL, NULL, '2026-05-01 23:46:59'),
+(6, 10, 'review', 'I tried the vanilla cake; it was very light and the sponge was so soft. ', NULL, NULL, '2026-05-01 23:47:50'),
+(7, 24, 'review', 'The packaging is very elegant, and the order arrived fresh and warm. ', NULL, NULL, '2026-05-01 23:53:04'),
+(10, 30, 'review', 'Your oriental sweets have the perfect amount of sugar and aren\'t heavy at all.', NULL, NULL, '2026-05-02 00:35:35'),
+(11, 18, 'review', ' The best place for oriental sweets in the area—consistent quality and taste. ', NULL, NULL, '2026-05-02 02:15:20'),
+(12, 15, 'review', 'The macarons have vibrant colors and taste excellent—perfect for gifts. ', NULL, NULL, '2026-05-02 22:42:56'),
+(14, 6, 'question', 'Can you add more chocolate-based desserts to the menu?', 'alaa.gaad.86@gmail.com', 'Alaa samir', '2026-05-03 21:29:20'),
+(15, 102, 'question', 'Is there a sugar-free or vegan option available in your menu?', NULL, NULL, '2026-05-03 21:37:27'),
+(16, 6, 'question', 'Do you have any gluten-free or vegan options available in your bakery?', 'ahmed79@gmail.com', 'Ahmed Mahmoud', '2026-05-04 13:05:15');
 
 --
 -- Indexes for dumped tables
@@ -423,13 +450,13 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `order_boxes`
 --
 ALTER TABLE `order_boxes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `order_details`
@@ -447,13 +474,13 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 
 --
 -- AUTO_INCREMENT for table `user_comment`
 --
 ALTER TABLE `user_comment`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Constraints for dumped tables
