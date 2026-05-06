@@ -4,16 +4,20 @@
   include 'includes/header.php'; 
   include 'includes/navbar.php'; 
 ?>
-    <main class="hero">
-        <div class="hero-overlay">
-            <div class="hero-content">
-                <h2>Baked to Perfection, Crafted for You</h2>
-                <p>Indulge in the art of artisanal baking, where every treat is handcrafted daily with premium ingredients and a touch of magic.</p>
-                <a href="menu.php">View Menu</a>
-                <a href="">Best Sellers</a>
-            </div>
+    <main class="hero position-relative w-100">
+    <div class="hero-overlay position-absolute top-0 start-0 w-100 h-100"></div>
+    <div class="hero-content position-relative d-flex flex-column align-items-center justify-content-center h-100 text-center px-3">
+        <h2 class="fw-bold">Baked to Perfection, Crafted for You</h2>
+        <p class="my-4 lh-lg">
+            Indulge in the art of artisanal baking, where every treat is handcrafted 
+            daily with premium ingredients and a touch of magic.
+        </p>
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+            <a href="menu.php" class="hero-btn">View Menu</a>
+            <a href="" class="hero-btn">Best Sellers</a>
         </div>
-    </main>
+    </div>
+</main>
 
 
 <section class="best">
@@ -126,41 +130,43 @@
 
 
     <section>
-            <div class="icons-section">
-                <div class="icons-overlay">
-                    <div class="icons">
-                        <div class="icon">
-                            <div class="icon-content">
-                                <img src="images/happy-costumers.png">
-                                <h3>10K+</h3>
-                                <p>Happy Customers</p>
-                            </div>    
+    <div class="icons-section position-relative">
+        <div class="icons-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center">
+            <div class="container">
+                <div class="row justify-content-center text-center g-4">
+                    <div class="col-6 col-md-3">
+                        <div class="icon-content d-flex flex-column align-items-center">
+                            <img src="images/happy-costumers.png">
+                            <h3>10K+</h3>
+                            <p>Happy Customers</p>
                         </div>
-                        <div class="icon">
-                            <div class="icon-content">
-                                <img src="images/signature-desserts.png">
-                                <h3>20+</h3>
-                                <p>Signature Desserts</p>
-                            </div>    
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="icon-content d-flex flex-column align-items-center">
+                            <img src="images/signature-desserts.png">
+                            <h3>20+</h3>
+                            <p>Signature Desserts</p>
                         </div>
-                    <div class="icon">
-                            <div class="icon-content">
-                                <img src="images/orders-served.png">
-                                <h3>40K+</h3>
-                                <p>Orders Served</p>
-                            </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="icon-content d-flex flex-column align-items-center">
+                            <img src="images/orders-served.png">
+                            <h3>40K+</h3>
+                            <p>Orders Served</p>
                         </div>
-                        <div class="icon">
-                            <div class="icon-content">
-                                <img src="images/unique-recipes.png">
-                                <h3>50+</h3>
-                                <p>Unique Recipes</p>
-                            </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="icon-content d-flex flex-column align-items-center">
+                            <img src="images/unique-recipes.png">
+                            <h3>50+</h3>
+                            <p>Unique Recipes</p>
                         </div>
                     </div>
                 </div>
             </div>
-    </section>
+        </div>
+    </div>
+</section>
 
 <section class="background">
         <div class="section-title text-center mb-4">
