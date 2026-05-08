@@ -4,15 +4,15 @@
   include 'includes/header.php'; 
   include 'includes/navbar.php'; 
 ?>
-    <main class="hero position-relative w-100">
-    <div class="hero-overlay position-absolute top-0 start-0 w-100 h-100"></div>
-    <div class="hero-content position-relative d-flex flex-column align-items-center justify-content-center h-100 text-center px-3">
-        <h2 class="fw-bold">Baked to Perfection, Crafted for You</h2>
-        <p class="my-4 lh-lg">
+<main class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <h2 class="fs-1">Baked to Perfection, Crafted for You</h2>
+        <p class="fs-4 my-4">
             Indulge in the art of artisanal baking, where every treat is handcrafted 
             daily with premium ingredients and a touch of magic.
         </p>
-        <div class="d-flex flex-wrap justify-content-center gap-3">
+        <div class="hero-btns">
             <a href="menu.php" class="hero-btn">View Menu</a>
             <a href="" class="hero-btn">Best Sellers</a>
         </div>
