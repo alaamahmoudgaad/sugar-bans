@@ -16,7 +16,7 @@
 
     <h4 class="error-line">The page you are looking for was not found or has been moved.</h4>
 
-    <a href="index.php" class="error-btn">Back to Home</a>
+    <a href="login.php" class="error-btn">Back to Home</a>
 
 </body>
 </html>
