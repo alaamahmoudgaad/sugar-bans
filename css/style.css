@@ -131,7 +131,7 @@ body{
 }
 
 .hero-content h2 {
-    font-size: 45px;
+    font-size: 40px;
 }
 
 .hero-content p {
@@ -144,6 +144,7 @@ body{
     justify-content: center;
     gap: 16px;
     flex-wrap: wrap;
+    text-decoration: none;
 }
 
 .hero-btn {
@@ -168,6 +169,7 @@ body{
     box-shadow: 0px 10px 10px #39261a72;
     color: #ffffe0;
     background-color: #643e2e;
+    text-decoration: none;
 }
 /* ////////////////////////////////////////////// */
 .best{
@@ -1195,7 +1197,7 @@ footer img{
     color: #b6a28e;
 }
 .sub-btn.active {
-    background: #413832 !important;
+    background: #2c1e12 !important;
     color: white !important;
 }
 @media (max-width: 768px) {
@@ -1208,10 +1210,11 @@ footer img{
         font-size: 14px;
     }
     .products-container {
-        padding: 0 15px 30px 15px;
+        padding: 0 0px 20px 15px;
     }
     .product-card img {
-        height: 220px;
+        height: 300px;
+        width: 100%;
     }
     .products-grid {
         grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));

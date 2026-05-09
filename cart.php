@@ -101,18 +101,5 @@
     </div>
 </div>
 
-<script>
-function AddressShow(show) {
-    const div = document.getElementById('address-div');
-    const input = document.getElementById('address');
-    if (show) {
-        div.style.display = 'block';
-        input.setAttribute('required', 'required');
-    } else {
-        div.style.display = 'none';
-        input.removeAttribute('required');
-    }
-}
-</script>
 
 <?php include 'includes/footer.php'; ?>

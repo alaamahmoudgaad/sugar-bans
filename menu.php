@@ -1,7 +1,10 @@
 <?php 
+session_start();
 require_once 'includes/db.php';
 include 'includes/header.php';
 include 'includes/navbar.php';
+
+$isLoggedIn = isset($_SESSION['user_id']) ? 'true' : 'false';
 ?>
 
 <link rel="stylesheet" href="css/style.css">
@@ -33,16 +36,15 @@ include 'includes/navbar.php';
 
 <script >
     async function loadMenu(filterType) {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        const container = document.getElementById('content');
-        if (!container) return;
-        container.innerHTML = '<div class="loading">Loading...</div>';
-        let url = 'api.php?action=getAll';
-        if (filterType === 'drinks') url = 'api.php?action=getByParent&id=1';
-        else if (filterType === 'western') url = 'api.php?action=getByParent&id=7';
-        else if (filterType === 'eastern') url = 'api.php?action=getByParent&id=8';
-        else if (filterType === 'cakes') url = 'api.php?action=getByParent&id=3';
-        else if (filterType === 'boxes') url = 'api.php?action=getBoxes';
+    const container = document.getElementById('content');
+    if (!container) return;
+    container.innerHTML = '<div class="loading">Loading...</div>';
+    let url = 'api.php?action=getAll';
+    if (filterType === 'drinks') url = 'api.php?action=getByParent&id=1';
+    else if (filterType === 'western') url = 'api.php?action=getByParent&id=7';
+    else if (filterType === 'eastern') url = 'api.php?action=getByParent&id=8';
+    else if (filterType === 'cakes') url = 'api.php?action=getByParent&id=3';
+    else if (filterType === 'boxes') url = 'api.php?action=getBoxes';
     try {
         const res = await fetch(url);
         const text = await res.text();
@@ -106,53 +108,60 @@ function attachCartEvents() {
                 else { alert(`Only ${maxStock} items available in stock`); }
             };
         }
-        if (add) {
-            add.onclick = async () => {
-                if (qty > 0) {
-                    try {
-                        const response = await fetch('api.php?action=updateStock', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                product_id: add.dataset.id,
-                                quantity: qty,
-                                type: add.dataset.type || 'product'
-                            })
-                        });
-                        const result = await response.json();
-                        if (result.success) {
-                            alert(`Added ${qty} x ${add.dataset.name} to cart`);
-                            const activeBtn = document.querySelector('.sidebar-btn.active');
-                            if (activeBtn && activeBtn.dataset.cat) loadMenu(activeBtn.dataset.cat);
-                            else loadMenu('all');
-                        } else {
-                            alert(result.message || 'Failed to add to cart');
-                        }
-                    } catch(error) {
-                        alert('Error adding to cart');
-                        console.error(error);
-                    }
+if (add) {
+    add.onclick = async () => {
+        const isLoggedIn = <?php echo $isLoggedIn; ?>;
+
+        if (!isLoggedIn) {
+            alert('Please login first to add items to your cart!');
+            window.location.href = 'login.php';
+            return;
+        }
+
+        if (qty > 0) {
+            try {
+                const response = await fetch('api.php?action=addToCart', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        product_id: add.dataset.id,
+                        quantity: qty,
+                        type: add.dataset.type || 'product'
+                    })
+                });
+                const result = await response.json();
+                if (result.success) {
+                    alert(`Added ${qty} x ${add.dataset.name} to cart!`);
                     qty = 0;
                     count.textContent = qty;
-                } else {
-                    alert('Please select quantity first');
                 }
-            };
+            } catch(error) {
+                alert('Error adding to cart');
+                console.error(error);
+            }
+        } else {
+            alert('Please select quantity first');
         }
+    };
+}
+    });
+}
+
+const toggleBtn = document.getElementById('toggleBtn');
+const sidebar = document.getElementById('mainSidebar');
+if (toggleBtn && sidebar) {
+    toggleBtn.addEventListener('click', function() {
+        sidebar.classList.toggle('collapsed');
+        this.textContent = '≡';
     });
 }
 
 const dessertsSidebar = document.getElementById('dessertsSidebar');
 if (dessertsSidebar) {
     dessertsSidebar.addEventListener('click', function() {
-        document.querySelectorAll('.sidebar-btn, .sub-btn').forEach(b => b.classList.remove('active'));
         const submenu = this.nextElementSibling;
-        if (submenu) {
-            const isOpen = submenu.classList.contains('show');
-            document.querySelectorAll('.submenu').forEach(s => s.classList.remove('show'));
-            if (!isOpen) submenu.classList.add('show');
-        }
-});
+        if (submenu) submenu.classList.toggle('show');
+    });
 }
 
 const sidebarBtns = document.querySelectorAll('.sidebar-btn:not(.dropdown-sidebar)');
@@ -180,15 +189,6 @@ if (subBtns.length) {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-
-    const toggleBtn = document.getElementById('toggleBtn');
-    const sidebar = document.getElementById('mainSidebar');
-    if (toggleBtn && sidebar) {
-        toggleBtn.addEventListener('click', function() {
-            sidebar.classList.toggle('collapsed');
-        });
-    }
-
     const urlParams = new URLSearchParams(window.location.search);
     const categoryFromUrl = urlParams.get('cat');
     if (categoryFromUrl) {
@@ -207,3 +207,4 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 
 <?php include 'includes/footer.php'; ?>
+

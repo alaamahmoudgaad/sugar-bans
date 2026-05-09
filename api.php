@@ -140,3 +140,4 @@ try {
     jsonResponse(['error' => 'Server error', 'details' => $e->getMessage()]);
 }
 ?>
+<?php include 'includes/footer.php'; ?>

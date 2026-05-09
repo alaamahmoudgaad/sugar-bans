@@ -14,7 +14,7 @@
         </p>
         <div class="hero-btns">
             <a href="menu.php" class="hero-btn">View Menu</a>
-            <a href="" class="hero-btn">Best Sellers</a>
+            <a href="contact.php" class="hero-btn">contact us</a>
         </div>
     </div>
 </main>
