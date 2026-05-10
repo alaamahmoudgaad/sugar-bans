@@ -4,6 +4,27 @@
   include 'includes/header.php'; 
   include 'includes/navbar.php'; 
 ?>
+<?php
+
+if(isset($_SESSION['success_order'])):
+
+$order_id = $_SESSION['success_order'];
+
+unset($_SESSION['success_order']);
+
+?>
+
+<script>
+
+alert(
+`Order Created Successfully ✅
+
+Order ID : #<?= $order_id ?>`
+);
+
+</script>
+
+<?php endif; ?>
 <main class="hero">
     <div class="hero-overlay"></div>
     <div class="hero-content">

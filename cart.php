@@ -1,6 +1,46 @@
-<?php 
-  session_start(); 
-  require_once 'includes/db.php'; 
+<?php
+session_start();
+require_once 'includes/db.php';
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// HANDLE ADD TO CART
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $id = $_POST['id'] ?? null;
+    $qty = isset($_POST['qty']) ? (int)$_POST['qty'] : 1;
+
+    if ($id) {
+
+        if (!isset($_SESSION['cart'])) {
+            $_SESSION['cart'] = [];
+        }
+
+        $found = false;
+
+        foreach ($_SESSION['cart'] as &$item) {
+            if ($item['id'] == $id && $item['type'] === 'product') {
+                $item['quantity'] += $qty;
+                $found = true;
+                break;
+            }
+        }
+
+        if (!$found) {
+            $_SESSION['cart'][] = [
+                'id' => $id,
+                'quantity' => $qty,
+                'type' => 'product'
+            ];
+        }
+    }
+
+    header("Location: menu.php");
+         exit;
+}
+?>
+<?php
   include 'includes/header.php'; 
   include 'includes/navbar.php'; 
 ?>

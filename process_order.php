@@ -44,10 +44,19 @@ if (isset($_POST['submit_order'])) {
         unset($_SESSION['cart']);
         
     
-        echo "<script>
-            alert('Order placed successfully! Order ID: #$order_id');
-            window.location.href = 'index.php';
-        </script>";
+      echo "<script>
+alert(` Order Created Successfully
+
+Order ID: #$order_id
+Customer: {$_POST['fname']} {$_POST['lname']}
+Order Type: $order_type
+Products Total: $total_price EGP
+Delivery Fee: " . ($order_type === 'delivery' ? 50 : 0) . " EGP
+
+Your order has been saved successfully `);
+window.location.href = 'index.php';
+</script>";
+exit();
         exit();
 
     } catch (Exception $e) {
