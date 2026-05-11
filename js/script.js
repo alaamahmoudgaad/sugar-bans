@@ -46,114 +46,128 @@ let mybutton = document.getElementById("btn-back-to-top");
     }
 //vaildation
 document.addEventListener("submit", function (e) {
-    const form = e.target;
-    
-    if (form.id === "loginForm") {
-        let firstName = document.getElementById("fname")?.value.trim();
-        let lastName = document.getElementById("lname")?.value.trim();
-        let email = document.getElementById("email")?.value.trim();
-        let password = document.getElementById("pass")?.value;
+      
+    if (e.target && e.target.id === "loginForm") {
+        
+        let firstName = document.getElementById("fname").value.trim();
+        let lastName = document.getElementById("lname").value.trim();
+        let email = document.getElementById("email").value.trim();
+        let password = document.getElementById("pass").value;
 
         let namePattern = /^[A-Za-z]{2,}$/;
         let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         let passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
 
-        if (!firstName || !namePattern.test(firstName)) {
+        if (!namePattern.test(firstName)) {
             alert("The first name consists of letters only (two letters or more)");
             e.preventDefault();
             return;
         }
         
-        if (!lastName || !namePattern.test(lastName)) {
+        if (!namePattern.test(lastName)) {
             alert("The Last Name consists of letters only (two letters or more)");
             e.preventDefault();
             return;
         }
 
-        if (!email || !emailPattern.test(email)) {
+        if (!emailPattern.test(email)) {
             alert("Email is incorrect.");
             e.preventDefault();
             return;
         }
 
-        if (!password || !passwordPattern.test(password)) {
+        if (!passwordPattern.test(password)) {
             alert("Password must be 8 characters long and include a capital letter, a lowercase letter, and a number.");      
             e.preventDefault();
             return;
         }
     }
+});
+
+//register form
+document.addEventListener("submit", function (e) {
     
-    else if (form.id === "register") {
-        let firstName = document.getElementById("fname")?.value.trim();
-        let lastName = document.getElementById("lname")?.value.trim();
-        let email = document.getElementById("email")?.value.trim();
-        let password = document.getElementById("pass")?.value;
-        let phone = document.getElementById("phone")?.value.trim();
-        let address = document.getElementById("address")?.value.trim();
+    if (e.target && (e.target.id === "register")) {
+        
+        let firstName = document.getElementById("fname").value.trim();
+        let lastName = document.getElementById("lname").value.trim();
+        let email = document.getElementById("email").value.trim();
+        let password = document.getElementById("pass").value;
+        let phone = document.getElementById("phone").value.trim();
+        let address = document.getElementById("address").value.trim();
+
 
         let namePattern = /^[A-Za-z]{2,}$/;
         let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         let passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
         let phonePattern = /^[0-9]{11}$/;
 
-        if (!firstName || !namePattern.test(firstName)) {
+        if (!namePattern.test(firstName)) {
             alert("First name must be letters only and at least 2 characters.");
             e.preventDefault();
             return;
         }
 
-        if (!lastName || !namePattern.test(lastName)) {
+        if (!namePattern.test(lastName)) {
             alert("Last name must be letters only and at least 2 characters.");
             e.preventDefault();
             return;
         }
 
-        if (!email || !emailPattern.test(email)) {
+        if (!emailPattern.test(email)) {
             alert("Please enter a valid email address.");
             e.preventDefault();
             return;
         }
 
-        if (!password || !passwordPattern.test(password)) {
+        if (!passwordPattern.test(password)) {
             alert("Password must be 8+ characters, with an uppercase, lowercase, and a number.");
             e.preventDefault();
             return;
         }
 
-        if (!phone || !phonePattern.test(phone)) {
+        if (!phonePattern.test(phone)) {
             alert("Please enter a valid 11-digit phone number.");
             e.preventDefault();
             return;
         }
 
-        if (!address || address.length < 10) {
-            alert("Please provide a more detailed address (at least 10 characters).");
+        if (address.length < 10) {
+            alert("Please provide a more detailed address.");
             e.preventDefault();
             return;
         }
     }
-    
-    else if (form.id === "contact") {
-        let firstName = document.getElementById("fname")?.value.trim();
-        let lastName = document.getElementById("lname")?.value.trim();
-        let subject = document.getElementById("Subject")?.value;
-        let message = document.getElementById("message")?.value.trim();
+});
+
+//contact us form
+document.addEventListener("submit", function (e) {
+
+    if (e.target && e.target.id === "contact") {
+        
+        let firstName = document.getElementById("fname").value.trim();
+        let lastName = document.getElementById("lname").value.trim();
+        let subject = document.getElementById("Subject").value;
+        let message = document.getElementById("message").value.trim();
 
         let namePattern = /^[A-Za-z]{2,}$/;
 
-        if (!firstName || !lastName || !namePattern.test(firstName) || !namePattern.test(lastName)) {
+
+        if (!namePattern.test(firstName) || !namePattern.test(lastName)) {
             alert("Names must be at least 2 characters long and contain only letters.");
             e.preventDefault();
             return;
         }
+
         
-        if (!subject || subject === "") {
+        if (subject === "" || subject === null) {
             alert("Please select a subject for your message.");
             e.preventDefault();
             return;
         }
+
         
-        if (!message || message.length < 10) {
+        if (message.length < 10) {
             alert("Please write a message with at least 10 characters.");
             e.preventDefault();
             return;
@@ -161,7 +175,6 @@ document.addEventListener("submit", function (e) {
     }
 });
 
-//menue
 
 
 

@@ -4,176 +4,176 @@
   include 'includes/header.php'; 
   include 'includes/navbar.php'; 
 ?>
-    <main class="hero position-relative w-100">
-    <div class="hero-overlay position-absolute top-0 start-0 w-100 h-100"></div>
-    <div class="hero-content position-relative d-flex flex-column align-items-center justify-content-center h-100 text-center px-3">
-        <h2 class="fw-bold">Baked to Perfection, Crafted for You</h2>
-        <p class="my-4 lh-lg">
-            Indulge in the art of artisanal baking, where every treat is handcrafted 
-            daily with premium ingredients and a touch of magic.
-        </p>
-        <div class="d-flex flex-wrap justify-content-center gap-3">
-            <a href="menu.php" class="hero-btn">View Menu</a>
-            <a href="" class="hero-btn">Best Sellers</a>
+    <main class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h2 class="fs-1">Baked to Perfection, Crafted for You</h2>
+            <p class="fs-4 my-4">
+                Indulge in the art of artisanal baking, where every treat is handcrafted 
+                daily with premium ingredients and a touch of magic.
+            </p>
+            <div class="hero-btns">
+                <a href="menu.php" class="hero-btn">View Menu</a>
+                <a href="contact.php" class="hero-btn">contact us</a>
+            </div>
         </div>
-    </div>
-</main>
+    </main>
 
 
-<section class="best">
+    <section class="best">
 
-        <div class="best-title">
-            <h2>best sallers</h2>
-            <div class="best-line"></div>
-        </div>
-
-        <div class="best-container">
-            <div class="wrapper" id="loop">
-                <div class="slide"><img src="assets/download (20).jpg"></div>
-                <div class="slide"><img src="assets/Brown Butter Cinnamon Rolls.jpg" alt="Best Seller 2"></div>
-                <div class="slide"><img src="assets/Pistachio Kunafa Cake  Crispy, Creamy, and Sweet.jpg" alt="Best Seller 3"></div>
-                <div class="slide"><img src="assets/So delicious food .jpg" alt="Best Seller 4"></div>
-                <div class="slide"><img src="assets/download (21).jpg" alt="Best Seller 5"></div>
-                <div class="slide"><img src="assets/download (24).jpg" alt="Best Seller 6"></div>
-                <div class="slide"><img src="assets/download (22).jpg" alt="Best Seller 7"></div>
-                <div class="slide"><img src="assets/Healthy Protein Donuts You’ll Actually Want to Eat.jpg" alt="Best Seller 8"></div>
+            <div class="best-title">
+                <h2>best sallers</h2>
+                <div class="best-line"></div>
             </div>
 
-        </div>
+            <div class="best-container">
+                <div class="wrapper" id="loop">
+                    <div class="slide"><img src="assets/download (20).jpg"></div>
+                    <div class="slide"><img src="assets/Brown Butter Cinnamon Rolls.jpg" alt="Best Seller 2"></div>
+                    <div class="slide"><img src="assets/Pistachio Kunafa Cake  Crispy, Creamy, and Sweet.jpg" alt="Best Seller 3"></div>
+                    <div class="slide"><img src="assets/So delicious food .jpg" alt="Best Seller 4"></div>
+                    <div class="slide"><img src="assets/download (21).jpg" alt="Best Seller 5"></div>
+                    <div class="slide"><img src="assets/download (24).jpg" alt="Best Seller 6"></div>
+                    <div class="slide"><img src="assets/download (22).jpg" alt="Best Seller 7"></div>
+                    <div class="slide"><img src="assets/Healthy Protein Donuts You’ll Actually Want to Eat.jpg" alt="Best Seller 8"></div>
+                </div>
 
-</section>
+            </div>
 
-<section class="background">
-    <div class="container mt-4">
-        <div class="section-title text-center mb-4">
-            <h2>Shop by Category</h2>
-            <p>Explore our delicious categories</p>
-        </div>
+    </section>
 
-        <div class="row g-4 justify-content-center">
-            <div class="col-md-3">
-                <div class="card">
-                    <img src="images/drinks.jpg">
-                    <div class="overlay">
-                        <h3>Drinks</h3>
-                        <div class="cart-controls">
-                            <a href="menu.php?cat=drinks" class="btn">View menu</a>
+    <section class="background">
+        <div class="container mt-4">
+            <div class="section-title text-center mb-4">
+                <h2>Shop by Category</h2>
+                <p>Explore our delicious categories</p>
+            </div>
+
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-3">
+                    <div class="card">
+                        <img src="images/drinks.jpg">
+                        <div class="overlay">
+                            <h3>Drinks</h3>
+                            <div class="cart-controls">
+                                <a href="menu.php?cat=drinks" class="btn">View menu</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card">
+                        <img src="images/desserts.jpg">
+                        <div class="overlay">
+                            <h3>Desserts</h3>
+                            <div class="cart-controls">
+                                <a href="menu.php?cat=western" class="btn">View menu</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card">
+                        <img src="images/cakes.png">
+                        <div class="overlay">
+                            <h3>Cakes</h3>
+                            <div class="cart-controls">
+                                <a href="menu.php?cat=cakes" class="btn">View menu</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card">
+                        <img src="images/boxes.jpg">
+                        <div class="overlay">
+                            <h3>Boxes</h3>
+                            <div class="cart-controls">
+                                <a href="menu.php?cat=boxes" class="btn">View menu</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-3">
-                <div class="card">
-                    <img src="images/desserts.jpg">
-                    <div class="overlay">
-                        <h3>Desserts</h3>
-                        <div class="cart-controls">
-                            <a href="menu.php?cat=western" class="btn">View menu</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="card">
-                    <img src="images/cakes.png">
-                    <div class="overlay">
-                        <h3>Cakes</h3>
-                        <div class="cart-controls">
-                            <a href="menu.php?cat=cakes" class="btn">View menu</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="card">
-                    <img src="images/boxes.jpg">
-                    <div class="overlay">
-                        <h3>Boxes</h3>
-                        <div class="cart-controls">
-                            <a href="menu.php?cat=boxes" class="btn">View menu</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
-<section class="choose">
+    <section class="choose">
         <div class="container"> 
             <div class="row align-items-center">
-             <div class="col-lg-6 choose-content">
-                <h2>Why Choose Our dessert shop?</h2>
-                <div class="choose-line"></div>
-                <p><i class="fa-solid fa-check"></i>Handcrafted with love. Baked fresh daily for your joy.</p>
-                <p><i class="fa-solid fa-check"></i>Natural flavors. Premium butter. No shortcuts, just taste.</p>
-                <p><i class="fa-solid fa-check"></i>From oven to heart.</p>
-                <p><i class="fa-solid fa-check"></i>Honest baking from our kitchen to your heart.</p>
-                <p><i class="fa-solid fa-check"></i>Driven by taste. Inspired by tradition. Perfectly sweet.</p>
-            </div>
-
-            <div class="col-lg-6 choose-video mt-4 mt-lg-0">
-                <div class="ratio ratio-16x9">
-                    <video controls loop autoplay muted>
-                        <source src="assets/3992584-uhd_4096_2160_25fps.mp4">
-                    </video>
+                <div class="col-lg-6 choose-content">
+                    <h2>Why Choose Our dessert shop?</h2>
+                    <div class="choose-line"></div>
+                    <p><i class="fa-solid fa-check"></i>Handcrafted with love. Baked fresh daily for your joy.</p>
+                    <p><i class="fa-solid fa-check"></i>Natural flavors. Premium butter. No shortcuts, just taste.</p>
+                    <p><i class="fa-solid fa-check"></i>From oven to heart.</p>
+                    <p><i class="fa-solid fa-check"></i>Honest baking from our kitchen to your heart.</p>
+                    <p><i class="fa-solid fa-check"></i>Driven by taste. Inspired by tradition. Perfectly sweet.</p>
                 </div>
-            </div>
 
+                <div class="col-lg-6 choose-video mt-4 mt-lg-0">
+                    <div class="ratio ratio-16x9">
+                        <video controls loop autoplay muted>
+                            <source src="assets/3992584-uhd_4096_2160_25fps.mp4">
+                        </video>
+                    </div>
+                </div>
+
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
     <section>
-    <div class="icons-section position-relative">
-        <div class="icons-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center">
-            <div class="container">
-                <div class="row justify-content-center text-center g-4">
-                    <div class="col-6 col-md-3">
-                        <div class="icon-content d-flex flex-column align-items-center">
-                            <img src="images/happy-costumers.png">
-                            <h3>10K+</h3>
-                            <p>Happy Customers</p>
+        <div class="icons-section position-relative">
+            <div class="icons-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center">
+                <div class="container">
+                    <div class="row justify-content-center text-center g-4">
+                        <div class="col-6 col-md-3">
+                            <div class="icon-content d-flex flex-column align-items-center">
+                                <img src="images/happy-costumers.png">
+                                <h3>10K+</h3>
+                                <p>Happy Customers</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-6 col-md-3">
-                        <div class="icon-content d-flex flex-column align-items-center">
-                            <img src="images/signature-desserts.png">
-                            <h3>20+</h3>
-                            <p>Signature Desserts</p>
+                        <div class="col-6 col-md-3">
+                            <div class="icon-content d-flex flex-column align-items-center">
+                                <img src="images/signature-desserts.png">
+                                <h3>20+</h3>
+                                <p>Signature Desserts</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-6 col-md-3">
-                        <div class="icon-content d-flex flex-column align-items-center">
-                            <img src="images/orders-served.png">
-                            <h3>40K+</h3>
-                            <p>Orders Served</p>
+                        <div class="col-6 col-md-3">
+                            <div class="icon-content d-flex flex-column align-items-center">
+                                <img src="images/orders-served.png">
+                                <h3>40K+</h3>
+                                <p>Orders Served</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-6 col-md-3">
-                        <div class="icon-content d-flex flex-column align-items-center">
-                            <img src="images/unique-recipes.png">
-                            <h3>50+</h3>
-                            <p>Unique Recipes</p>
+                        <div class="col-6 col-md-3">
+                            <div class="icon-content d-flex flex-column align-items-center">
+                                <img src="images/unique-recipes.png">
+                                <h3>50+</h3>
+                                <p>Unique Recipes</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="background">
+    <section class="background">
         <div class="section-title text-center mb-4">
             <h2>Our Team</h2>
             <p>Explore our Team members</p>
         </div>
-    <div class="team-container">
+        <div class="team-container">
 
             <div class="team-card">
                 <div class="img-box">
@@ -219,9 +219,9 @@
                 </div>
             </div>
         </div>
-</section>
+    </section>
 
-<section class="about-section">
+    <section class="about-section">
 
         <div class="container about-wrapper">
 
@@ -259,12 +259,12 @@
             </div>
 
         </div>
-</section>
+    </section>
 
     
-<button type="button" class="btn btn-brown btn-back-to-top" id="btn-back-to-top">
-  <i class="fas fa-arrow-up"></i>
-</button>
+    <button type="button" class="btn btn-brown btn-back-to-top" id="btn-back-to-top">
+    <i class="fas fa-arrow-up"></i>
+    </button>
 
 <?php include 'includes/footer.php';?>
 
