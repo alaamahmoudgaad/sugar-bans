@@ -94,7 +94,7 @@ $isLoggedIn = isset($_SESSION['user_id']) ? 'true' : 'false';
                 FROM products p
                 JOIN categories c
                 ON p.category_id = c.category_id
-                ORDER BY c.category_id
+               
             ");
 
             $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -145,7 +145,7 @@ $isLoggedIn = isset($_SESSION['user_id']) ? 'true' : 'false';
                 "eastern" => 8
             ];
 
-            $id = $map[$cat] ?? 1;
+            $id = $map[$cat] ?? null;
 
             $stmtSections = $connect->prepare("
                 SELECT category_id , name
@@ -264,7 +264,8 @@ function showCard($item){
 ?>
 
 <div class="product-card"
-     data-id="<?= $item['product_id'] ?>">
+     data-id="<?= $item['product_id'] ?>"
+     data-stock="<?= $stock ?>">
 
     <img src="<?= $img ?>"
          onerror="this.src='https://via.placeholder.com/300x280'">
@@ -330,8 +331,9 @@ document.querySelectorAll('.dropdown-sidebar').forEach(btn => {
     };
 
 });
-
 document.querySelectorAll('.product-card').forEach(card => {
+
+    let stock = parseInt(card.dataset.stock);
 
     let minus = card.querySelector('.minus');
 
@@ -347,11 +349,14 @@ document.querySelectorAll('.product-card').forEach(card => {
 
     plus.onclick = () => {
 
-        qty++;
+    if(qty >= stock){
+        alert('You have reached the maximum available stock');
+        return;
+    }
 
-        count.innerText = qty;
-
-    };
+    qty++;
+    count.innerText = qty;
+};
 
     minus.onclick = () => {
 
