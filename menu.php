@@ -6,7 +6,6 @@ include 'includes/header.php';
 include 'includes/navbar.php';
 
 $cat = $_GET['cat'] ?? 'all';
-
 $isLoggedIn = isset($_SESSION['user_id']) ? 'true' : 'false';
 ?>
 
@@ -24,55 +23,45 @@ $isLoggedIn = isset($_SESSION['user_id']) ? 'true' : 'false';
         <ul class="sidebar-menu">
 
             <li>
-                <a href="menu.php?cat=all"
-                   class="sidebar-btn <?= $cat=='all' ? 'active' : '' ?>">
+                <a href="menu.php?cat=all" class="sidebar-btn <?= $cat=='all' ? 'active' : '' ?>">
                    All Products
                 </a>
             </li>
 
             <li>
-                <a href="menu.php?cat=drinks"
-                   class="sidebar-btn <?= $cat=='drinks' ? 'active' : '' ?>">
+                <a href="menu.php?cat=drinks" class="sidebar-btn <?= $cat=='drinks' ? 'active' : '' ?>">
                    Drinks
                 </a>
             </li>
 
             <li>
-
-                <button class="sidebar-btn dropdown-sidebar">
-                    Desserts
-                </button>
+                <button class="sidebar-btn dropdown-sidebar">Desserts</button>
 
                 <ul class="submenu <?= ($cat=='western' || $cat=='eastern') ? 'show' : '' ?>">
 
                     <li>
-                        <a href="menu.php?cat=western"
-                           class="sub-btn <?= $cat=='western' ? 'active' : '' ?>">
+                        <a href="menu.php?cat=western" class="sub-btn <?= $cat=='western' ? 'active' : '' ?>">
                            Western Dessert
                         </a>
                     </li>
 
                     <li>
-                        <a href="menu.php?cat=eastern"
-                           class="sub-btn <?= $cat=='eastern' ? 'active' : '' ?>">
+                        <a href="menu.php?cat=eastern" class="sub-btn <?= $cat=='eastern' ? 'active' : '' ?>">
                            Eastern Dessert
                         </a>
                     </li>
 
                 </ul>
-
             </li>
 
             <li>
-                <a href="menu.php?cat=cakes"
-                   class="sidebar-btn <?= $cat=='cakes' ? 'active' : '' ?>">
+                <a href="menu.php?cat=cakes" class="sidebar-btn <?= $cat=='cakes' ? 'active' : '' ?>">
                    Cakes
                 </a>
             </li>
 
             <li>
-                <a href="menu.php?cat=boxes"
-                   class="sidebar-btn <?= $cat=='boxes' ? 'active' : '' ?>">
+                <a href="menu.php?cat=boxes" class="sidebar-btn <?= $cat=='boxes' ? 'active' : '' ?>">
                    Boxes
                 </a>
             </li>
@@ -83,180 +72,126 @@ $isLoggedIn = isset($_SESSION['user_id']) ? 'true' : 'false';
 
     <div class="products-container">
 
-        <?php
+<?php
 
-        if($cat == 'all'){
+if($cat == 'all'){
 
-            $stmt = $connect->query("
-                SELECT 
-                    p.*,
-                    c.name AS category_name
-                FROM products p
-                JOIN categories c
-                ON p.category_id = c.category_id
-               
-            ");
+    $stmt = $connect->query("
+        SELECT p.*, c.name AS category_name
+        FROM products p
+        JOIN categories c ON p.category_id = c.category_id
+    ");
 
-            $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            echo "<h2 class='section-title'>All Products</h2>";
+    echo "<h2 class='section-title'>All Products</h2>";
+    echo "<div class='products-grid'>";
 
-            echo "<div class='products-grid'>";
+    foreach($products as $item){
+        showCard($item, 'product');
+    }
 
-            foreach($products as $item){
+    echo "</div>";
+}
 
-                showCard($item);
+elseif($cat == 'boxes'){
 
-            }
+    $stmt = $connect->query("SELECT * FROM boxes");
+    $boxes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            echo "</div>";
+    echo "<h2 class='section-title'>Boxes</h2>";
+    echo "<div class='products-grid'>";
+
+    foreach($boxes as $item){
+
+        $item['product_id'] = $item['box_id'];
+        $item['product_name'] = $item['box_name'];
+        $item['product_price'] = $item['box_price'];
+        $item['product_image_url'] = $item['box_image_url'];
+
+        showCard($item, 'box');
+    }
+
+    echo "</div>";
+}
+
+
+else {
+
+    $map = [
+        "drinks" => 1,
+        "cakes" => 3,
+        "western" => 7,
+        "eastern" => 8
+    ];
+$id = $map[$cat] ?? 0;
+
+if ($id == 0) {
+    echo "<h2>Invalid Category</h2>";
+    exit;
+}
+
+    if(!$id){
+        echo "<h2 class='section-title'>Invalid Category</h2>";
+        exit;
+    }
+
+    $stmtSections = $connect->prepare("
+        SELECT category_id, name
+        FROM categories
+        WHERE parent_id = ?
+    ");
+
+    $stmtSections->execute([$id]);
+    $sections = $stmtSections->fetchAll(PDO::FETCH_ASSOC);
+
+    /* main category products */
+    $main = $connect->prepare("SELECT * FROM products WHERE category_id = ?");
+    $main->execute([$id]);
+    $mainItems = $main->fetchAll(PDO::FETCH_ASSOC);
+
+    if(!empty($mainItems)){
+        echo "<h2 class='section-title'>".ucfirst($cat)."</h2>";
+        echo "<div class='products-grid'>";
+
+        foreach($mainItems as $item){
+            showCard($item, 'product');
         }
 
-        elseif($cat == 'boxes'){
+        echo "</div>";
+    }
 
-            $stmt = $connect->query("SELECT * FROM boxes");
+    foreach($sections as $section){
 
-            $boxes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        echo "<h2 class='section-title'>{$section['name']}</h2>";
 
-            echo "<h2 class='section-title'>Boxes</h2>";
+        $stmtProducts = $connect->prepare("
+            SELECT * FROM products WHERE category_id = ?
+        ");
 
-            echo "<div class='products-grid'>";
+        $stmtProducts->execute([$section['category_id']]);
+        $products = $stmtProducts->fetchAll(PDO::FETCH_ASSOC);
 
-            foreach($boxes as $item){
+        if(empty($products)) continue;
 
-                $item['product_name'] = $item['box_name'];
-                $item['product_price'] = $item['box_price'];
-                $item['product_image_url'] = $item['box_image_url'];
-                $item['product_id'] = $item['box_id'];
+        echo "<div class='products-grid'>";
 
-                showCard($item);
-
-            }
-
-            echo "</div>";
+        foreach($products as $item){
+            showCard($item, 'product');
         }
 
-        else{
+        echo "</div>";
+    }
+}
 
-            $map = [
-                "drinks" => 1,
-                "cakes" => 3,
-                "western" => 7,
-                "eastern" => 8
-            ];
-
-            $id = $map[$cat] ?? null;
-
-            $stmtSections = $connect->prepare("
-                SELECT category_id , name
-                FROM categories
-                WHERE parent_id = ?
-            ");
-
-            $stmtSections->execute([$id]);
-
-            $sections = $stmtSections->fetchAll(PDO::FETCH_ASSOC);
-
-            if(empty($sections)){
-
-                $stmt = $connect->prepare("
-                    SELECT *
-                    FROM products
-                    WHERE category_id = ?
-                ");
-
-                $stmt->execute([$id]);
-
-                $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-                echo "<h2 class='section-title'>"
-                     . ucfirst($cat) .
-                     "</h2>";
-
-                echo "<div class='products-grid'>";
-
-                foreach($products as $item){
-
-                    showCard($item);
-
-                }
-
-                echo "</div>";
-            }
-
-            else{
-
-                $mainProducts = $connect->prepare("
-                    SELECT *
-                    FROM products
-                    WHERE category_id = ?
-                ");
-
-                $mainProducts->execute([$id]);
-
-                $mainItems = $mainProducts->fetchAll(PDO::FETCH_ASSOC);
-
-                if(!empty($mainItems)){
-
-                    echo "<h2 class='section-title'>"
-                         . ucfirst($cat) .
-                         "</h2>";
-
-                    echo "<div class='products-grid'>";
-
-                    foreach($mainItems as $item){
-
-                        showCard($item);
-
-                    }
-
-                    echo "</div>";
-                }
-
-                foreach($sections as $section){
-
-                    echo "<h2 class='section-title'>"
-                         . $section['name'] .
-                         "</h2>";
-
-                    $stmtProducts = $connect->prepare("
-                        SELECT *
-                        FROM products
-                        WHERE category_id = ?
-                    ");
-
-                    $stmtProducts->execute([
-                        $section['category_id']
-                    ]);
-
-                    $products = $stmtProducts->fetchAll(PDO::FETCH_ASSOC);
-
-                    if(empty($products)){
-                        continue;
-                    }
-
-                    echo "<div class='products-grid'>";
-
-                    foreach($products as $item){
-
-                        showCard($item);
-
-                    }
-
-                    echo "</div>";
-                }
-            }
-        }
-
-        ?>
+?>
 
     </div>
-
 </div>
 
 <?php
 
-function showCard($item){
+function showCard($item, $type){
 
     $img = $item['product_image_url'] ?? '';
     $stock = $item['stock'] ?? 0;
@@ -265,42 +200,29 @@ function showCard($item){
 
 <div class="product-card"
      data-id="<?= $item['product_id'] ?>"
+     data-type="<?= $type ?>"
      data-stock="<?= $stock ?>">
 
-    <img src="<?= $img ?>"
-         onerror="this.src='https://via.placeholder.com/300x280'">
+    <img src="<?= $img ?>" onerror="this.src='https://via.placeholder.com/300x280'">
 
     <h4><?= $item['product_name'] ?></h4>
 
-    <p>
-        <?= $item['description'] ?? 'Delicious item' ?>
-    </p>
+    <p><?= $item['description'] ?? 'Delicious item' ?></p>
 
-    <div class="price">
-        <?= $item['product_price'] ?> EGP
-    </div>
+    <div class="price"><?= $item['product_price'] ?> EGP</div>
 
     <?php if($stock > 0): ?>
 
     <div class="cart-controls">
-
         <button class="minus">-</button>
-
         <span class="count">0</span>
-
         <button class="plus">+</button>
-
-        <button class="add-btn">
-            Add to Cart
-        </button>
-
+        <button class="add-btn">Add to Cart</button>
     </div>
 
     <?php else: ?>
 
-    <div class="out-of-stock">
-        Out Of Stock
-    </div>
+    <div class="out-of-stock">Out Of Stock</div>
 
     <?php endif; ?>
 
@@ -312,123 +234,85 @@ function showCard($item){
 
 const isLoggedIn = <?= $isLoggedIn ?>;
 
-const toggleBtn = document.getElementById('toggleBtn');
-
-const sidebar = document.getElementById('mainSidebar');
-
-toggleBtn.onclick = function(){
-
-    sidebar.classList.toggle('collapsed');
-
+document.getElementById('toggleBtn').onclick = function () {
+    document.getElementById('mainSidebar').classList.toggle('collapsed');
 };
 
 document.querySelectorAll('.dropdown-sidebar').forEach(btn => {
-
-    btn.onclick = function(){
-
-        this.nextElementSibling.classList.toggle('show');
-
-    };
-
+    btn.onclick = () => btn.nextElementSibling.classList.toggle('show');
 });
+
 document.querySelectorAll('.product-card').forEach(card => {
 
-    let stock = parseInt(card.dataset.stock);
+    let stock = parseInt(card.dataset.stock || 0);
+    let qty = 0;
 
     let minus = card.querySelector('.minus');
-
     let plus = card.querySelector('.plus');
-
     let count = card.querySelector('.count');
-
     let addBtn = card.querySelector('.add-btn');
 
-    if(!addBtn) return;
-
-    let qty = 0;
+    if (!addBtn) return;
 
     plus.onclick = () => {
 
-    if(qty >= stock){
-        alert('You have reached the maximum available stock');
-        return;
-    }
+        if (stock > 0 && qty >= stock) {
+            alert('You reached maximum available stock');
+            return;
+        }
 
-    qty++;
-    count.innerText = qty;
-};
+        qty++;
+        count.innerText = qty;
+    };
 
     minus.onclick = () => {
 
-        if(qty > 0){
-
+        if (qty > 0) {
             qty--;
-
             count.innerText = qty;
-
         }
-
     };
 
+    
     addBtn.onclick = () => {
 
-        if(!isLoggedIn){
-
+        if (!isLoggedIn) {
             alert('Please login first');
-
             window.location.href = 'login.php';
-
             return;
         }
 
-        if(qty <= 0){
-
+        if (qty <= 0) {
             alert('Please select quantity');
-
             return;
         }
 
-        let productName =
-            card.querySelector('h4').innerText;
+        let name = card.querySelector('h4').innerText;
 
-        let confirmAdd = confirm(
-            `Are you sure you want to add ${qty} × ${productName} to cart?`
-        );
-
-        if(!confirmAdd){
-            return;
-        }
+        if (!confirm(`Add ${qty} × ${name} to cart?`)) return;
 
         let formData = new FormData();
-
         formData.append('id', card.dataset.id);
-
         formData.append('qty', qty);
+        formData.append('type', card.dataset.type);
 
         fetch('cart.php', {
+            method: 'POST',
+            body: formData
+        }).then(() => {
 
-            method:'POST',
-
-            body:formData
-
-        })
-
-        .then(() => {
-
-            alert(`${productName} added to cart successfully`);
+            alert('Added successfully');
 
             qty = 0;
-
             count.innerText = 0;
-
         });
-
     };
 
 });
+
 </script>
 
 <?php 
 $connect = null;
-include 'includes/footer.php'; 
+include 'includes/footer.php';
 ?>
