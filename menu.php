@@ -4,7 +4,7 @@ include 'includes/header.php';
 include 'includes/navbar.php';
 ?>
 
-<link rel="stylesheet" href="css/style.css">
+<!-- <link rel="stylesheet" href="css/style.css"> -->
 
 <div class="main-container">
     <aside class="sidebar" id="mainSidebar">
