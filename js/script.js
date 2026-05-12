@@ -1,174 +1,182 @@
+
 function closeMenu() {
-    if ($('.navbar-collapse').hasClass('show')) {
+    if ($('.navbar-collapse').length && $('.navbar-collapse').hasClass('show')) {
         $('.navbar-toggler').click();
     }
 }
-$('.nav-link').click(closeMenu);
 
-var loopTrack = document.getElementById('loop');
+if (document.querySelectorAll('.nav-link').length > 0) {
+    $('.nav-link').click(closeMenu);
+}
+
+
+const loopTrack = document.getElementById('loop');
 
 if (loopTrack) {
-    var images = loopTrack.innerHTML;
+    const images = loopTrack.innerHTML;
     loopTrack.innerHTML = images + images;
 }
 
+
 function AddressShow(show) {
-    const address= document.getElementById('address-div');
-    if (show) {
-        address.style.display = 'block';
-    } else {
-        address.style.display = 'none';
-    }
+    const address = document.getElementById('address-div');
+
+    if (!address) return;
+
+    address.style.display = show ? 'block' : 'none';
 }
 
-//Main page
-let mybutton = document.getElementById("btn-back-to-top");
 
-    window.onscroll = function () {
-        scrollFunction();
-    };
 
-    function scrollFunction() {
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        mybutton.style.display = "block";
-    } else {
-        mybutton.style.display = "none";
-    }
-    }
+const mybutton = document.getElementById("btn-back-to-top");
 
-    mybutton.addEventListener("click", backToTop);
+if (mybutton) {
 
-    function backToTop() {
+    window.addEventListener("scroll", function () {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            mybutton.style.display = "block";
+        } else {
+            mybutton.style.display = "none";
+        }
+    });
+
+    mybutton.addEventListener("click", function () {
         window.scrollTo({
             top: 0,
             behavior: "smooth"
         });
-    }
-//vaildation
-document.addEventListener("submit", function (e) {
-      
-    if (e.target && e.target.id === "loginForm") {
-        
-        let firstName = document.getElementById("fname").value.trim();
-        let lastName = document.getElementById("lname").value.trim();
-        let email = document.getElementById("email").value.trim();
-        let password = document.getElementById("pass").value;
+    });
+}
 
-        let namePattern = /^[A-Za-z]{2,}$/;
-        let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        let passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+/* =========================
+   LOGIN FORM VALIDATION
+
+document.addEventListener("submit", function (e) {
+
+    if (e.target && e.target.id === "loginForm") {
+
+        const firstName = document.getElementById("fname")?.value.trim();
+        const lastName = document.getElementById("lname")?.value.trim();
+        const email = document.getElementById("email")?.value.trim();
+        const password = document.getElementById("pass")?.value;
+
+        const namePattern = /^[A-Za-z]{2,}$/;
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
 
         if (!namePattern.test(firstName)) {
-            alert("The first name consists of letters only (two letters or more)");
+            alert("First name must be at least 2 letters.");
             e.preventDefault();
             return;
         }
-        
+
         if (!namePattern.test(lastName)) {
-            alert("The Last Name consists of letters only (two letters or more)");
+            alert("Last name must be at least 2 letters.");
             e.preventDefault();
             return;
         }
 
         if (!emailPattern.test(email)) {
-            alert("Email is incorrect.");
+            alert("Invalid email.");
             e.preventDefault();
             return;
         }
 
         if (!passwordPattern.test(password)) {
-            alert("Password must be 8 characters long and include a capital letter, a lowercase letter, and a number.");      
+            alert("Password must include uppercase, lowercase, number and 8+ characters.");
             e.preventDefault();
             return;
         }
     }
 });
+*/
+/* =========================
+   REGISTER FORM VALIDATION
+========================= */
 
-//register form
 document.addEventListener("submit", function (e) {
-    
-    if (e.target && (e.target.id === "register")) {
-        
-        let firstName = document.getElementById("fname").value.trim();
-        let lastName = document.getElementById("lname").value.trim();
-        let email = document.getElementById("email").value.trim();
-        let password = document.getElementById("pass").value;
-        let phone = document.getElementById("phone").value.trim();
-        let address = document.getElementById("address").value.trim();
 
+    if (e.target && e.target.id === "register") {
 
-        let namePattern = /^[A-Za-z]{2,}$/;
-        let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        let passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-        let phonePattern = /^[0-9]{11}$/;
+        const firstName = document.getElementById("fname")?.value.trim();
+        const lastName = document.getElementById("lname")?.value.trim();
+        const email = document.getElementById("email")?.value.trim();
+        const password = document.getElementById("pass")?.value;
+        const phone = document.getElementById("phone")?.value.trim();
+        const address = document.getElementById("address")?.value.trim();
+
+        const namePattern = /^[A-Za-z]{2,}$/;
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+        const phonePattern = /^[0-9]{11}$/;
 
         if (!namePattern.test(firstName)) {
-            alert("First name must be letters only and at least 2 characters.");
+            alert("First name invalid.");
             e.preventDefault();
             return;
         }
 
         if (!namePattern.test(lastName)) {
-            alert("Last name must be letters only and at least 2 characters.");
+            alert("Last name invalid.");
             e.preventDefault();
             return;
         }
 
         if (!emailPattern.test(email)) {
-            alert("Please enter a valid email address.");
+            alert("Invalid email.");
             e.preventDefault();
             return;
         }
 
         if (!passwordPattern.test(password)) {
-            alert("Password must be 8+ characters, with an uppercase, lowercase, and a number.");
+            alert("Weak password.");
             e.preventDefault();
             return;
         }
 
         if (!phonePattern.test(phone)) {
-            alert("Please enter a valid 11-digit phone number.");
+            alert("Phone must be 11 digits.");
             e.preventDefault();
             return;
         }
 
         if (address.length < 10) {
-            alert("Please provide a more detailed address.");
+            alert("Address too short.");
             e.preventDefault();
             return;
         }
     }
 });
 
-//contact us form
+/* =========================
+   CONTACT US VALIDATION
+========================= */
+
 document.addEventListener("submit", function (e) {
 
     if (e.target && e.target.id === "contact") {
-        
-        let firstName = document.getElementById("fname").value.trim();
-        let lastName = document.getElementById("lname").value.trim();
-        let subject = document.getElementById("Subject").value;
-        let message = document.getElementById("message").value.trim();
 
-        let namePattern = /^[A-Za-z]{2,}$/;
+        const firstName = document.getElementById("fname")?.value.trim();
+        const lastName = document.getElementById("lname")?.value.trim();
+        const subject = document.getElementById("Subject")?.value;
+        const message = document.getElementById("message")?.value.trim();
 
+        const namePattern = /^[A-Za-z]{2,}$/;
 
         if (!namePattern.test(firstName) || !namePattern.test(lastName)) {
-            alert("Names must be at least 2 characters long and contain only letters.");
+            alert("Invalid name.");
             e.preventDefault();
             return;
         }
 
-        
-        if (subject === "" || subject === null) {
-            alert("Please select a subject for your message.");
+        if (!subject) {
+            alert("Select subject.");
             e.preventDefault();
             return;
         }
 
-        
         if (message.length < 10) {
-            alert("Please write a message with at least 10 characters.");
+            alert("Message too short.");
             e.preventDefault();
             return;
         }
@@ -178,4 +186,117 @@ document.addEventListener("submit", function (e) {
 
 
 
+const toggleBtn = document.getElementById('toggleBtn');
 
+if (toggleBtn) {
+    toggleBtn.onclick = function () {
+        const sidebar = document.getElementById('mainSidebar');
+
+        if (sidebar) {
+            sidebar.classList.toggle('collapsed');
+        }
+    };
+}
+
+document.querySelectorAll('.dropdown-sidebar').forEach(btn => {
+
+    btn.onclick = () => {
+        btn.nextElementSibling.classList.toggle('show');
+    };
+
+});
+
+document.querySelectorAll('.product-card').forEach(card => {
+
+    let stock = parseInt(card.dataset.stock || 0);
+
+    let qty = 0;
+
+    let minus = card.querySelector('.minus');
+    let plus = card.querySelector('.plus');
+    let count = card.querySelector('.count');
+    let addBtn = card.querySelector('.add-btn');
+
+    if (!addBtn) {
+        return;
+    }
+
+    plus.onclick = () => {
+
+        if (stock > 0 && qty >= stock) {
+            alert('You reached maximum available stock');
+            return;
+        }
+
+        qty++;
+
+        count.innerText = qty;
+    };
+
+    minus.onclick = () => {
+
+        if (qty > 0) {
+
+            qty--;
+
+            count.innerText = qty;
+        }
+
+    };
+
+    addBtn.onclick = () => {
+
+        if (!isLoggedIn) {
+
+            alert('Please login first');
+
+            window.location.href = 'login.php';
+
+            return;
+        }
+
+        if (qty <= 0) {
+
+            alert('Please select quantity');
+
+            return;
+        }
+
+        let name = card.querySelector('h4').innerText;
+
+        if (!confirm(`Add ${qty} × ${name} to cart?`)) {
+            return;
+        }
+
+        let formData = new FormData();
+
+        formData.append('id', card.dataset.id);
+        formData.append('qty', qty);
+        formData.append('type', card.dataset.type);
+
+        fetch('cart.php', {
+            method: 'POST',
+            body: formData
+        })
+
+        .then(response => response.text())
+
+        .then(() => {
+
+            alert('Added successfully');
+
+            qty = 0;
+
+            count.innerText = 0;
+
+        })
+
+        .catch(() => {
+
+            alert('Something went wrong');
+
+        });
+
+    };
+
+});
