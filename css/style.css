@@ -556,11 +556,11 @@ footer img{
 }
 
 .cart-controls a {
-    background: linear-gradient(135deg,#e0c9a1, #a67c52);
+    background: #e7d8c8;
     border: none;
     padding: 8px 20px;
     border-radius: 25px;
-    color: white;
+    color: #2c1e12;
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s ease;
@@ -573,7 +573,8 @@ footer img{
 .cart-controls a:hover {
     transform: translateY(-5px) scale(1.05);
     box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-    background: linear-gradient(135deg, #ddbd87, #9c6e3d);
+    color: white;
+    background: #a58467;
 }
 
 /*__________________________ icons section __________________________*/
