@@ -1195,11 +1195,11 @@ footer img{
         height:260px;
     }
 
-    .section-title{
+    .menu-title{
         font-size:32px;
     }
 
-    .section-title::before{
+    .menu-title::before{
         height:34px;
     }
 
