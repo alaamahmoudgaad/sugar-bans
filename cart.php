@@ -53,7 +53,7 @@ $totalItems = 0;
 ?>
 
 <div class="form-bg">
-    <div class="order-summary-box">
+    <div class="order-summary-box mb-2">
         <h5 class="border-bottom pb-2">Order Summary</h5>
         <?php if (!empty($_SESSION['cart'])): ?>
             <?php foreach ($_SESSION['cart'] as $item): ?>
