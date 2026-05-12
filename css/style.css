@@ -431,7 +431,7 @@ body{
     color: #4c3a2f;
 }
 .log-card h2{
-    color: #9d8162;
+    color: #eed9c0;
 }
 .overlay {
     position: absolute;
@@ -500,9 +500,10 @@ footer img{
 .card {
     position: relative;
     width: 100%;
-    border-radius: 15px;
+    border-radius: 10px 20% ;
     overflow: hidden;
     margin-bottom: 15px;
+    border: 2px dashed rgb(167, 136, 108);
 }
 
 .card img {
@@ -673,7 +674,7 @@ footer img{
   height: 100px;
   border-radius: 50%;
   overflow: hidden;
-  border: 5px solid #fff;
+  border: 3px dashed rgb(167, 136, 108);
   transition: 0.4s;
 }
 
@@ -1012,10 +1013,10 @@ footer img{
 }
 
 .product-card{
-    background:white;
+    background:rgb(247, 241, 235);
     border-radius:16px;
     overflow:hidden;
-    box-shadow:0 3px 12px rgba(0,0,0,0.08);
+    box-shadow:0 10px 15px rgba(0,0,0,0.1);
     transition:0.3s;
     text-align:center;
 }
@@ -1068,7 +1069,7 @@ footer img{
     height:32px;
     border:none;
     border-radius:8px;
-    background:#bfa88f;
+    background:#eed9c0;
     color:#2c1e12;
     font-size:20px;
     font-weight:700;
@@ -1095,8 +1096,8 @@ footer img{
 }
 
 .add-btn{
-    background:#bfa88f;
-    color:white;
+    background:#eed9c0;
+    color:#2c1e12;
     border:none;
     border-radius:10px;
     padding:10px 18px;
@@ -1109,6 +1110,7 @@ footer img{
 
 .add-btn:hover{
     background:#2c1e12;
+    color:white;
 }
 
 .out-of-stock{
