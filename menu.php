@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'includes/db.php';
+
 include 'includes/header.php';
 include 'includes/navbar.php';
 
@@ -21,7 +22,6 @@ $isLoggedIn = isset($_SESSION['user_id']);
             <li>
                 <a href="menu.php?cat=all" class="sidebar-btn <?= $cat == 'all' ? 'active' : '' ?>"> All Products </a>
             </li>
-
             <li>
                 <a href="menu.php?cat=drinks" class="sidebar-btn <?= $cat == 'drinks' ? 'active' : '' ?>"> Drinks </a>
             </li>
@@ -65,7 +65,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
             $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $stmt = null;
 
-            echo "<h2 class='section-title'>All Products</h2>";
+            echo "<h2 class='menu-title'>All Products</h2>";
             echo "<div class='products-grid'>";
 
             foreach ($products as $item) {
@@ -78,7 +78,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
             $boxes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $stmt = null;
 
-            echo "<h2 class='section-title'>Boxes</h2>";
+            echo "<h2 class='menu-title'>Boxes</h2>";
             echo "<div class='products-grid'>";
 
             foreach ($boxes as $item) {
@@ -99,7 +99,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
             $id = $map[$cat] ?? 0;
             if ($id === 0) {
 
-                echo "<h2 class='section-title'>Invalid Category</h2>";
+                echo "<h2 class='menu-title'>Invalid Category</h2>";
                 include 'includes/footer.php';
                 $connect = null;
                 exit;
@@ -125,7 +125,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
             $mainItems = $main->fetchAll(PDO::FETCH_ASSOC);
             $main = null;
             if (!empty($mainItems)) {
-                echo "<h2 class='section-title'>" . htmlspecialchars(ucfirst($cat)) . "</h2>";
+                echo "<h2 class='menu-title'>" . htmlspecialchars(ucfirst($cat)) . "</h2>";
                 echo "<div class='products-grid'>";
                 foreach ($mainItems as $item) {
                     showCard($item, 'product');
@@ -149,7 +149,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
                     continue;
                 }
 
-                echo "<h2 class='section-title'>" . htmlspecialchars($section['name']) . "</h2>";
+                echo "<h2 class='menu-title'>" . htmlspecialchars($section['name']) . "</h2>";
 
                 echo "<div class='products-grid'>";
 

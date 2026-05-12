@@ -5,9 +5,11 @@
 }
 body{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: #faf0e3;
+
 }
 .navbarcss {
-    background-color: #b19a80 ;
+    background-color: #eed9c0 ;
     padding: 8px 0;
     position: fixed;
     top: 0;
@@ -155,8 +157,8 @@ body{
     flex-shrink: 0;
     border-radius: 10px;
     text-decoration: none;
-    background-color: #d6b794;
-    color: rgb(86 64 31);
+    background-color: #eed9c0;
+    color: rgb(129, 98, 52);
     font-size: 18px;
     font-weight: 900;
     text-transform: uppercase;
@@ -169,7 +171,7 @@ body{
     transform: scale(1.04);
     box-shadow: 0px 10px 10px #39261a72;
     color: #ffffe0;
-    background-color: #643e2e;
+    background-color: #8d5841;
     text-decoration: none;
 }
 /* ////////////////////////////////////////////// */
@@ -432,7 +434,7 @@ body{
     color: #4c3a2f;
 }
 .log-card h2{
-    color: #9d8162;
+    color: #eed9c0;
 }
 .overlay {
     position: absolute;
@@ -452,7 +454,7 @@ body{
 /* __________________________foooter______________________________*/
 
 footer {
-    background: linear-gradient(to bottom, #c6ac8f, #825e53bd);
+    background: linear-gradient(to bottom, #eed9c0, #825e53bd);
     position: relative;
     z-index: 10;
 }
@@ -501,9 +503,10 @@ footer img{
 .card {
     position: relative;
     width: 100%;
-    border-radius: 15px;
+    border-radius: 10px 20% ;
     overflow: hidden;
     margin-bottom: 15px;
+    border: 2px dashed rgb(167, 136, 108);
 }
 
 .card img {
@@ -556,11 +559,11 @@ footer img{
 }
 
 .cart-controls a {
-    background: linear-gradient(135deg,#e0c9a1, #a67c52);
+    background: #e7d8c8;
     border: none;
     padding: 8px 20px;
     border-radius: 25px;
-    color: white;
+    color: #2c1e12;
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s ease;
@@ -573,7 +576,8 @@ footer img{
 .cart-controls a:hover {
     transform: translateY(-5px) scale(1.05);
     box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-    background: linear-gradient(135deg, #ddbd87, #9c6e3d);
+    color: white;
+    background: #a58467;
 }
 
 /*__________________________ icons section __________________________*/
@@ -674,7 +678,7 @@ footer img{
   height: 100px;
   border-radius: 50%;
   overflow: hidden;
-  border: 5px solid #fff;
+  border: 3px dashed rgb(167, 136, 108);
   transition: 0.4s;
 }
 
@@ -724,7 +728,6 @@ footer img{
 
 .about-section {
   padding: 150px 20px;
-  background: #fff8f2;
   font-family: Arial, sans-serif;
 }
 
@@ -851,7 +854,7 @@ footer img{
 
 .sidebar{
     width:240px;
-    background:#bfa88f;
+    background:#eed9c0 ;
     border-radius:22px;
     padding:20px 18px;
     position:sticky;
@@ -920,7 +923,7 @@ footer img{
     border-radius:12px;
     background:transparent;
     text-decoration:none;
-    color:#2c1e12;
+    color:#503721;
     font-size:16px;
     font-weight:700;
     cursor:pointer;
@@ -986,7 +989,7 @@ footer img{
     min-height:70vh;
 }
 
-.section-title{
+.menu-title{
     font-size:30px;
     font-weight:700;
     color:#2c1e12;
@@ -995,14 +998,14 @@ footer img{
     padding-left:18px;
 }
 
-.section-title::before{
+.menu-title::before{
     content:'';
     position:absolute;
     left:0;
     top:5px;
     width:5px;
     height:38px;
-    background:#ca8740;
+    background:#d18d47;
     border-radius:10px;
 }
 
@@ -1013,10 +1016,10 @@ footer img{
 }
 
 .product-card{
-    background:white;
+    background:rgb(247, 241, 235);
     border-radius:16px;
     overflow:hidden;
-    box-shadow:0 3px 12px rgba(0,0,0,0.08);
+    box-shadow:0 10px 15px rgba(0,0,0,0.1);
     transition:0.3s;
     text-align:center;
 }
@@ -1051,7 +1054,7 @@ footer img{
 .price{
     font-size:22px;
     font-weight:800;
-    color:#ca8740;
+    color:#d18d47;
     margin-bottom:15px;
 }
 
@@ -1069,7 +1072,7 @@ footer img{
     height:32px;
     border:none;
     border-radius:8px;
-    background:#bfa88f;
+    background:#eed9c0;
     color:#2c1e12;
     font-size:20px;
     font-weight:700;
@@ -1096,8 +1099,8 @@ footer img{
 }
 
 .add-btn{
-    background:#bfa88f;
-    color:white;
+    background:#eed9c0;
+    color:#2c1e12;
     border:none;
     border-radius:10px;
     padding:10px 18px;
@@ -1110,6 +1113,7 @@ footer img{
 
 .add-btn:hover{
     background:#2c1e12;
+    color:white;
 }
 
 .out-of-stock{
@@ -1196,11 +1200,11 @@ footer img{
         height:260px;
     }
 
-    .section-title{
+    .menu-title{
         font-size:32px;
     }
 
-    .section-title::before{
+    .menu-title::before{
         height:34px;
     }
 
