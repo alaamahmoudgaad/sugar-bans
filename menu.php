@@ -9,8 +9,6 @@ $cat = $_GET['cat'] ?? 'all';
 $isLoggedIn = isset($_SESSION['user_id']) ? 'true' : 'false';
 ?>
 
-<!-- <link rel="stylesheet" href="css/style.css"> -->
-
 <div class="main-container">
 
     <aside class="sidebar" id="mainSidebar">

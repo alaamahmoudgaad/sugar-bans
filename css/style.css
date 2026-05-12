@@ -350,6 +350,9 @@ body{
     background-color: #f5f1ea;
     color: #4c3a2f;
 }
+.card-style{
+    background-color: #fdfdfd; 
+}
 
 /* ________________________cart ____________________________ */
 .order-summary-box {
