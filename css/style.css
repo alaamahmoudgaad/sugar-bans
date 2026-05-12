@@ -5,6 +5,8 @@
 }
 body{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: #faf0e3;
+
 }
 .navbarcss {
     background-color: #eed9c0 ;
@@ -725,7 +727,6 @@ footer img{
 
 .about-section {
   padding: 150px 20px;
-  background: #fff8f2;
   font-family: Arial, sans-serif;
 }
 
