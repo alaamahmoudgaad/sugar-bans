@@ -9,7 +9,7 @@ $cat = $_GET['cat'] ?? 'all';
 $isLoggedIn = isset($_SESSION['user_id']);
 ?>
 
-<link rel="stylesheet" href="css/style.css">
+<!-- <link rel="stylesheet" href="css/style.css"> -->
 
 <div class="main-container">
 
