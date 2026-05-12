@@ -4,13 +4,12 @@
   include 'includes/header.php'; 
   include 'includes/navbar.php'; 
 
-  if (isset($_POST['contact'])) {
+  if ($_SERVER['REQUEST_METHOD' ] == "POST") {
     $fname    = trim($_POST['fname']);
     $lname    = trim($_POST['lname']);
     $email    = trim($_POST['email']);
     $subject = htmlspecialchars(trim($_POST['subject']));
     $message = htmlspecialchars(trim($_POST['message']));
-
 
     if (empty($fname) || empty($lname) || empty($email) || empty($subject) || empty($message)){
         $connect = null;
@@ -60,8 +59,7 @@
 ?>
 <div class="form-bg">
 <div class="container my-5 ">
-    <div class="row  shadow" style="background-color: #fdfdfd;">
-        
+    <div class="row shadow card-style my-5 " >
         <div class="col-md-6 p-5">
             <h2 class=" mb-2">Contact Us</h2>
             <p class="mb-4">We'd love to hear from you. Please fill out the form below.</p>

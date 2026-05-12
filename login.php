@@ -11,7 +11,7 @@ if($_SERVER['REQUEST_METHOD' ] == "POST"){
     $email    = trim($_POST['email']);
     $password = $_POST['pass'];
 
-    if (empty($fname) || empty($lname) || empty($email) || empty($password)) {
+    if (empty($fname) || empty ($lname) || empty($email) || empty($password)) {
          $connect = null;
         header("Location: login.php");      
         exit();
@@ -28,26 +28,21 @@ if($_SERVER['REQUEST_METHOD' ] == "POST"){
             $_SESSION['user_fname'] = $result['first_name'];
             $_SESSION['user_lname'] = $result['last_name'];    
             $_SESSION['user_email'] = $result['email']; 
+            $_SESSION['phone'] = $result['phone'] ;
             $_SESSION['role'] = $result['role']; 
 
             $statement = null;
             $connect = null;
 
-            if (isset($_SESSION['contact_message'])) {
-                header("Location: contact.php");
+            if ($_SESSION['role'] === 'admin'){
+                header("Location: Admin/dashboard.php");
                 exit();
-            } 
-            else {
-                if ($_SESSION['role'] === 'admin'){
-                    header("Location: Admin/dashboard.php");
-                    exit();
-                }
-                else{
-                    header("Location: index.php");
-                    exit();
-                }
             }
-            
+            else{
+                header("Location: index.php");
+                exit();
+             }
+                        
         } 
          else {
             $statement = null;

@@ -52,6 +52,7 @@
         }
 
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        
         $statement = $connect->prepare("INSERT INTO users (first_name, last_name, email, `password`, phone) VALUES (?, ?, ?, ? ,? )");
         $statement->execute([$fname, $lname, $email, $hashed_password ,$phone]);
 
@@ -69,7 +70,7 @@
 
 
 <div class="form-bg">
-   <h2 class="text-center mb-4" >Start Your Journey with Sugar BANS</h2>
+   <h2 class="text-center my-4" >Start Your Journey with Sugar BANS</h2>
 
 <div class="order-card pb-3">
     <?php if (isset($_SESSION['error_msg'])){
@@ -77,7 +78,7 @@
         unset($_SESSION['error_msg']);
     ?>
  
-    <h3>Create Your Account</h3>
+    <h3 class="mb-4">Create Your Account</h3>
     
     <form id ="register" action="register.php" method="POST">
         
@@ -110,7 +111,7 @@
 
         <button type="submit" name="submit" class="btn-submit mt-4 shadow-sm">Create Account</button>
 
-        <div class="text-center mt-4 pt-3 border-top">
+        <div class="text-center mt-5 pt-3 border-top">
             <p>Already have an account <a href="login.php">Login Here</a></p>
         </div>
     </form>
