@@ -7,7 +7,7 @@ body{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 .navbarcss {
-    background-color: #b19a80 ;
+    background-color: #eed9c0 ;
     padding: 8px 0;
     position: fixed;
     top: 0;
@@ -154,8 +154,8 @@ body{
     flex-shrink: 0;
     border-radius: 10px;
     text-decoration: none;
-    background-color: #d6b794;
-    color: rgb(86 64 31);
+    background-color: #eed9c0;
+    color: rgb(129, 98, 52);
     font-size: 18px;
     font-weight: 900;
     text-transform: uppercase;
@@ -168,7 +168,7 @@ body{
     transform: scale(1.04);
     box-shadow: 0px 10px 10px #39261a72;
     color: #ffffe0;
-    background-color: #643e2e;
+    background-color: #8d5841;
     text-decoration: none;
 }
 /* ////////////////////////////////////////////// */
@@ -451,7 +451,7 @@ body{
 /* __________________________foooter______________________________*/
 
 footer {
-    background: linear-gradient(to bottom, #c6ac8f, #825e53bd);
+    background: linear-gradient(to bottom, #eed9c0, #825e53bd);
     position: relative;
     z-index: 10;
 }
@@ -850,7 +850,7 @@ footer img{
 
 .sidebar{
     width:240px;
-    background:#bfa88f;
+    background:#eed9c0 ;
     border-radius:22px;
     padding:20px 18px;
     position:sticky;
@@ -919,7 +919,7 @@ footer img{
     border-radius:12px;
     background:transparent;
     text-decoration:none;
-    color:#2c1e12;
+    color:#503721;
     font-size:16px;
     font-weight:700;
     cursor:pointer;
@@ -985,7 +985,7 @@ footer img{
     min-height:70vh;
 }
 
-.section-title{
+.menu-title{
     font-size:30px;
     font-weight:700;
     color:#2c1e12;
@@ -994,14 +994,14 @@ footer img{
     padding-left:18px;
 }
 
-.section-title::before{
+.menu-title::before{
     content:'';
     position:absolute;
     left:0;
     top:5px;
     width:5px;
     height:38px;
-    background:#ca8740;
+    background:#d18d47;
     border-radius:10px;
 }
 
@@ -1050,7 +1050,7 @@ footer img{
 .price{
     font-size:22px;
     font-weight:800;
-    color:#ca8740;
+    color:#d18d47;
     margin-bottom:15px;
 }
 
