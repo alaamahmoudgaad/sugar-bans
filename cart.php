@@ -9,16 +9,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $type = $_POST['type'] ?? 'product';
 
     if (!isset($_SESSION['user_id'])) {
+        $connect = null;
         exit('login required');
     }
 
     if (!$id || !is_numeric($id)) {
+        $connect = null;
         exit('invalid item');
     }
 
     $qty = max(1, $qty);
 
     if (!in_array($type, ['product', 'box'])) {
+        $connect = null;
         exit('invalid type');
     }
 
@@ -43,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ];
     }
 
+    $connect = null;
     header("Location: menu.php");
     exit;
 }
