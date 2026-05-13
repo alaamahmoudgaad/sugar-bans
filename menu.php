@@ -14,7 +14,7 @@ if (isset($_SESSION['error_msg'])) {
     </script>";
     unset($_SESSION['error_msg']);
 }
-?>
+?> 
 
 <div class="main-container">
 
