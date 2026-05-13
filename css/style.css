@@ -5,11 +5,10 @@
 }
 body{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    background-color: #faf0e3;
-
+    background-color: #fffaf4;
 }
 .navbarcss {
-    background-color: #eed9c0 ;
+    background-color: #ccbaa4;
     padding: 8px 0;
     position: fixed;
     top: 0;
@@ -46,7 +45,7 @@ body{
         position: fixed;
         top: 60px;
         right: -100%; 
-        background-color: #b19a80; 
+        background-color: #ccbaa4; 
         transition: right 0.6s linear; 
         padding: 5px 10px;
         border-radius: 10px;
