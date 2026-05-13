@@ -103,14 +103,15 @@ if (isset($_SESSION['error_msg'])) {
                 "western" => 7,
                 "eastern" => 8
             ];
+            
             $id = $map[$cat] ?? 0;
             if ($id === 0) {
-
                 echo "<h2 class='menu-title'>Invalid Category</h2>";
-                include 'includes/footer.php';
                 $connect = null;
+                include 'includes/footer.php';
                 exit;
             }
+
             $stmtSections = $connect->prepare("
                 SELECT category_id, name
                 FROM categories

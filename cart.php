@@ -21,14 +21,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $qty  = isset($_POST['qty']) ? (int)$_POST['qty'] : 1;
     $type = $_POST['type'] ?? 'product';
 
+<<<<<<< HEAD
+=======
+    if (!isset($_SESSION['user_id'])) {
+        $connect = null;
+        exit('login required');
+    }
+>>>>>>> 83860dc9c0a1b0cf9d2a2eec6339ef65d448a0a5
 
     if (!$id || !is_numeric($id)) {
+        $connect = null;
         exit('invalid item');
     }
 
     $qty = max(1, $qty);
 
     if (!in_array($type, ['product', 'box'])) {
+        $connect = null;
         exit('invalid type');
     }
 
@@ -53,6 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ];
     }
 
+    $connect = null;
     header("Location: menu.php");
     exit;
 }
@@ -63,7 +73,7 @@ $totalItems = 0;
 ?>
 
 <div class="form-bg">
-    <div class="order-summary-box">
+    <div class="order-summary-box mb-2">
         <h5 class="border-bottom pb-2">Order Summary</h5>
         <?php if (!empty($_SESSION['cart'])): ?>
             <?php foreach ($_SESSION['cart'] as $item): ?>
@@ -191,7 +201,7 @@ $totalItems = 0;
 
                 <input type="hidden" name="total_price_hidden" value="<?= (float)$totalPrice ?>">
 
-                <div class="d-flex justify-content-center mt-5">
+                <div class="d-flex justify-content-center mt-5 mb-3">
 
                     <button type="submit" name="submit_order" class="btn-submit w-48">  Confirm Order </button>
 

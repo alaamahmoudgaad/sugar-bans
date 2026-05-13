@@ -6,8 +6,15 @@ if (isset($_POST['cancel_order'])) {
 
     unset($_SESSION['cart']);
     $connect = null;
+<<<<<<< HEAD
     $_SESSION['order_cancelled'] = true;
     header("Location: index.php");
+=======
+    echo "<script>
+        alert('Order cancelled successfully');
+        window.location.href='index.php';
+    </script>";
+>>>>>>> 83860dc9c0a1b0cf9d2a2eec6339ef65d448a0a5
     exit();
 }
 
@@ -26,10 +33,18 @@ if (!isset($_SESSION['user_id'])) {
 }
  
 if (empty($_SESSION['cart'])) {
+<<<<<<< HEAD
 
     $_SESSION['error_msg'] = "Your cart is empty. Please add items first.";
 
     header("Location: menu.php");
+=======
+    $connect = null;
+    echo "<script>
+        alert('Your cart is empty. Please add items first.');
+        window.location.href='menu.php';
+    </script>";
+>>>>>>> 83860dc9c0a1b0cf9d2a2eec6339ef65d448a0a5
     exit();
 }
 
@@ -42,9 +57,17 @@ if (
     $fname !== $_SESSION['user_fname'] ||
     $lname !== $_SESSION['user_lname']
 ) {
+<<<<<<< HEAD
      $connect = null;
     $_SESSION['error_msg'] = "You cannot change account information";
     header("Location: cart.php");
+=======
+    $connect = null;
+    echo "<script>
+        alert('You cannot change account information');
+        window.location.href='cart.php';
+    </script>";
+>>>>>>> 83860dc9c0a1b0cf9d2a2eec6339ef65d448a0a5
     exit();
 }
 
@@ -52,9 +75,16 @@ $phone = trim($_POST['phone'] ?? '');
 
 if (!preg_match('/^01[0-9]{9}$/', $phone)) {
     $connect = null;
+<<<<<<< HEAD
     $_SESSION['error_msg'] = "Invalid phone number";
 
     header("Location: cart.php");
+=======
+    echo "<script>
+        alert('Invalid phone number');
+        window.history.back();
+    </script>";
+>>>>>>> 83860dc9c0a1b0cf9d2a2eec6339ef65d448a0a5
     exit();
 }
 
@@ -62,9 +92,16 @@ $order_type = $_POST['order_state'] ?? '';
 
 if (!in_array($order_type, ['pickup', 'delivery'])) {
     $connect = null;
+<<<<<<< HEAD
     $_SESSION['error_msg'] = "Invalid order type";
 
     header("Location: cart.php");
+=======
+   echo "<script>
+            alert('Invalid order type');
+            window.history.back();
+        </script>";
+>>>>>>> 83860dc9c0a1b0cf9d2a2eec6339ef65d448a0a5
     exit();
 }
 
@@ -77,10 +114,18 @@ if ($order_type === 'delivery') {
     $addressInput = trim($_POST['address'] ?? '');
 
     if ($addressInput === '') {
+<<<<<<< HEAD
     $connect = null;
         $_SESSION['error_msg'] = "Please enter delivery address";
 
         header("Location: cart.php");
+=======
+        $connect = null;
+        echo "<script>
+            alert('Please enter delivery address');
+            window.history.back();
+        </script>";
+>>>>>>> 83860dc9c0a1b0cf9d2a2eec6339ef65d448a0a5
         exit();
     }
 
