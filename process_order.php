@@ -44,7 +44,7 @@ $lname = trim($_POST['lname'] ?? '');
 
 if (
     $fname !== $_SESSION['user_fname'] ||
-    $lname !== $_SESSION['user_lname']) {
+    $lname !== $_SESSION['user_lname']git) {
      $connect = null;
     $_SESSION['error_msg'] = "You cannot change account information";
     header("Location: cart.php");

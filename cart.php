@@ -21,13 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $qty  = isset($_POST['qty']) ? (int)$_POST['qty'] : 1;
     $type = $_POST['type'] ?? 'product';
 
-<<<<<<< HEAD
-=======
-    if (!isset($_SESSION['user_id'])) {
-        $connect = null;
-        exit('login required');
-    }
->>>>>>> 83860dc9c0a1b0cf9d2a2eec6339ef65d448a0a5
 
     if (!$id || !is_numeric($id)) {
         $connect = null;
