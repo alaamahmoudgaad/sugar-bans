@@ -54,7 +54,6 @@ if ($_SESSION['role'] !== 'admin') {
                                     <a href="view_table.php?table=<?php echo $table; ?>" class="btn btn-secondary">Back</a>
                                 </div>
 
-                                
                                 <table class="table mb-0">
                                      <?php foreach ($item as $key => $value){ 
                                      ?>
@@ -82,7 +81,7 @@ if ($_SESSION['role'] !== 'admin') {
                     $stmt = null;
                     ?>
                     <div class="card shadow-sm mt-2 mb-5 mx-5">
-                        <div class="card-header bg-white py-3">
+                        <div class="card-header py-3">
                             <h4>Edit Record: <?php echo $id; ?></h4>
                         </div>
                         <?php 
@@ -108,7 +107,6 @@ if ($_SESSION['role'] !== 'admin') {
                         </p>
                         <?php }?>
 
-
                         <div class="mt-4 px-3 pb-4">
                             <button type="submit" name="update" class="btn btn-success px-3">Save Changes</button>
                             <a href="view_table.php?table=<?php echo $table; ?>" class="btn btn-outline-secondary px-4">Cancel</a>
@@ -125,7 +123,6 @@ if ($_SESSION['role'] !== 'admin') {
                         $tableName = $_POST['table_name'];
                         $idValue = $_POST['id_value'];
                         $primaryKey = $_POST['primary_key'];
-                        
                         
 
                         unset($_POST['table_name'], $_POST['id_value'], $_POST['primary_key'], $_POST['update']);
@@ -144,7 +141,6 @@ if ($_SESSION['role'] !== 'admin') {
                             if ($key =='email') {
 
                                 $pattern = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/";
-                                // Perl Regular Expressions
                                 if (!preg_match($pattern, $trimmedValue)) {
                                     $_SESSION['validation_msg'] = "Invalid Email format! Please use something like name@example.com";
                                     $connect = null;
@@ -202,8 +198,8 @@ if ($_SESSION['role'] !== 'admin') {
                         $allColumns = $stmtCol->fetchAll(PDO::FETCH_ASSOC);
                         $stmtCol = null;
                  ?> 
-                 <div class="card shadow-sm mt-2 mb-5 mx-5">
-                        <div class="card-header bg-white py-3">
+                 <div class="card shadow-sm mt-1 mb-5 mx-5">
+                        <div class="card-header py-3">
                             <h4>Add New Record to: <?php echo $table; ?></h4>
                         </div>
                         <?php 
@@ -220,7 +216,7 @@ if ($_SESSION['role'] !== 'admin') {
                             if ($column['Extra'] == 'auto_increment' || $column['Type'] =='timestamp') continue;
                             $oldValue = "";
                             if(isset($_SESSION['form_data'][$column['Field']])){
-                                $oldValue =$_SESSION['form_data'][$column['Field']];
+                                $oldValue = $_SESSION['form_data'][$column['Field']];
                             }
                             ?>
                 

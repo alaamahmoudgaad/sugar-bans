@@ -20,11 +20,11 @@
         </ul>
 
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown text-white">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown">
                     <span>Welcome, <?php echo $_SESSION['user_fname']; ?></span><i class="fas fa-user-circle"></i>
                 </a>
-                <div class="dropdown-menu dropdown-menu-right">
+                <div class="dropdown-menu">
                     <a class="dropdown-item text-danger" href="../logout.php">Logout</a>
                 </div>
             </li>
