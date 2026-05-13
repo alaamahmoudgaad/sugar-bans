@@ -4,7 +4,40 @@
   include 'includes/header.php'; 
   include 'includes/navbar.php'; 
 ?>
+<?php
+
+if (isset($_SESSION['order_cancelled'])) {
+
+    echo "<script>
+        window.onload = function () {
+            alert('Order cancelled successfully');
+        }
+    </script>";
+
+    unset($_SESSION['order_cancelled']);
+}
+
+if (isset($_SESSION['order_success'])) {
+    $o = $_SESSION['order_success'];
+
+    $delivery_fee = ($o['order_type'] === 'delivery') ? 50 : 0;
+
+    echo "<script>
+        window.onload = function () {
+            alert(`Order Created Successfully
+            Order ID: #{$o['order_id']}
+            Customer: {$o['fname']} {$o['lname']}
+            Order Type: {$o['order_type']}
+            Total Price: {$o['total_price']} EGP
+            Delivery : {$delivery_fee} EGP`);
+        }
+    </script>";
+
+    unset($_SESSION['order_success']);
+}
+?>
     <main class="hero">
+        
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <h2 class="fs-1">Baked to Perfection, Crafted for You</h2>

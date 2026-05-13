@@ -3,31 +3,33 @@ session_start();
 require_once 'includes/db.php';
 
 if (isset($_POST['cancel_order'])) {
+
     unset($_SESSION['cart']);
-    echo "<script>
-        alert('Order cancelled successfully');
-        window.location.href='index.php';
-    </script>";
+    $connect = null;
+    $_SESSION['order_cancelled'] = true;
+    header("Location: index.php");
     exit();
 }
 
 if (!isset($_POST['submit_order'])) {
+    $connect = null;
     exit();
 }
 
 if (!isset($_SESSION['user_id'])) {
+    $connect = null;
     echo "<script>
         alert('Login required');
         window.location.href='login.php';
     </script>";
     exit();
 }
-
+ 
 if (empty($_SESSION['cart'])) {
-    echo "<script>
-        alert('Your cart is empty. Please add items first.');
-        window.location.href='menu.php';
-    </script>";
+
+    $_SESSION['error_msg'] = "Your cart is empty. Please add items first.";
+
+    header("Location: menu.php");
     exit();
 }
 
@@ -37,31 +39,32 @@ $fname = trim($_POST['fname'] ?? '');
 $lname = trim($_POST['lname'] ?? '');
 
 if (
-    $fname !== $_SESSION['user_fname'] || $lname !== $_SESSION['user_lname']
+    $fname !== $_SESSION['user_fname'] ||
+    $lname !== $_SESSION['user_lname']
 ) {
-    echo "<script>
-        alert('You cannot change account information');
-        window.location.href='cart.php';
-    </script>";
+     $connect = null;
+    $_SESSION['error_msg'] = "You cannot change account information";
+    header("Location: cart.php");
     exit();
 }
 
 $phone = trim($_POST['phone'] ?? '');
+
 if (!preg_match('/^01[0-9]{9}$/', $phone)) {
-    echo "<script>
-        alert('Invalid phone number');
-        window.history.back();
-    </script>";
+    $connect = null;
+    $_SESSION['error_msg'] = "Invalid phone number";
+
+    header("Location: cart.php");
     exit();
 }
 
 $order_type = $_POST['order_state'] ?? '';
 
 if (!in_array($order_type, ['pickup', 'delivery'])) {
-   echo "<script>
-            alert('Invalid order type');
-            window.history.back();
-        </script>";
+    $connect = null;
+    $_SESSION['error_msg'] = "Invalid order type";
+
+    header("Location: cart.php");
     exit();
 }
 
@@ -70,12 +73,14 @@ $note = htmlspecialchars($_POST['notes'] ?? '');
 $address = null;
 
 if ($order_type === 'delivery') {
+
     $addressInput = trim($_POST['address'] ?? '');
+
     if ($addressInput === '') {
-        echo "<script>
-            alert('Please enter delivery address');
-            window.history.back();
-        </script>";
+    $connect = null;
+        $_SESSION['error_msg'] = "Please enter delivery address";
+
+        header("Location: cart.php");
         exit();
     }
 
@@ -167,7 +172,7 @@ try {
             if (!$product) continue;
 
             if ($product['stock'] < $qty) {
-
+               $connect->rollBack();
                 echo "<script>
                     alert('Some products are out of stock or not enough quantity');
                     window.history.back();
@@ -185,6 +190,7 @@ try {
             if (!$box) continue;
 
             if ($box['stock'] < $qty) {
+                $connect->rollBack();
                 echo "<script>
                     alert('Some boxes are out of stock or not enough quantity');
                     window.history.back();
@@ -236,17 +242,18 @@ try {
 
     $connect->commit();
     unset($_SESSION['cart']);
-   echo "<script>
-        alert(`Order Created Successfully
 
-        Order ID: #$order_id
-        Customer: $fname $lname
-        Order Type: $order_type
-        Total Price: $total_price EGP
-        Delivery Fee: " . ($order_type === 'delivery' ? 50 : 0) . " EGP`);
 
-window.location.href = 'index.php';
-</script>";
+$_SESSION['order_success'] = [
+    'order_id' => $order_id,
+    'fname' => $fname,
+    'lname' => $lname,
+    'order_type' => $order_type,
+    'total_price' => $total_price
+];
+
+header("Location: index.php");
+exit();
 
 } catch (Exception $e) {
 

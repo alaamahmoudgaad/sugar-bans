@@ -48,75 +48,31 @@ if (mybutton) {
     });
 }
 
-/* =========================
-   LOGIN FORM VALIDATION
-
 document.addEventListener("submit", function (e) {
 
-    if (e.target && e.target.id === "loginForm") {
+    const form = e.target;
+    /* ================= REGISTER ================= */
+     if (form.id === "register") {
 
-        const firstName = document.getElementById("fname")?.value.trim();
-        const lastName = document.getElementById("lname")?.value.trim();
-        const email = document.getElementById("email")?.value.trim();
-        const password = document.getElementById("pass")?.value;
+        const fname = form.querySelector("#fname")?.value.trim();
+        const lname = form.querySelector("#lname")?.value.trim();
+        const email = form.querySelector("#email")?.value.trim();
+        const pass = form.querySelector("#pass")?.value;
+        const phone = form.querySelector("#phone")?.value.trim();
+        const address = form.querySelector("#address")?.value.trim();
 
         const namePattern = /^[A-Za-z]{2,}$/;
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+        const phonePattern = /^01[0-9]{9}$/;
 
-        if (!namePattern.test(firstName)) {
-            alert("First name must be at least 2 letters.");
-            e.preventDefault();
-            return;
-        }
-
-        if (!namePattern.test(lastName)) {
-            alert("Last name must be at least 2 letters.");
-            e.preventDefault();
-            return;
-        }
-
-        if (!emailPattern.test(email)) {
-            alert("Invalid email.");
-            e.preventDefault();
-            return;
-        }
-
-        if (!passwordPattern.test(password)) {
-            alert("Password must include uppercase, lowercase, number and 8+ characters.");
-            e.preventDefault();
-            return;
-        }
-    }
-});
-*/
-/* =========================
-   REGISTER FORM VALIDATION
-========================= */
-
-document.addEventListener("submit", function (e) {
-
-    if (e.target && e.target.id === "register") {
-
-        const firstName = document.getElementById("fname")?.value.trim();
-        const lastName = document.getElementById("lname")?.value.trim();
-        const email = document.getElementById("email")?.value.trim();
-        const password = document.getElementById("pass")?.value;
-        const phone = document.getElementById("phone")?.value.trim();
-        const address = document.getElementById("address")?.value.trim();
-
-        const namePattern = /^[A-Za-z]{2,}$/;
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-        const phonePattern = /^[0-9]{11}$/;
-
-        if (!namePattern.test(firstName)) {
+        if (!namePattern.test(fname)) {
             alert("First name invalid.");
             e.preventDefault();
             return;
         }
 
-        if (!namePattern.test(lastName)) {
+        if (!namePattern.test(lname)) {
             alert("Last name invalid.");
             e.preventDefault();
             return;
@@ -128,7 +84,7 @@ document.addEventListener("submit", function (e) {
             return;
         }
 
-        if (!passwordPattern.test(password)) {
+        if (!passwordPattern.test(pass)) {
             alert("Weak password.");
             e.preventDefault();
             return;
@@ -146,24 +102,40 @@ document.addEventListener("submit", function (e) {
             return;
         }
     }
-});
+    /* ================= LOGIN ================= 
+    else if (form.id === "loginForm") {
 
-/* =========================
-   CONTACT US VALIDATION
-========================= */
+        const email = form.querySelector("#email")?.value.trim();
+        const pass = form.querySelector("#pass")?.value;
 
-document.addEventListener("submit", function (e) {
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
 
-    if (e.target && e.target.id === "contact") {
+        if (!emailPattern.test(email)) {
+            alert("Invalid email.");
+            e.preventDefault();
+            return;
+        }
 
-        const firstName = document.getElementById("fname")?.value.trim();
-        const lastName = document.getElementById("lname")?.value.trim();
-        const subject = document.getElementById("Subject")?.value;
-        const message = document.getElementById("message")?.value.trim();
+        if (!passwordPattern.test(pass)) {
+            alert("Invalid password.");
+            e.preventDefault();
+            return;
+        }
+    }
+*/
+
+    /* ================= CONTACT ================= */
+    else if (form.id === "contact") {
+
+        const fname = form.querySelector("#fname")?.value.trim();
+        const lname = form.querySelector("#lname")?.value.trim();
+        const subject = form.querySelector("#Subject")?.value;
+        const message = form.querySelector("#message")?.value.trim();
 
         const namePattern = /^[A-Za-z]{2,}$/;
 
-        if (!namePattern.test(firstName) || !namePattern.test(lastName)) {
+        if (!namePattern.test(fname) || !namePattern.test(lname)) {
             alert("Invalid name.");
             e.preventDefault();
             return;
@@ -181,6 +153,7 @@ document.addEventListener("submit", function (e) {
             return;
         }
     }
+
 });
 
 
@@ -299,4 +272,14 @@ document.querySelectorAll('.product-card').forEach(card => {
 
     };
 
+});
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelector('button[name="cancel_order"]').addEventListener('click', function (e) {
+        let ok = confirm("Are you sure you want to cancel the order?");
+        if (!ok) {
+            e.preventDefault();
+        }
+    });
 });

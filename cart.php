@@ -3,14 +3,24 @@ session_start();
 require_once 'includes/db.php';
 include 'includes/header.php';
 include 'includes/navbar.php';
+
+
+if (!isset($_SESSION['user_id'])) {
+    echo "
+    <script>
+        alert('Please login first');
+        window.location.href='login.php';
+    </script>
+    ";
+
+    exit();
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id   = $_POST['id'] ?? null;
     $qty  = isset($_POST['qty']) ? (int)$_POST['qty'] : 1;
     $type = $_POST['type'] ?? 'product';
 
-    if (!isset($_SESSION['user_id'])) {
-        exit('login required');
-    }
 
     if (!$id || !is_numeric($id)) {
         exit('invalid item');
@@ -118,7 +128,26 @@ $totalItems = 0;
 
     <div class="order-card">
         <h2>Complete Order</h2>
+         <?php
 
+    if (isset($_SESSION['error_msg'])) {
+
+        echo "<div class='alert alert-danger text-center'>"
+            . $_SESSION['error_msg'] .
+        "</div>";
+
+        unset($_SESSION['error_msg']);
+    }
+
+    if (isset($_SESSION['success_msg'])) {
+
+        echo "<div class='alert alert-success text-center'>"
+            . $_SESSION['success_msg'] .
+        "</div>";
+
+        unset($_SESSION['success_msg']);
+    }
+       ?>
         <form action="process_order.php" method="POST" id="orderForm">
 
             <div class="row">
