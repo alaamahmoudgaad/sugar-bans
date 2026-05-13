@@ -2,6 +2,17 @@
 session_start();
 require_once 'includes/db.php';
 
+session_start();
+
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    $_SESSION['login_msg'] = "Please login first to continue your order";
+
+    header("Location: login.php");
+    exit;
+}
+
 if (isset($_POST['cancel_order'])) {
     unset($_SESSION['cart']);
     $connect = null;

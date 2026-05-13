@@ -4,14 +4,6 @@ require_once 'includes/db.php';
 include 'includes/header.php';
 include 'includes/navbar.php';
 
-if (!isset($_SESSION['user_id'])) {
-    $connect = null;
-    echo "<script>
-    alert('Please login first');
-    window.location.href='login.php';
-    </script>";
-    exit;
-}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 

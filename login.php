@@ -4,6 +4,7 @@
   include 'includes/header.php'; 
   include 'includes/navbar.php'; 
 
+
 if($_SERVER['REQUEST_METHOD' ] == "POST"){
 
     $fname    = trim($_POST['fname']);
@@ -87,7 +88,12 @@ if($_SERVER['REQUEST_METHOD' ] == "POST"){
 
 
     <h3>Log IN</h3>
-
+    <?php if (isset($_SESSION['login_msg'])): ?>
+    <div class="alert alert-warning text-center mb-3">
+        <?= $_SESSION['login_msg']; ?>
+    </div>
+    <?php unset($_SESSION['login_msg']); ?>
+<?php endif; ?>
     
     <form id="loginForm" action="" method="POST">
         
