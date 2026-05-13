@@ -4,6 +4,7 @@ require_once 'includes/db.php';
 
 if (isset($_POST['cancel_order'])) {
     unset($_SESSION['cart']);
+    $connect = null;
     echo "<script>
         alert('Order cancelled successfully');
         window.location.href='index.php';
@@ -12,10 +13,12 @@ if (isset($_POST['cancel_order'])) {
 }
 
 if (!isset($_POST['submit_order'])) {
+    $connect = null;
     exit();
 }
 
 if (!isset($_SESSION['user_id'])) {
+    $connect = null;
     echo "<script>
         alert('Login required');
         window.location.href='login.php';
@@ -24,6 +27,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 if (empty($_SESSION['cart'])) {
+    $connect = null;
     echo "<script>
         alert('Your cart is empty. Please add items first.');
         window.location.href='menu.php';
@@ -39,6 +43,7 @@ $lname = trim($_POST['lname'] ?? '');
 if (
     $fname !== $_SESSION['user_fname'] || $lname !== $_SESSION['user_lname']
 ) {
+    $connect = null;
     echo "<script>
         alert('You cannot change account information');
         window.location.href='cart.php';
@@ -48,6 +53,7 @@ if (
 
 $phone = trim($_POST['phone'] ?? '');
 if (!preg_match('/^01[0-9]{9}$/', $phone)) {
+    $connect = null;
     echo "<script>
         alert('Invalid phone number');
         window.history.back();
@@ -58,6 +64,7 @@ if (!preg_match('/^01[0-9]{9}$/', $phone)) {
 $order_type = $_POST['order_state'] ?? '';
 
 if (!in_array($order_type, ['pickup', 'delivery'])) {
+    $connect = null;
    echo "<script>
             alert('Invalid order type');
             window.history.back();
@@ -72,6 +79,7 @@ $address = null;
 if ($order_type === 'delivery') {
     $addressInput = trim($_POST['address'] ?? '');
     if ($addressInput === '') {
+        $connect = null;
         echo "<script>
             alert('Please enter delivery address');
             window.history.back();
