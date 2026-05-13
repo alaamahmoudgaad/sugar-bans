@@ -4,7 +4,6 @@ require_once 'includes/db.php';
 
 if (!isset($_SESSION['user_id'])) {
     $_SESSION['login_msg'] = "Please login first to continue your order";
-
     header("Location: login.php");
     exit;
 }
@@ -12,9 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 if (isset($_POST['cancel_order'])) {
     unset($_SESSION['cart']);
     $connect = null;
-
     $_SESSION['order_cancelled'] = true;
-
     header("Location: index.php");
     exit;
 }
@@ -26,15 +23,12 @@ if (!isset($_POST['submit_order'])) {
 
 if (empty($_SESSION['cart'])) {
     $connect = null;
-
     $_SESSION['error_msg'] = "Your cart is empty. Please add items first.";
-
     header("Location: cart.php");
     exit;
 }
 
 $user_id = $_SESSION['user_id'];
-
 $fname = trim($_POST['fname'] ?? '');
 $lname = trim($_POST['lname'] ?? '');
 
@@ -43,9 +37,7 @@ if (
     strtolower(trim($lname)) !== strtolower(trim($_SESSION['user_lname']))
 ) {
     $connect = null;
-
     $_SESSION['error_msg'] = "You cannot change account information";
-
     header("Location: cart.php");
     exit;
 }
@@ -54,9 +46,7 @@ $phone = trim($_POST['phone'] ?? '');
 
 if (!preg_match('/^01[0-9]{9}$/', $phone)) {
     $connect = null;
-
     $_SESSION['error_msg'] = "Invalid phone number";
-
     header("Location: cart.php");
     exit;
 }
@@ -65,30 +55,22 @@ $order_type = $_POST['order_state'] ?? '';
 
 if (!in_array($order_type, ['pickup', 'delivery'])) {
     $connect = null;
-
     $_SESSION['error_msg'] = "Invalid order type";
-
     header("Location: cart.php");
     exit;
 }
 
 $note = trim($_POST['notes'] ?? '');
-
 $address = null;
 
 if ($order_type === 'delivery') {
-
     $addressInput = trim($_POST['address'] ?? '');
-
     if ($addressInput === '') {
         $connect = null;
-
         $_SESSION['error_msg'] = "Please enter delivery address";
-
         header("Location: cart.php");
         exit;
     }
-
     $address = $addressInput;
 }
 
@@ -108,9 +90,7 @@ $productsMap = [];
 $boxesMap = [];
 
 if (!empty($productIds)) {
-
     $in = str_repeat('?,', count($productIds) - 1) . '?';
-
     $stmt = $connect->prepare("
         SELECT product_id, product_price, stock
         FROM products
@@ -179,9 +159,7 @@ try {
 
             if (!$product) {
                 $connect->rollBack();
-
                 $_SESSION['error_msg'] = "Product not found";
-
                 header("Location: cart.php");
                 exit;
             }
@@ -195,14 +173,11 @@ try {
             $ok = $stmtStock->execute([$qty, $id, $qty]);
 
             if (!$ok || $stmtStock->rowCount() == 0) {
-
                 $connect->rollBack();
-
                 echo "<script>
                         alert('Product out of stock');
                         window.history.back();
                       </script>";
-
                 exit;
             }
 
@@ -231,9 +206,7 @@ try {
 
             if (!$box) {
                 $connect->rollBack();
-
                 $_SESSION['error_msg'] = "Box not found";
-
                 header("Location: cart.php");
                 exit;
             }
@@ -247,14 +220,11 @@ try {
             $ok = $stmtStock->execute([$qty, $id, $qty]);
 
             if (!$ok || $stmtStock->rowCount() == 0) {
-
                 $connect->rollBack();
-
                 echo "<script>
                         alert('Box out of stock');
                         window.history.back();
                       </script>";
-
                 exit;
             }
 
@@ -308,16 +278,13 @@ try {
     exit;
 
 } catch (Exception $e) {
-
     if ($connect->inTransaction()) {
         $connect->rollBack();
     }
-
     header("Location: 404.php");
     exit;
-
+    
 } finally {
-
     $connect = null;
 }
 ?>

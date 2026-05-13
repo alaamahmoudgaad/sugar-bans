@@ -4,7 +4,6 @@ require_once 'includes/db.php';
 include 'includes/header.php';
 include 'includes/navbar.php';
 
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $id   = $_POST['id'] ?? null;
@@ -39,13 +38,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         FROM products
         WHERE product_id = ?
     ");
-} else {
+    } 
+    else {
     $stmt = $connect->prepare("
         SELECT stock
         FROM boxes
         WHERE box_id = ?
     ");
-}
+    }
 
 $stmt->execute([$id]);
 $product = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -215,8 +215,6 @@ $totalItems = 0;
                 </div>
 
                 <textarea name="notes" class="form-control mt-2" placeholder="Notes (Optional)"></textarea>
-
-                <input type="hidden" name="total_price_hidden" value="<?= (float)$totalPrice ?>">
 
                 <div class="d-flex justify-content-center mt-5 mb-3">
                     <button type="submit" name="submit_order" class="btn-submit w-48">Confirm Order</button>
