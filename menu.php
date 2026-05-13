@@ -152,8 +152,6 @@ else {
         echo "</div>";
     }
 
-
-    /* SUB SECTIONS */
     $stmtSections = $connect->prepare("
         SELECT category_id, name
         FROM categories

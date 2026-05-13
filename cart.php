@@ -216,8 +216,6 @@ $totalItems = 0;
 
                 <textarea name="notes" class="form-control mt-2" placeholder="Notes (Optional)"></textarea>
 
-                <input type="hidden" name="total_price_hidden" value="<?= (float)$totalPrice ?>">
-
                 <div class="d-flex justify-content-center mt-5 mb-3">
                     <button type="submit" name="submit_order" class="btn-submit w-48">Confirm Order</button>
 
