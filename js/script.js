@@ -158,7 +158,7 @@ document.addEventListener("submit", function (e) {
 
 
 
-
+ /* ================= MENU ================= */
 const toggleBtn = document.getElementById('toggleBtn');
 
 if (toggleBtn) {
@@ -222,7 +222,6 @@ document.querySelectorAll('.product-card').forEach(card => {
         if (!isLoggedIn) {
 
             alert('Please login first');
-
             window.location.href = 'login.php';
 
             return;
