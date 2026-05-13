@@ -4,7 +4,6 @@ require_once 'includes/db.php';
 include 'includes/header.php';
 include 'includes/navbar.php';
 
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $id   = $_POST['id'] ?? null;
@@ -39,13 +38,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         FROM products
         WHERE product_id = ?
     ");
-} else {
+    } 
+    else {
     $stmt = $connect->prepare("
         SELECT stock
         FROM boxes
         WHERE box_id = ?
     ");
-}
+    }
 
 $stmt->execute([$id]);
 $product = $stmt->fetch(PDO::FETCH_ASSOC);
