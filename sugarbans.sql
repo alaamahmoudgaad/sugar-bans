@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 06, 2026 at 07:16 PM
+-- Generation Time: May 18, 2026 at 08:21 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -32,21 +32,55 @@ CREATE TABLE `boxes` (
   `box_name` varchar(150) NOT NULL,
   `box_price` decimal(10,2) NOT NULL,
   `description` text DEFAULT NULL,
-  `box_image_url` varchar(255) DEFAULT NULL,
-  `products_included` text DEFAULT NULL,
-  `stock` int(11) NOT NULL DEFAULT 30
+  `box_image_url` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `boxes`
 --
 
-INSERT INTO `boxes` (`box_id`, `box_name`, `box_price`, `description`, `box_image_url`, `products_included`, `stock`) VALUES
-(1, 'Besties Box', 250.00, '2 Donuts (Chocolate + Caramel) + 2 Cold Drinks (Iced Mocha / Iced Coffee)', 'images/besties offer.png', 'Chocolate donut, Caramel donut, Iced Mocha, Iced Coffee', 27),
-(2, 'Sweet Heaven', 250.00, 'Cheesecake slice + Tiramisu slice + 1 Cold Drink', 'images/sweet heaven.png', 'Cheesecake, Tiramisu, Iced Latte', 27),
-(3, 'Sugar Rush Duo', 400.00, '2 Donuts + 2 Cupcakes + 2 Cold Drinks', 'images/sugar rush duo.png', 'Chocolate donut, Caramel donut, Vanilla cupcake, Caramel cupcake, Iced Mocha, Iced Coffee', 30),
-(4, 'Honey Mood', 150.00, 'Honey Cake slice + Iced Latte', 'images/honey mood.jpeg', 'Honey cake, Iced Latte', 30),
-(5, 'Chill Combo', 200.00, 'Cupcake + Tiramisu slice + Cold Drink', 'images/chill combo.jpeg', 'Vanilla cupcake, Tiramisu, Iced Latte', 30);
+INSERT INTO `boxes` (`box_id`, `box_name`, `box_price`, `description`, `box_image_url`) VALUES
+(1, 'Besties Box', 250.00, '2 Donuts (Chocolate + Caramel) + 2 Cold Drinks (Iced Mocha / Iced Coffee)', 'images/besties offer.png'),
+(2, 'Sweet Heaven', 250.00, 'Oreo cheesecake slice + Tiramisu slice + Iced Latte', 'images/sweet heaven.png'),
+(3, 'Sugar Rush Duo', 400.00, '2 Donuts(Lotus + Chocolate ) + 2 Cupcakes(Caramel + Oreo)+ 2 Cold Drinks (Iced Coffee / Frappé)', 'images/sugar rush duo.png'),
+(4, 'Honey Mood', 150.00, 'Honey Cake slice + Iced Latte', 'images/honey mood.jpeg'),
+(5, 'Chill Combo', 200.00, 'Oreo Cupcake + Tiramisu slice + Iced Mocha', 'images/chill combo.jpeg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `box_items`
+--
+
+CREATE TABLE `box_items` (
+  `box_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `box_items`
+--
+
+INSERT INTO `box_items` (`box_id`, `product_id`, `quantity`) VALUES
+(1, 16, 1),
+(1, 18, 1),
+(1, 40, 1),
+(1, 41, 1),
+(2, 17, 1),
+(2, 26, 1),
+(2, 35, 1),
+(3, 16, 1),
+(3, 19, 1),
+(3, 40, 1),
+(3, 44, 1),
+(3, 48, 1),
+(3, 49, 1),
+(4, 17, 1),
+(4, 28, 1),
+(5, 18, 1),
+(5, 26, 1),
+(5, 49, 1);
 
 -- --------------------------------------------------------
 
@@ -58,28 +92,28 @@ CREATE TABLE `categories` (
   `category_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `parent_id` int(11) DEFAULT NULL,
-  `level` tinyint(1) DEFAULT 0,
-  `display_order` int(11) DEFAULT 0
+  `display_order` int(11) DEFAULT 0,
+  `parent_id_indexed` int(11) GENERATED ALWAYS AS (coalesce(`parent_id`,0)) STORED
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `categories`
 --
 
-INSERT INTO `categories` (`category_id`, `name`, `parent_id`, `level`, `display_order`) VALUES
-(1, 'Drinks', NULL, 0, 1),
-(2, 'Desserts', NULL, 0, 2),
-(3, 'Cakes', NULL, 0, 3),
-(4, 'Hot Drinks', 1, 1, 1),
-(5, 'Cold Drinks', 1, 1, 2),
-(6, 'Flavored Coffee', 1, 1, 3),
-(7, 'Western Desserts', 2, 1, 1),
-(8, 'Eastern Desserts', 2, 1, 2),
-(9, 'Cupcakes', 7, 2, 1),
-(10, 'Donuts', 7, 2, 2),
-(11, 'Cheesecakes', 7, 2, 3),
-(12, 'Cinnamon Rolls', 7, 2, 4),
-(13, 'Kunafa', 8, 2, 1);
+INSERT INTO `categories` (`category_id`, `name`, `parent_id`, `display_order`) VALUES
+(1, 'Drinks', NULL, 1),
+(2, 'Desserts', NULL, 2),
+(3, 'Cakes', NULL, 3),
+(4, 'Hot Drinks', 1, 1),
+(5, 'Cold Drinks', 1, 2),
+(6, 'Flavored Coffee', 1, 3),
+(7, 'Western Desserts', 2, 1),
+(8, 'Eastern Desserts', 2, 2),
+(9, 'Cupcakes', 7, 1),
+(10, 'Donuts', 7, 2),
+(11, 'Cheesecakes', 7, 3),
+(12, 'Cinnamon Rolls', 7, 4),
+(13, 'Kunafa', 8, 1);
 
 -- --------------------------------------------------------
 
@@ -89,48 +123,27 @@ INSERT INTO `categories` (`category_id`, `name`, `parent_id`, `level`, `display_
 
 CREATE TABLE `orders` (
   `order_id` int(11) NOT NULL,
-  `order_price` decimal(10,2) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `order_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `order_type` enum('delivery','pickup') NOT NULL,
+  `order_price` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `order_type` enum('pickup','delivery') NOT NULL,
   `note` text DEFAULT NULL,
-  `address` varchar(255) DEFAULT NULL
+  `address` text DEFAULT NULL,
+  `order_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`order_id`, `order_price`, `user_id`, `order_date`, `order_type`, `note`, `address`) VALUES
-(1, 20.00, 13, '2026-05-01 13:52:16', 'delivery', '', 'سيبلاتنمكط'),
-(3, 250.00, 13, '2026-05-01 14:14:15', 'pickup', '', NULL),
-(4, 500.00, 13, '2026-05-01 14:51:17', 'pickup', '', NULL),
-(5, 750.00, 13, '2026-05-01 15:13:21', 'pickup', '', NULL),
-(6, 250.00, 7, '2026-05-01 22:00:49', 'pickup', '', NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `order_boxes`
---
-
-CREATE TABLE `order_boxes` (
-  `id` int(11) NOT NULL,
-  `order_id` int(11) NOT NULL,
-  `box_id` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL DEFAULT 1,
-  `box_price` decimal(10,2) NOT NULL,
-  `box_date` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `order_boxes`
---
-
-INSERT INTO `order_boxes` (`id`, `order_id`, `box_id`, `quantity`, `box_price`, `box_date`) VALUES
-(1, 3, 1, 1, 0.00, '2026-05-01 14:14:15'),
-(2, 5, 2, 1, 0.00, '2026-05-01 15:13:21'),
-(3, 6, 2, 1, 0.00, '2026-05-01 22:00:49');
+INSERT INTO `orders` (`order_id`, `user_id`, `order_price`, `order_type`, `note`, `address`, `order_date`) VALUES
+(1, 11, 186.00, 'pickup', '', NULL, '2026-05-18 14:58:47'),
+(2, 11, 450.00, 'pickup', '', NULL, '2026-05-18 15:00:09'),
+(3, 11, 450.00, 'delivery', '', 'suez', '2026-05-18 15:03:34'),
+(4, 11, 350.00, 'pickup', '', NULL, '2026-05-18 15:12:26'),
+(5, 11, 300.00, 'pickup', '', NULL, '2026-05-18 15:18:34'),
+(6, 11, 5250.00, 'pickup', '', NULL, '2026-05-18 15:59:25'),
+(7, 11, 100.00, 'delivery', '', 'suez', '2026-05-18 16:54:29'),
+(9, 11, 3450.00, 'pickup', '', NULL, '2026-05-18 17:32:31');
 
 -- --------------------------------------------------------
 
@@ -139,22 +152,31 @@ INSERT INTO `order_boxes` (`id`, `order_id`, `box_id`, `quantity`, `box_price`, 
 --
 
 CREATE TABLE `order_details` (
-  `id` int(11) NOT NULL,
+  `detail_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `box_id` int(11) DEFAULT NULL,
   `quantity` int(11) NOT NULL,
-  `price` decimal(10,2) NOT NULL,
-  `order_date` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `price` decimal(10,2) NOT NULL
+) ;
 
 --
 -- Dumping data for table `order_details`
 --
 
-INSERT INTO `order_details` (`id`, `order_id`, `product_id`, `quantity`, `price`, `order_date`) VALUES
-(1, 1, 31, 1, 0.00, '2026-05-01 13:52:16'),
-(2, 4, 63, 1, 0.00, '2026-05-01 14:51:17'),
-(3, 5, 63, 1, 0.00, '2026-05-01 15:13:21');
+INSERT INTO `order_details` (`detail_id`, `order_id`, `product_id`, `box_id`, `quantity`, `price`) VALUES
+(1, 1, NULL, 4, 1, 150.00),
+(2, 1, 65, NULL, 2, 18.00),
+(3, 2, 61, NULL, 1, 450.00),
+(4, 3, 61, NULL, 1, 450.00),
+(5, 4, NULL, 2, 1, 250.00),
+(6, 4, 3, NULL, 2, 50.00),
+(7, 5, NULL, 4, 2, 150.00),
+(8, 6, 61, NULL, 2, 450.00),
+(9, 6, NULL, 4, 29, 150.00),
+(10, 7, 26, NULL, 1, 100.00),
+(12, 9, NULL, 4, 19, 150.00),
+(13, 9, 28, NULL, 6, 100.00);
 
 -- --------------------------------------------------------
 
@@ -178,7 +200,7 @@ CREATE TABLE `products` (
 
 INSERT INTO `products` (`product_id`, `product_name`, `product_price`, `description`, `product_image_url`, `category_id`, `stock`) VALUES
 (2, 'Green tea', 20.00, 'Fresh green tea', 'images/green tea.jpg', 4, 50),
-(3, 'Espresso', 50.00, 'Strong espresso shot', 'images/Espresso.jpg', 4, 50),
+(3, 'Espresso', 50.00, 'Strong espresso shot', 'images/Espresso.jpg', 4, 46),
 (4, 'Americano', 55.00, 'Espresso with hot water', 'images/americano.png', 4, 50),
 (5, 'Cappuccino', 60.00, 'Espresso with steamed milk foam', 'images/Cappuccino.jpg', 4, 49),
 (6, 'Latte', 65.00, 'Espresso with steamed milk', 'images/Latte.jpg', 4, 48),
@@ -187,16 +209,16 @@ INSERT INTO `products` (`product_id`, `product_name`, `product_price`, `descript
 (9, 'Turkish Coffee', 25.00, 'Traditional Turkish coffee', 'images/Turkish Coffee.jpg', 4, 50),
 (10, 'French Coffee', 35.00, 'French style coffee with cream', 'images/french coffee.jpg', 4, 49),
 (16, 'Iced Coffee', 45.00, 'Cold brewed coffee', 'images/iced coffee.jpg', 5, 49),
-(17, 'Iced Latte', 50.00, 'Cold latte with milk', 'images/Iced Latte.jpg', 5, 50),
+(17, 'Iced Latte', 50.00, 'Cold latte with milk', 'images/Iced Latte.jpg', 5, 40),
 (18, 'Iced Mocha', 60.00, 'Cold mocha with chocolate', 'images/iced mocha.jpg', 5, 50),
 (19, 'Frappé', 60.00, 'Blended iced coffee', 'images/Frappé.png', 5, 50),
 (20, 'Iced Matcha', 65.00, 'Cold green tea matcha', 'images/iced matcha !.jpg', 5, 50),
 (23, 'Vanilla Latte', 70.00, 'Latte with vanilla syrup', 'images/vanilla latte.jpg', 6, 50),
 (24, 'Caramel Latte', 65.00, 'Latte with caramel syrup', 'images/caramel latte.jpeg', 6, 46),
 (25, 'Chocolate Coffee', 60.00, 'Coffee with chocolate flavor', 'images/chocolate coffee.jpg', 6, 50),
-(26, 'Tiramisu', 100.00, 'ladyfinger biscuits, heavy cream, espresso coffee, cocoa powder, vanilla extract', 'images/Tiramisu.jpg', 7, 50),
+(26, 'Tiramisu', 100.00, 'ladyfinger biscuits, heavy cream, espresso coffee, cocoa powder, vanilla extract', 'images/Tiramisu.jpg', 7, 49),
 (27, 'Macaron', 20.00, 'Almond flour, powdered sugar, eggs, granulated sugar, food coloring, buttercream filling', 'images/Macaron.jpg', 7, 50),
-(28, 'Honey cake', 100.00, 'Flour, eggs, sugar, honey, butter, milk, vanilla extract, cream filling', 'images/Honey cake.jpg', 7, 50),
+(28, 'Honey cake', 100.00, 'Flour, eggs, sugar, honey, butter, milk, vanilla extract, cream filling', 'images/Honey cake.jpg', 7, 30),
 (29, 'Eclairs', 50.00, 'Flour, butter, eggs, milk, sugar, vanilla extract, pastry cream, chocolate ganache', 'images/Eclairs.jpg', 7, 50),
 (30, 'Creme caramel', 80.00, 'Milk, Sugar, Eggs, Vanilla extract, Caramel', 'images/Creme pana cotta.png', 7, 50),
 (31, 'Classic cookies', 20.00, 'Flour, Butter, Brown sugar, Vanilla extract, Chocolate chips', 'images/Classic cookies.jpg', 7, 49),
@@ -215,7 +237,7 @@ INSERT INTO `products` (`product_id`, `product_name`, `product_price`, `descript
 (46, 'Pistachio donut', 100.00, 'Flour, sugar, eggs, butter, cream, pistachio spread', 'images/pistachio donut.jpg', 10, 50),
 (47, 'Vanilla cupcake', 50.00, 'cake, creme', 'images/vanilla cupcake.jpg', 9, 50),
 (48, 'Caramel cupcake', 60.00, 'cake, caramel spread, creme', 'images/caramel cupcake.jpg', 9, 50),
-(49, 'Oreo cupcake', 65.00, 'chocolate cake, oreo cookies, oreo creme', 'images/oreo cupcake.jpg', 9, 50),
+(49, 'Oreo cupcake', 65.00, 'chocolate cake, oreo cookies, oreo creme', 'images/oreo cupcake.jpg', 9, 0),
 (50, 'Red velvet cupcake', 70.00, 'red velvet cake, creme', 'images/red velvet cupcake.jpg', 9, 50),
 (51, 'Pistachio cupcake', 80.00, 'cake, pistachio spread, creme', 'images/pistachio cupcake.jpg', 9, 49),
 (54, 'Classic cinnamon rolls', 70.00, 'Flour, butter, brown sugar, eggs, milk, cinnamon powder, vanilla extract, cream cheese icing', 'images/classic cinnamon.jpg', 12, 50),
@@ -224,11 +246,11 @@ INSERT INTO `products` (`product_id`, `product_name`, `product_price`, `descript
 (57, 'Lotus cinnamon rolls', 90.00, 'Flour, butter, brown sugar, eggs, milk, cinnamon powder, vanilla extract, Lotus biscuits, Lotus spread', 'images/lotus cinnamon.jpg', 12, 50),
 (58, 'Red velvet cinnamon', 90.00, 'red velvet cake, cream cheese icing', 'images/red_velvet_ cinnamon_rolls.jpg', 12, 50),
 (59, 'Pistachio cinnamon rolls', 120.00, 'Flour, butter, brown sugar, eggs, milk, cinnamon powder, vanilla extract, cream cheese icing, pistachio spread', 'images/pistachio cinnamon.jpg', 12, 50),
-(61, 'Vanilla Cake', 450.00, 'Flour, sugar, eggs, butter, milk, vanilla, cream', 'images/Vanilla Cake.jpg', 3, 49),
+(61, 'Vanilla Cake', 450.00, 'Flour, sugar, eggs, butter, milk, vanilla, cream', 'images/Vanilla Cake.jpg', 3, 43),
 (62, 'Oreo Cake', 550.00, 'Flour, sugar, eggs, butter, milk, Oreo, cream', 'images/Oreo Cake.jpg', 3, 49),
 (63, 'Chocolate Cake', 500.00, 'Flour, sugar, eggs, butter, milk, chocolate, cream', 'images/Chocolate Cake.jpg', 3, 45),
 (64, 'Basbousa', 25.00, 'Semolina, coconut flakes, sugar, yogurt, almonds, rose water, simple syrup', 'images/basbousa.jfif', 8, 49),
-(65, 'Zalabia (Luqaimat)', 18.00, 'Flour, yeast, sugar, cardamom, saffron, date syrup, vegetable oil', 'images/Zalabia.jpg', 8, 50),
+(65, 'Zalabia (Luqaimat)', 18.00, 'Flour, yeast, sugar, cardamom, saffron, date syrup, vegetable oil', 'images/Zalabia.jpg', 8, 48),
 (66, 'Qatayef', 22.00, 'Flour, yeast, baking powder, sugar, walnuts, cinnamon, heavy cream, rose water', 'images/qatayef.jpg', 8, 50),
 (67, 'Baklava', 30.00, 'Phyllo dough, walnuts, pistachios, sugar, cinnamon, honey, lemon juice, rose water', 'images/Baklava.jpg', 8, 50),
 (68, 'Classic Kunafa', 35.00, 'Kunafa dough, sweet cheese, sugar, orange blossom water, pistachios, simple syrup', 'images/classic kunafa.png', 13, 50),
@@ -378,36 +400,39 @@ INSERT INTO `user_comment` (`comment_id`, `user_id`, `subject`, `comment`, `gues
 -- Indexes for table `boxes`
 --
 ALTER TABLE `boxes`
-  ADD PRIMARY KEY (`box_id`);
+  ADD PRIMARY KEY (`box_id`),
+  ADD UNIQUE KEY `uq_box_name` (`box_name`);
+
+--
+-- Indexes for table `box_items`
+--
+ALTER TABLE `box_items`
+  ADD PRIMARY KEY (`box_id`,`product_id`),
+  ADD KEY `product_id` (`product_id`);
 
 --
 -- Indexes for table `categories`
 --
 ALTER TABLE `categories`
-  ADD PRIMARY KEY (`category_id`);
+  ADD PRIMARY KEY (`category_id`),
+  ADD UNIQUE KEY `uq_category_name_parent_fixed` (`name`,`parent_id_indexed`),
+  ADD KEY `fk_category_parent` (`parent_id`);
 
 --
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`order_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `order_boxes`
---
-ALTER TABLE `order_boxes`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `order_id` (`order_id`),
-  ADD KEY `box_id` (`box_id`);
+  ADD KEY `fk_orders_user` (`user_id`);
 
 --
 -- Indexes for table `order_details`
 --
 ALTER TABLE `order_details`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`detail_id`),
   ADD KEY `order_id` (`order_id`),
-  ADD KEY `product_id` (`product_id`);
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `box_id` (`box_id`);
 
 --
 -- Indexes for table `products`
@@ -415,6 +440,7 @@ ALTER TABLE `order_details`
 ALTER TABLE `products`
   ADD PRIMARY KEY (`product_id`),
   ADD UNIQUE KEY `product_name` (`product_name`),
+  ADD UNIQUE KEY `uq_product_name` (`product_name`),
   ADD KEY `category_id` (`category_id`);
 
 --
@@ -444,81 +470,56 @@ ALTER TABLE `boxes`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `order_boxes`
---
-ALTER TABLE `order_boxes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `products`
---
-ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
-
---
--- AUTO_INCREMENT for table `user_comment`
---
-ALTER TABLE `user_comment`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `detail_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
 --
 
 --
+-- Constraints for table `box_items`
+--
+ALTER TABLE `box_items`
+  ADD CONSTRAINT `box_items_ibfk_1` FOREIGN KEY (`box_id`) REFERENCES `boxes` (`box_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `box_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
+
+--
+-- Constraints for table `categories`
+--
+ALTER TABLE `categories`
+  ADD CONSTRAINT `fk_category_parent` FOREIGN KEY (`parent_id`) REFERENCES `categories` (`category_id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
-
---
--- Constraints for table `order_boxes`
---
-ALTER TABLE `order_boxes`
-  ADD CONSTRAINT `fk_order_boxes_orders` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `order_boxes_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `order_boxes_ibfk_2` FOREIGN KEY (`box_id`) REFERENCES `boxes` (`box_id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `fk_orders_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `order_details`
 --
 ALTER TABLE `order_details`
-  ADD CONSTRAINT `fk_order_details_orders` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `order_details_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
-  ADD CONSTRAINT `order_details_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
+  ADD CONSTRAINT `order_details_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `order_details_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `order_details_ibfk_3` FOREIGN KEY (`box_id`) REFERENCES `boxes` (`box_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `products`
 --
 ALTER TABLE `products`
-  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`) ON DELETE CASCADE;
-
---
--- Constraints for table `user_comment`
---
-ALTER TABLE `user_comment`
-  ADD CONSTRAINT `user_comment_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+  ADD CONSTRAINT `fk_product_category` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

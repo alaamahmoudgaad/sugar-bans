@@ -228,7 +228,8 @@ document.querySelectorAll('.product-card').forEach(card => {
         if (!confirm(`Add ${qty} × ${name} to cart?`)) {
             return;
         }
-
+//يبعت بيانات المنتج لـ PHP (cart.php) من غير ما الصفحة تعمل refresh
+// بنعمل object بيجمع البيانات بالجافا و بعدين يبعتها ل cart عشان يتاكد هي تمام ولا ايه 
         let formData = new FormData();
 
         formData.append('id', card.dataset.id);
