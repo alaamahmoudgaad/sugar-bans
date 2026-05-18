@@ -173,23 +173,53 @@ if ($_SESSION['role'] !== 'admin') {
                             }
                         }
 
-                            $updateParts[] = "`$key` = ?";
-                            $values[] = $value;
+                        if ($key == 'role') {
+                        $allowedRoles = ['admin', 'customer'];
+                        if (!in_array($trimmedValue, $allowedRoles)) {
+                            $_SESSION['validation_msg'] = "Invalid role! Must be admin or customer.";
+                            header("Location: action.php?action=edit&table=$tableName&id=$idValue");
+                            exit();
                         }
-                        $values[] = $idValue;
-
-                        
-
-                        $stmt = $connect->prepare("UPDATE `$tableName` SET " . implode(', ', $updateParts) . " WHERE `$primaryKey` = ?");
-                        $stmt->execute($values);
-                        $stmt = null;
-                        $connect = null;
-
-                        $_SESSION['msg'] = "Record Updated Successfully!";
-                        header("Location: view_table.php?table=$tableName");
-                        exit();
                     }
 
+                    if ($key == 'password') {
+                        if (empty($trimmedValue)) {
+                            continue;
+                        }
+                        $value           = password_hash($trimmedValue, PASSWORD_DEFAULT);
+                        $passwordChanged = true;
+                    }
+
+                    $updateParts[] = "`$key` = ?";
+                    $values[]      = $value;
+                    }
+
+                    $values[] = $idValue;
+
+                    $stmt = $connect->prepare("UPDATE `$tableName` SET " . implode(', ', $updateParts) . " WHERE `$primaryKey` = ?");
+                    $stmt->execute($values);
+                    $stmt = null;
+
+                    if ($passwordChanged) {
+                        $stmtUser = $connect->prepare("SELECT email, first_name FROM $tableName WHERE $primaryKey = ?");
+                        $stmtUser->execute([$idValue]);
+                        $userData = $stmtUser->fetch(PDO::FETCH_ASSOC);
+                        $stmtUser = null;
+
+                        if ($userData) {
+                            $toEmail = $userData['email'];
+                            $subject = "Password Changed - Sugar Bans";
+                            $message = "Hello {$userData['first_name']}, your password has been changed by the admin. If you did not request this, please contact us.";
+                            mail($toEmail, $subject, $message);
+                        }
+                    }
+
+                    $connect = null;
+                    $_SESSION['msg'] = "Record Updated Successfully!";
+                    header("Location: view_table.php?table=$tableName");
+                    exit();
+                    }
+                    break;
 
 
                  case 'add':
