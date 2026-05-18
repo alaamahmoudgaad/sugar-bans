@@ -8,12 +8,6 @@ include 'includes/navbar.php';
 $cat = $_GET['cat'] ?? 'all';
 $isLoggedIn = isset($_SESSION['user_id']);
 
-if (isset($_SESSION['error_msg'])) {
-    echo "<script>
-        alert('" . $_SESSION['error_msg'] . "');
-    </script>";
-    unset($_SESSION['error_msg']);
-}
 ?> 
 
 <div class="main-container">

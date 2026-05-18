@@ -1,5 +1,4 @@
 <?php 
-// PDO   ===> PHP Data Object 
 
 $dns = "mysql:host=localhost;dbname=sugarbans";
 $user = "root";
@@ -15,6 +14,6 @@ try{
 
 }catch(PDOException $e){
     echo "Failed To Connect With DB" . $e->getMessage();
-}
+} 
 
 ?>         

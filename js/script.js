@@ -1,15 +1,4 @@
 
-// function closeMenu() {
-//     if ($('.navbar-collapse').length && $('.navbar-collapse').hasClass('show')) {
-//         $('.navbar-toggler').click();
-//     }
-// }
-
-// if (document.querySelectorAll('.nav-link').length > 0) {
-//     $('.nav-link').click(closeMenu);
-// }
-
-
 const loopTrack = document.getElementById('loop');
 
 if (loopTrack) {
