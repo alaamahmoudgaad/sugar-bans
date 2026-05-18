@@ -9,8 +9,7 @@
         try {
             $stmt = $connect->prepare("SHOW TABLES");
             $stmt->execute();
-            $allTables = $stmt->fetchAll(PDO::FETCH_COLUMN);
-            foreach ($allTables as $row) {
+            while ($row = $stmt->fetchColumn()) {
                 echo"<a href='view_table.php?table=$row' class='side-item d-flex align-items-center'>
                         <i class='fas fa-table mr-2'></i>$row</a>";
             }

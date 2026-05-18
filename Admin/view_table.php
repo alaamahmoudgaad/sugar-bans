@@ -48,9 +48,6 @@ if ($_SESSION['role'] !== 'admin') {
             unset($_SESSION['message']);
         ?>
             <div class="card shadow-sm mt-4 overflow-hidden">
-    
-                <div class="table-responsive">
-        
                     <table class="table table-hover mb-0 w-100 border 1px">
                         <thead>
                             <tr>
@@ -77,8 +74,6 @@ if ($_SESSION['role'] !== 'admin') {
 
                     </table>
                 </div>
-            </div>
-
         </main>
     </div>
 

@@ -95,7 +95,7 @@ if($_SERVER['REQUEST_METHOD' ] == "POST"){
     <?php unset($_SESSION['login_msg']); ?>
 <?php endif; ?>
     
-    <form id="loginForm" action="" method="POST">
+    <form id="loginForm" action="login.php" method="POST">
         
         <div class="form-row">
           
