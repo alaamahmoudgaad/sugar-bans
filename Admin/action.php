@@ -174,9 +174,9 @@ if ($_SESSION['role'] !== 'admin') {
                         }
 
                         if ($key == 'role') {
-                        $allowedRoles = ['admin', 'customer'];
+                        $allowedRoles = ['admin', 'customer', 'guest'];
                         if (!in_array($trimmedValue, $allowedRoles)) {
-                            $_SESSION['validation_msg'] = "Invalid role! Must be admin or customer.";
+                            $_SESSION['validation_msg'] = "Invalid role! Must be admin or customer or guest.";
                             header("Location: action.php?action=edit&table=$tableName&id=$idValue");
                             exit();
                         }
